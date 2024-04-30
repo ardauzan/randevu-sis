@@ -12,6 +12,7 @@
     "dotenv.dotenv-vscode",
     "redhat.vscode-yaml",
     "foxundermoon.shell-format",
-    "oven.bun-vscode"
+    "oven.bun-vscode",
+    "bradlc.vscode-tailwindcss"
   ]
 }

@@ -1,12 +1,10 @@
-import formsPlugin from "@tailwindcss/forms";
-import type { Config } from "tailwindcss";
+import formsPlugin from '@tailwindcss/forms'
+import type { Config } from 'tailwindcss'
 
 const config = {
-  content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
+  content: ['./src/client/**/*.{html,js,jsx,ts,tsx}'],
   theme: {},
-  plugins: [
-    formsPlugin
-  ],
-} satisfies Config;
+  plugins: [formsPlugin]
+} satisfies Config
 
-export default config;
+export default config

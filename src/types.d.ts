@@ -6,7 +6,8 @@ type Kişi = {
   ad: string
   soyad: string
   email: string
-  şifrehash: string
+  şifre?: string
+  şifrehash?: string
 }
 
 type Kişiler = Kişi[]
