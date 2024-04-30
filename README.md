@@ -1,15 +1,17 @@
-# Elysia with Bun runtime
+# SDU Randevu Sistemi
 
-## Getting Started
-To get started with this template, simply paste this command into your terminal:
+## Kurulum
+
+Bu proje bun ile çalışır ve versiyon 1.1.6 ile test edilmiştir
+
 ```bash
-bun create elysia ./elysia-example
+curl -fsSl https://bun.sh/install | bash -s "bun-v1.1.6"
 ```
 
-## Development
-To start the development server run:
+Sonrada projenin dizinine girip aşağıdaki komutu çalıştırın
+
 ```bash
-bun run dev
+bun install
 ```
 
-Open http://localhost:3000/ with your browser to see the result.
+### Prototip atölyesi için A.A.U. tarafından geliştirilmiştir

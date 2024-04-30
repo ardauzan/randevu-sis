@@ -1,0 +1,57 @@
+CREATE TABLE IF NOT EXISTS kişi (
+  id SERIAL PRIMARY KEY,
+  öğrencino BIGINT UNIQUE NOT NULL,
+  ad VARCHAR(50) NOT NULL,
+  soyad VARCHAR(50) NOT NULL,
+  email VARCHAR(50) UNIQUE NOT NULL,
+  şifrehash VARCHAR(118) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS proje (
+  id SERIAL PRIMARY KEY,
+  ad VARCHAR(50) UNIQUE NOT NULL,
+  başlangıçtarihi DATE NOT NULL,
+  bitiştarihi DATE NOT NULL,
+  açıklama VARCHAR(200) NOT NULL,
+  üyeler BIGINT[] NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS gereç (
+  id SERIAL PRIMARY KEY,
+  ad VARCHAR(50) NOT NULL,
+  adet INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS sarf (
+  id SERIAL PRIMARY KEY,
+  ad VARCHAR(50) NOT NULL,
+  açıklama VARCHAR(200) NOT NULL,
+  arızalı BOOLEAN NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS randevu (
+  id SERIAL PRIMARY KEY,
+  açıklama VARCHAR(200) NOT NULL,
+  proje SERIAL REFERENCES proje(id) ON DELETE CASCADE NOT NULL,
+  gereçler INTEGER[2][] NOT NULL,
+  sarflar VARCHAR(10)[] NOT NULL,
+  gün DATE NOT NULL,
+  başlangıçzamanı TIME NOT NULL,
+  bitişzamanı TIME NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS tatil (
+  id SERIAL PRIMARY KEY,
+  başlangıçtarihi DATE NOT NULL,
+  bitiştarihi DATE NOT NULL,
+  açıklama VARCHAR(200) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS ziyaret (
+  id SERIAL PRIMARY KEY,
+  gün DATE NOT NULL,
+  başlangıçzamanı TIME NOT NULL,
+  bitişzamanı TIME NOT NULL,
+  ziyareteden VARCHAR(100) NOT NULL,
+  ziyaretçisayısı INTEGER NOT NULL
+);
