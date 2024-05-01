@@ -1,14 +1,12 @@
 //info Burası sunucu tarafının giriş noktasıdır.
-
 import { Elysia } from 'elysia'
 import { staticPlugin } from '@elysiajs/static'
 //@ts-ignore
 import { renderToReadableStream } from 'react-dom/server.browser'
-/*
 import { createElement } from 'react'
-import Anasayfa from '~/client/anasayfa/anasayfa'
-import Admin from '~/client/admin/admin'
-*/
+import Anasayfa from '@/client/anasayfa/anasayfa'
+import Admin from '@/client/admin/admin'
+import Bulunamadı from '@/client/404/404'
 import {
   kişileriSay,
   kişileriOku,
@@ -53,15 +51,12 @@ import {
   ziyaretGüncelle,
   ziyaretSil
 } from '@/server/lib'
-import type { NodePgDatabase } from 'drizzle-orm/node-postgres'
 
 //info Sunucumuzu oluşturuyoruz.
 //info /public dizinini statik dosyalar için kullanacağız.
-
 export default function sunucuyuOluştur() {
   const app = new Elysia()
     .use(staticPlugin())
-    /*
     .get('/', async () => {
       return new Response(
         await renderToReadableStream(createElement(Anasayfa), {
@@ -82,7 +77,6 @@ export default function sunucuyuOluştur() {
         }
       )
     })
-    */
     .get('/api/kisi', async ({ query: { arama, sayfa, sayfaBoyutu } }) => {
       const _arama = arama || ''
       const _sayfa = sayfa ? parseInt(sayfa) : 1
@@ -473,11 +467,21 @@ export default function sunucuyuOluştur() {
       await ziyaretSil(parseInt(id), pool)
       return { message: 'Ziyaret silindi' }
     })
-    */
+    */ .onError(async ({ code }) => {
+      if (code === 'NOT_FOUND')
+        return new Response(
+          await renderToReadableStream(createElement(Bulunamadı), {
+            bootstrapScripts: ['/public/404.js']
+          }),
+          {
+            headers: { 'Content-Type': 'text/html' }
+          }
+        )
+      return new Response('Sunucu tarafında bir hata oluştu.', { status: 500 })
+    })
     .listen(3000)
 
   //info Sunucumuzun çalıştığını konsola yazdırıyoruz.
-
   console.info(
     `Sunucu şurda çalışıyor: ${app.server?.hostname}:${app.server?.port}`
   )
