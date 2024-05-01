@@ -1,12 +1,18 @@
 {
   "name": "randevu-sis",
+  "description": "SDU Randevu Sistemi",
   "version": "1.0.50",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run --watch src/index.ts"
+    "dev": "bun run --watch src/index.ts",
+    "start": "bun run src/index.ts",
+    "db:generate": "drizzle-kit generate:pg --schema src/db/schema.ts --out=src/db/migrations",
+    "db:migrate": "bun run src/db/migrate.ts",
+    "db:seed": "bun run src/db/seed.ts"
   },
   "dependencies": {
     "@elysiajs/static": "^1.0.3",
+    "drizzle-orm": "^0.30.9",
     "elysia": "^1.0.15",
     "pg": "^8.11.5",
     "react": "^18.3.1",
@@ -18,6 +24,8 @@
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
     "bun-types": "^1.1.6",
+    "drizzle-kit": "^0.20.17",
+    "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.14",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.5"

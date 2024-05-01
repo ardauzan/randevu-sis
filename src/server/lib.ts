@@ -1,160 +1,286 @@
 //info Burda uygulamayı çalıştıran sunucu tarafı mantığı tanımlıyoruz.
-import type { Pool } from 'pg'
+import { count, like, or, eq } from 'drizzle-orm'
+import db from '@/db'
+import { kişiler, projeler, kişilerProjeler } from '@/db/schema'
 
 //info Kişi işlemleri
 
 //# Kişileri say
-export async function kişileriSay(
-  arama: string,
-  pool: Pool
-): Promise<number | void> {
-  const res = await pool.query({
-    text: `SELECT COUNT(*) FROM kişi WHERE ad LIKE '%${arama}%' OR soyad LIKE '%${arama}%' OR email LIKE '%${arama}%'`
-  })
-  return parseInt(res.rows[0].count)
+export async function kişileriSay(arama: string): Promise<number | void> {
+  const res = await db
+    .select({ count: count() })
+    .from(kişiler)
+    .where(
+      or(
+        or(like(kişiler.ad, `%${arama}%`), like(kişiler.soyAd, `%${arama}%`)),
+        like(kişiler.email, `%${arama}%`)
+      )
+    )
+  return res[0]?.count
 }
 
 //# Kişileri oku
 export async function kişileriOku(
   arama: string,
   sayfa: number,
-  sayfaBoyutu: number,
-  pool: Pool
-): Promise<Kişiler | void> {
-  const res = await pool.query({
-    text: `SELECT id, öğrencino, ad, soyad, email FROM kişi WHERE ad LIKE '%${arama}%' OR soyad LIKE '%${arama}%'  OR email LIKE '%${arama}%' LIMIT ${sayfaBoyutu} OFFSET ${
-      (sayfa - 1) * sayfaBoyutu
-    }`
+  sayfaBoyutu: number
+): Promise<SunucuKaynaklıKişiler | void> {
+  const res = await db.query.kişiler.findMany({
+    where: or(
+      or(like(kişiler.ad, `%${arama}%`), like(kişiler.soyAd, `%${arama}%`)),
+      like(kişiler.email, `%${arama}%`)
+    ),
+    limit: sayfaBoyutu,
+    offset: (sayfa - 1) * sayfaBoyutu,
+    columns: {
+      şifreHash: false
+    },
+    with: {
+      projeler: {
+        columns: {},
+        with: {
+          proje: {
+            columns: {
+              id: true
+            }
+          }
+        }
+      }
+    }
   })
-  return res.rows as Kişiler
+  const processedRes: SunucuKaynaklıKişiler = []
+  for (const kişi of res) {
+    processedRes.push({
+      id: kişi.id,
+      öğrenciNo: kişi.öğrenciNo,
+      ad: kişi.ad,
+      soyAd: kişi.soyAd,
+      email: kişi.email,
+      projeler: kişi.projeler.map((kişiProje) => kişiProje.proje.id)
+    })
+  }
+  return processedRes
 }
 
 //# Kişi oku
 export async function kişiOku(
   id: number,
-  pool: Pool,
-  showPasswordHash: boolean = false
-): Promise<Kişi | void> {
-  const res = await pool.query({
-    text: `SELECT id, öğrencino, ad, soyad${showPasswordHash ? ', şifrehash' : ''}, email FROM kişi WHERE id = $1`,
-    values: [id]
+  şifreli: boolean = false
+): Promise<SunucuKaynaklıKişi | void> {
+  if (şifreli) {
+    const res = await db.query.kişiler.findFirst({
+      where: eq(kişiler.id, id),
+      with: {
+        projeler: {
+          columns: {},
+          with: {
+            proje: true
+          }
+        }
+      }
+    })
+    if (!res) return
+    const processedRes: SunucuKaynaklıKişi = {
+      id: res.id,
+      öğrenciNo: res.öğrenciNo,
+      ad: res.ad,
+      soyAd: res.soyAd,
+      email: res.email,
+      projeler: res.projeler.map((kişiProje) => kişiProje.proje)
+    }
+    return processedRes
+  }
+  const res = await db.query.kişiler.findFirst({
+    where: eq(kişiler.id, id),
+    columns: {
+      şifreHash: false
+    },
+    with: {
+      projeler: {
+        columns: {},
+        with: {
+          proje: true
+        }
+      }
+    }
   })
-  return res.rows[0] as Kişi
+  if (!res) return
+  const processedRes: SunucuKaynaklıKişi = {
+    id: res.id,
+    öğrenciNo: res.öğrenciNo,
+    ad: res.ad,
+    soyAd: res.soyAd,
+    email: res.email,
+    projeler: res.projeler.map((kişiProje) => kişiProje.proje)
+  }
+  return processedRes
 }
 
 //# Kişi yarat
 export async function kişiYarat(
-  öğrencino: number,
+  öğrenciNo: number,
   ad: string,
-  soyad: string,
+  soyAd: string,
   email: string,
-  şifre: string,
-  pool: Pool
+  şifre: string
 ): Promise<void> {
-  const şifrehash = await şifreHashle(şifre)
-  const query = {
-    text: 'INSERT INTO kişi(öğrencino, ad, soyad, email, şifrehash) VALUES($1, $2, $3, $4, $5)',
-    values: [öğrencino, ad, soyad, email, şifrehash]
-  }
-  await pool.query(query)
+  const şifreHash = await şifreHashle(şifre)
+  await db.insert(kişiler).values({
+    öğrenciNo,
+    ad,
+    soyAd,
+    email,
+    şifreHash
+  })
 }
 
 //# Kişi güncelle
 export async function kişiGüncelle(
   id: number,
   {
-    öğrencino,
+    öğrenciNo,
     ad,
-    soyad,
+    soyAd,
     email,
     şifre
   }: {
-    öğrencino?: number
+    öğrenciNo?: number
     ad?: string
-    soyad?: string
+    soyAd?: string
     email?: string
     şifre?: string
-  },
-  pool: Pool
+  }
 ): Promise<void> {
   let şifreHash
-  const res1 = await kişiOku(id, pool, true)
+  const res1 = await kişiOku(id, true)
   if (!res1) return
   if (şifre) {
     şifreHash = await şifreHashle(şifre)
   }
-  const _öğrencino = öğrencino ?? res1.öğrencino
+  const _öğrenciNo = öğrenciNo ?? res1.öğrenciNo
   const _ad = ad ?? res1.ad
-  const _soyad = soyad ?? res1.soyad
+  const _soyAd = soyAd ?? res1.soyAd
   const _email = email ?? res1.email
-  const _şifrehash = şifreHash ?? res1.şifrehash
-  const query = {
-    text: 'UPDATE kişi SET öğrencino = $1, ad = $2, soyad = $3, email = $4, şifrehash = $5 WHERE id = $6',
-    values: [_öğrencino, _ad, _soyad, _email, _şifrehash, id]
-  }
-  await pool.query(query)
+  const _şifreHash = şifreHash ?? (res1.şifreHash as string)
+  await db
+    .update(kişiler)
+    .set({
+      öğrenciNo: _öğrenciNo,
+      ad: _ad,
+      soyAd: _soyAd,
+      email: _email,
+      şifreHash: _şifreHash
+    })
+    .where(eq(kişiler.id, id))
 }
 
 //# Kişi sil
-export async function kişiSil(id: number, pool: Pool): Promise<void> {
-  const query = {
-    text: 'DELETE FROM kişi WHERE id = $1',
-    values: [id]
-  }
-  await pool.query(query)
+export async function kişiSil(id: number): Promise<void> {
+  await db.delete(kişiler).where(eq(kişiler.id, id))
 }
 
 //info Proje işlemleri
 
 //# Projeleri say
-export async function projeleriSay(
-  arama: string,
-  pool: Pool
-): Promise<number | void> {
-  const res = await pool.query({
-    text: `SELECT COUNT(*) FROM proje WHERE ad LIKE '%${arama}%' OR açıklama LIKE '%${arama}%'`
-  })
-  return parseInt(res.rows[0].count)
+export async function projeleriSay(arama: string): Promise<number | void> {
+  const res = await db
+    .select({ count: count() })
+    .from(projeler)
+    .where(
+      or(like(projeler.ad, `%${arama}%`), like(projeler.açıklama, `%${arama}%`))
+    )
+  return res[0]?.count
 }
 
 //# Projeleri oku
 export async function projeleriOku(
   arama: string,
   sayfa: number,
-  sayfaBoyutu: number,
-  pool: Pool
-): Promise<Projeler | void> {
-  const res = await pool.query({
-    text: `SELECT * FROM proje WHERE ad LIKE '%${arama}%' OR açıklama LIKE '%${arama}%' LIMIT ${sayfaBoyutu} OFFSET ${
-      (sayfa - 1) * sayfaBoyutu
-    }`
+  sayfaBoyutu: number
+): Promise<SunucuKaynaklıProjeler | void> {
+  const res = await db.query.projeler.findMany({
+    where: or(
+      like(projeler.ad, `%${arama}%`),
+      like(projeler.açıklama, `%${arama}%`)
+    ),
+    limit: sayfaBoyutu,
+    offset: (sayfa - 1) * sayfaBoyutu,
+    with: {
+      üyeler: {
+        columns: {},
+        with: {
+          üye: {
+            columns: {
+              id: true
+            }
+          }
+        }
+      }
+    }
   })
-  return res.rows as Projeler
+  const processedRes: SunucuKaynaklıProjeler = []
+  for (const proje of res) {
+    processedRes.push({
+      id: proje.id,
+      ad: proje.ad,
+      başlangıçTarihi: proje.başlangıçTarihi,
+      bitişTarihi: proje.bitişTarihi,
+      açıklama: proje.açıklama,
+      üyeler: proje.üyeler.map((kişiProje) => kişiProje.üye.id)
+    })
+  }
+  return processedRes
 }
 
 //# Proje oku
-export async function projeOku(id: number, pool: Pool): Promise<Proje | void> {
-  const res = await pool.query({
-    text: 'SELECT * FROM proje WHERE id = $1',
-    values: [id]
+export async function projeOku(
+  id: number
+): Promise<SunucuKaynaklıProje | void> {
+  const res = await db.query.projeler.findFirst({
+    where: eq(projeler.id, id),
+    with: {
+      üyeler: {
+        columns: {},
+        with: {
+          üye: true
+        }
+      }
+    }
   })
-  return res.rows[0] as Proje
+  if (!res) return
+  const processedRes: SunucuKaynaklıProje = {
+    id: res.id,
+    ad: res.ad,
+    başlangıçTarihi: res.başlangıçTarihi,
+    bitişTarihi: res.bitişTarihi,
+    açıklama: res.açıklama,
+    üyeler: res.üyeler.map((kişiProje) => kişiProje.üye)
+  }
+  return processedRes
 }
 
 //# Proje yarat
 export async function projeYarat(
   ad: string,
-  başlangıçtarihi: string,
-  bitiştarihi: string,
+  başlangıçTarihi: string,
+  bitişTarihi: string,
   açıklama: string,
-  üyeler: number[],
-  pool: Pool
+  üyeler: number[]
 ): Promise<void> {
-  const query = {
-    text: 'INSERT INTO proje(ad, başlangıçtarihi, bitiştarihi, açıklama, üyeler) VALUES($1, $2, $3, $4, $5)',
-    values: [ad, başlangıçtarihi, bitiştarihi, açıklama, üyeler]
+  await db.insert(projeler).values({
+    ad,
+    başlangıçTarihi,
+    bitişTarihi,
+    açıklama
+  })
+  const res = await db.select().from(projeler).where(eq(projeler.ad, ad))
+  const projeId = res[0]!.id
+  for (const üye of üyeler) {
+    await db.insert(kişilerProjeler).values({
+      kişi: üye,
+      proje: projeId
+    })
   }
-  await pool.query(query)
 }
 
 //# Proje güncelle

@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1714523413726,
+      "tag": "0000_fancy_alex_power",
+      "breakpoints": true
+    }
+  ]
+}

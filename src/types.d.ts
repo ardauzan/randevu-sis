@@ -1,28 +1,50 @@
 //info Burada tüm veri tiplerini tanımlıyoruz.
 
-type Kişi = {
-  id?: number //# primary key
-  öğrencino: number
+//# Kişiler
+type Kişiler = Kişi[]
+type Kişi = SunucuKaynaklıKişi | İstemciKaynaklıKişi
+type SunucuKaynaklıKişiler = SunucuKaynaklıKişi[]
+type SunucuKaynaklıKişi = {
+  id: number
+  öğrenciNo: number
   ad: string
-  soyad: string
+  soyAd: string
+  email: string
+  şifreHash?: string
+  projeler?: SunucuKaynaklıProjeler | number[]
+}
+type İstemciKaynaklıKişiler = İstemciKaynaklıKişi[]
+type İstemciKaynaklıKişi = {
+  öğrenciNo: number
+  ad: string
+  soyAd: string
   email: string
   şifre?: string
-  şifrehash?: string
+  projeler: number[]
 }
 
-type Kişiler = Kişi[]
-
-type Proje = {
-  id?: number //# primary key
+//# Projeler
+type Projeler = Proje[]
+type Proje = SunucuKaynaklıProje | İstemciKaynaklıProje
+type SunucuKaynaklıProjeler = SunucuKaynaklıProje[]
+type SunucuKaynaklıProje = {
+  id: number
   ad: string
-  başlangıçtarihi: string
-  bitiştarihi: string
+  başlangıçTarihi: string
+  bitişTarihi: string
+  açıklama: string
+  üyeler?: Kişiler | number[]
+}
+type İstemciKaynaklıProjeler = İstemciKaynaklıProje[]
+type İstemciKaynaklıProje = {
+  ad: string
+  başlangıçTarihi: string
+  bitişTarihi: string
   açıklama: string
   üyeler: number[]
 }
 
-type Projeler = Proje[]
-
+//# Gereçler
 type Gereç = {
   id?: number //# primary key
   ad: string

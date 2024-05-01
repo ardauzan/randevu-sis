@@ -52,12 +52,13 @@ import {
   ziyaretYarat,
   ziyaretGüncelle,
   ziyaretSil
-} from '~/server/lib'
-import type { Pool } from 'pg'
+} from '@/server/lib'
+import type { NodePgDatabase } from 'drizzle-orm/node-postgres'
 
 //info Sunucumuzu oluşturuyoruz.
 //info /public dizinini statik dosyalar için kullanacağız.
-export default function sunucuyuOluştur(pool: Pool) {
+
+export default function sunucuyuOluştur() {
   const app = new Elysia()
     .use(staticPlugin())
     /*
@@ -87,8 +88,8 @@ export default function sunucuyuOluştur(pool: Pool) {
       const _sayfa = sayfa ? parseInt(sayfa) : 1
       const _sayfaBoyutu = sayfaBoyutu ? parseInt(sayfaBoyutu) : 10
       try {
-        const total = await kişileriSay(_arama, pool)
-        const içerik = await kişileriOku(_arama, _sayfa, _sayfaBoyutu, pool)
+        const total = await kişileriSay(_arama)
+        const içerik = await kişileriOku(_arama, _sayfa, _sayfaBoyutu)
         return {
           durum: 'Başarılı',
           total,
@@ -103,7 +104,7 @@ export default function sunucuyuOluştur(pool: Pool) {
     })
     .get('/api/kisi/:id', async ({ params: { id } }) => {
       try {
-        const içerik = await kişiOku(parseInt(id), pool)
+        const içerik = await kişiOku(parseInt(id))
         return { durum: 'Başarılı', içerik }
       } catch (e) {
         console.error(e)
@@ -111,9 +112,9 @@ export default function sunucuyuOluştur(pool: Pool) {
       }
     })
     .post('/api/kisi', async ({ body }) => {
-      const { öğrencino, ad, soyad, email, şifre } = body as Kişi
+      const { öğrenciNo, ad, soyAd, email, şifre } = body as İstemciKaynaklıKişi
       try {
-        await kişiYarat(öğrencino, ad, soyad, email, şifre as string, pool)
+        await kişiYarat(öğrenciNo, ad, soyAd, email, şifre as string)
         return { durum: 'Başarılı' }
       } catch (e) {
         console.error(e)
@@ -122,7 +123,7 @@ export default function sunucuyuOluştur(pool: Pool) {
     })
     .patch('/api/kisi/:id', async ({ params: { id }, body }) => {
       try {
-        await kişiGüncelle(parseInt(id), body as Kişi, pool)
+        await kişiGüncelle(parseInt(id), body as Kişi)
         return { durum: 'Başarılı' }
       } catch (e) {
         console.error(e)
@@ -131,20 +132,21 @@ export default function sunucuyuOluştur(pool: Pool) {
     })
     .delete('/api/kisi/:id', async ({ params: { id } }) => {
       try {
-        await kişiSil(parseInt(id), pool)
+        await kişiSil(parseInt(id))
         return { durum: 'Başarılı' }
       } catch (e) {
         console.error(e)
         return { durum: 'Başarısız' }
       }
     })
+    /*
     .get('/api/proje', async ({ query: { arama, sayfa, sayfaBoyutu } }) => {
       const _arama = arama || ''
       const _sayfa = sayfa ? parseInt(sayfa) : 1
       const _sayfaBoyutu = sayfaBoyutu ? parseInt(sayfaBoyutu) : 10
       try {
-        const total = await projeleriSay(_arama, pool)
-        const içerik = await projeleriOku(_arama, _sayfa, _sayfaBoyutu, pool)
+        const total = await projeleriSay(_arama)
+        const içerik = await projeleriOku(_arama, _sayfa, _sayfaBoyutu)
         return {
           durum: 'Başarılı',
           total,
@@ -159,7 +161,7 @@ export default function sunucuyuOluştur(pool: Pool) {
     })
     .get('/api/proje/:id', async ({ params: { id } }) => {
       try {
-        const içerik = await projeOku(parseInt(id), pool)
+        const içerik = await projeOku(parseInt(id))
         return { durum: 'Başarılı', içerik }
       } catch (e) {
         console.error(e)
@@ -167,16 +169,15 @@ export default function sunucuyuOluştur(pool: Pool) {
       }
     })
     .post('/api/proje', async ({ body }) => {
-      const { ad, başlangıçtarihi, bitiştarihi, açıklama, üyeler } =
+      const { ad, başlangıçTarihi, bitişTarihi, açıklama, üyeler } =
         body as Proje
       try {
         await projeYarat(
           ad,
-          başlangıçtarihi,
-          bitiştarihi,
+          başlangıçTarihi,
+          bitişTarihi,
           açıklama,
-          üyeler,
-          pool
+          üyeler as number[]
         )
         return { durum: 'Başarılı' }
       } catch (e) {
@@ -472,7 +473,10 @@ export default function sunucuyuOluştur(pool: Pool) {
       await ziyaretSil(parseInt(id), pool)
       return { message: 'Ziyaret silindi' }
     })
+    */
     .listen(3000)
+
+  //info Sunucumuzun çalıştığını konsola yazdırıyoruz.
 
   console.info(
     `Sunucu şurda çalışıyor: ${app.server?.hostname}:${app.server?.port}`
