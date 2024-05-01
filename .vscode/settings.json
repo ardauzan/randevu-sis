@@ -46,16 +46,7 @@
       "italic": false
     },
     {
-      "tag": "|",
-      "color": "#FF00FD",
-      "strikethrough": false,
-      "underline": true,
-      "backgroundColor": "transparent",
-      "bold": true,
-      "italic": false
-    },
-    {
-      "tag": "todo",
+      "tag": "yapılacak",
       "color": "#FF8C00",
       "strikethrough": false,
       "underline": false,
@@ -75,17 +66,5 @@
   ],
   "dotenv.enableAutocloaking": false,
   "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
-  "sqltools.connections": [
-    {
-      "previewLimit": 50,
-      "server": "localhost",
-      "port": 5432,
-      "askForPassword": true,
-      "driver": "PostgreSQL",
-      "name": "RandevuSis",
-      "database": "randevusis",
-      "username": "randevusis"
-    }
-  ]
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }

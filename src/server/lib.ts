@@ -86,6 +86,7 @@ export async function kişiOku(
       ad: res.ad,
       soyAd: res.soyAd,
       email: res.email,
+      şifreHash: res.şifreHash,
       projeler: res.projeler.map((kişiProje) => kişiProje.proje)
     }
     return processedRes
