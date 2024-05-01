@@ -1,6 +1,6 @@
 {
   "name": "randevu-sis",
-  "description": "SDU Randevu Sistemi",
+  "description": "SDU Randevu Yönetim Sistemi",
   "version": "1.0.50",
   "private": true,
   "scripts": {

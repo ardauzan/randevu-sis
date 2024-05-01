@@ -1,4 +1,4 @@
-# SDU Randevu Sistemi
+# SDU Randevu Yönetim Sistemi
 
 ## Kurulum
 
@@ -24,4 +24,20 @@ Son olarak projeyi çalıştırmak için aşağıdaki komutu çalıştırın:
 bun start
 ```
 
-### Prototip atölyesi için A.A.U. tarafından geliştirilmiştir
+### Notlar
+
+- Proje varsayılan olarak `http://localhost:3000` adresinde çalışır.
+- PostgreSql veritabanı kullanır. Veritabanı ayarlarını `.env.local` dosyasından yapabilirsiniz.
+- Proje ilk çalıştırıldığında veritabanı şemasını oluşturmak için aşağıdaki komutu çalıştırın:
+  
+  ```bash
+  bun run db:generate
+  ```
+
+- Sonrada aşağıdaki komutu çalıştırarak veritabanına şemayı yükleyin:
+
+  ```bash
+  bun run db:migrate
+  ```
+
+#### Prototip atölyesi için A.A.U. tarafından geliştirilmiştir
