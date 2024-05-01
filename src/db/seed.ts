@@ -45,9 +45,10 @@ const main = async () => {
       }
     ])
     console.info('Veritabanı sıfırlandı ve örnek veri eklendi.')
+    process.exit(0)
   } catch (error) {
     console.error(error)
-    throw new Error('Failed to seed database')
+    process.exit(1)
   }
 }
 
