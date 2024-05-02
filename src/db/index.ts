@@ -8,6 +8,7 @@ const pool = new Pool()
 const db = drizzle(pool, {
   schema
 })
+console.info('Veritabanı bağlantısı sağlandı.')
 
 //info db değişkeni export edilir.
 export default db

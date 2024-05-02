@@ -97,21 +97,32 @@ export default function sunucuyuOluştur() {
           return app
             .post(
               '/giris',
-              async ({ body: { email, şifre }, jwt, cookie: { kimlik } }) => {
+              async ({
+                body: { email, şifre, beniHatırla },
+                jwt,
+                cookie: { kimlik }
+              }) => {
                 //info Giriş yapmaya çalış, başarırsan kimlik adındaki çereze jwt yi koy ve başarılı olduğunu belirt, başaramazsan başaramadığını belirt.
                 const sonuç = await emailVeŞifreİleKimlikDoğrula(email, şifre)
                 if (sonuç === 'Kimlik doğrulanamadı.') return sonuç
                 kimlik.set({
                   value: await jwt.sign({ id: sonuç }),
                   httpOnly: true,
-                  maxAge: 7 * 86400
+                  path: '/',
+                  sameSite: 'strict',
+                  secure: true,
+                  expires: beniHatırla
+                    ? new Date(Date.now() + 7 * 86400 * 1000)
+                    : undefined,
+                  priority: 'high'
                 })
                 return 'Giriş yapıldı.'
               },
               {
                 body: t.Object({
                   email: t.String(),
-                  şifre: t.String()
+                  şifre: t.String(),
+                  beniHatırla: t.Boolean()
                 })
               }
             )

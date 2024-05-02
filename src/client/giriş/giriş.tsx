@@ -16,7 +16,7 @@ export default function Giriş() {
         <link rel="icon" href="/public/favicon.ico" />
         <link rel="stylesheet" href="/public/styles.css" />
       </head>
-      <body>
+      <body className="bg-gray-100">
         <Main />
       </body>
     </html>

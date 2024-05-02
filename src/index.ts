@@ -8,7 +8,8 @@ const tailwindcss = Bun.spawnSync([
   '-i',
   'src/styles.css',
   '-o',
-  'public/styles.css'
+  'public/styles.css',
+  '--minify'
 ])
 console.info('Tailwindcss dosyası oluşturuldu:', tailwindcss.success)
 
@@ -30,7 +31,7 @@ console.info('Yönetici sayfası derlendi:', yönet.success)
 const randevularım = await Bun.build({
   entrypoints: ['src/client/randevularım/index.tsx'],
   outdir: 'public',
-  minify: false,
+  minify: true,
   naming: '[dir]/randevularim.[ext]'
 })
 console.info('Randevularım sayfası derlendi:', randevularım.success)

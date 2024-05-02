@@ -1,7 +1,13 @@
+//info Giriş sayfasının istemci tarafında hydrate edilmesi sağlanır.
 /// <reference lib="dom" />
 /// <reference lib="dom.iterable" />
-import React from 'react'
+import React, { StrictMode } from 'react'
 import { hydrateRoot } from 'react-dom/client'
 import Giriş from '@/client/giriş/giriş'
 
-hydrateRoot(document, <Giriş />)
+hydrateRoot(
+  document,
+  <StrictMode>
+    <Giriş />
+  </StrictMode>
+)
