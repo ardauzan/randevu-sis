@@ -36,6 +36,7 @@ const main = async () => {
     await db.insert(kişiler).values([
       {
         id: 1,
+        yönetici: true,
         öğrenciNo: 2311310817,
         ad: 'Ali Arda',
         soyAd: 'Uzan',
@@ -44,7 +45,7 @@ const main = async () => {
           '$argon2id$v=19$m=65536,t=2,p=1$VCLAJ0wncHSr/fPp/9IdO7yafqlQmIH17nn+h8yHvFM$61paoxFJfO64EQqL9N0VbdaIhuX6Y3iNLJVfJN36TcM' //# Şifre: tets1234
       }
     ])
-    console.info('Veritabanı sıfırlandı ve örnek veri eklendi.')
+    console.info('Veritabanı sıfırlandı ve örnek veriler eklendi.')
     process.exit(0)
   } catch (error) {
     console.error(error)

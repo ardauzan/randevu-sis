@@ -15,6 +15,7 @@ import {
 //info Tablolar tanımlanır.
 export const kişiler = pgTable('kişiler', {
   id: serial('id').primaryKey(),
+  yönetici: boolean('yönetici').notNull().default(false),
   öğrenciNo: bigint('öğrenci_no', { mode: 'number' }).unique().notNull(),
   ad: text('ad').notNull(),
   soyAd: text('soy_ad').notNull(),

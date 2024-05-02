@@ -23,7 +23,7 @@ const yönet = await Bun.build({
   entrypoints: ['src/client/yönet/index.tsx'],
   outdir: 'public',
   minify: true,
-  naming: '[dir]/yönet.[ext]'
+  naming: '[dir]/yonet.[ext]'
 })
 console.info('Yönetici sayfası:', yönet)
 const bulunamadı = await Bun.build({
@@ -37,14 +37,14 @@ const randevularım = await Bun.build({
   entrypoints: ['src/client/randevularım/index.tsx'],
   outdir: 'public',
   minify: true,
-  naming: '[dir]/randevularım.[ext]'
+  naming: '[dir]/randevularim.[ext]'
 })
 console.info('Randevularım sayfası:', randevularım)
 const giriş = await Bun.build({
   entrypoints: ['src/client/giriş/index.tsx'],
   outdir: 'public',
   minify: true,
-  naming: '[dir]/giriş.[ext]'
+  naming: '[dir]/giris.[ext]'
 })
 console.info('Giriş sayfası:', giriş)
 

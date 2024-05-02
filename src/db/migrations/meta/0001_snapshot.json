@@ -1,6 +1,6 @@
 {
-  "id": "84a588da-1f94-4d5f-a194-cbd2612a6d48",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "b24b3744-0c1a-494a-9b57-60dfbfe665be",
+  "prevId": "84a588da-1f94-4d5f-a194-cbd2612a6d48",
   "version": "5",
   "dialect": "pg",
   "tables": {
@@ -80,7 +80,8 @@
           "name": "yönetici",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": false
         },
         "öğrenci_no": {
           "name": "öğrenci_no",

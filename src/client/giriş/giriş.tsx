@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Giriş() {
   return (
-    <html lang="tr" className="h-full bg-white">
+    <html lang="tr">
       <head>
         <meta charSet="utf-8" />
         <title>Giriş Yap</title>

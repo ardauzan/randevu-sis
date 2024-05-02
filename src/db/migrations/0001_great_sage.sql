@@ -1,0 +1,1 @@
+ALTER TABLE "kişiler" ALTER COLUMN "yönetici" SET DEFAULT false;

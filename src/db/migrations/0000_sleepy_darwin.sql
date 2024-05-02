@@ -1,3 +1,10 @@
+CREATE TABLE IF NOT EXISTS "araçlar" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"ad" text NOT NULL,
+	"açıklama" text NOT NULL,
+	"arızalı" boolean NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "gereçler" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"ad" text NOT NULL,
@@ -6,6 +13,7 @@ CREATE TABLE IF NOT EXISTS "gereçler" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "kişiler" (
 	"id" serial PRIMARY KEY NOT NULL,
+	"yönetici" boolean NOT NULL,
 	"öğrenci_no" bigint NOT NULL,
 	"ad" text NOT NULL,
 	"soy_ad" text NOT NULL,
@@ -37,13 +45,6 @@ CREATE TABLE IF NOT EXISTS "randevular" (
 	"gün" date NOT NULL,
 	"başlangıç_saat" time NOT NULL,
 	"bitiş_saat" time NOT NULL
-);
---> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "sarflar" (
-	"id" serial PRIMARY KEY NOT NULL,
-	"ad" text NOT NULL,
-	"açıklama" text NOT NULL,
-	"arızalı" boolean NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "tatiller" (

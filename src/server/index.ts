@@ -71,7 +71,7 @@ export default function sunucuyuOluştur() {
     .get('/yonet', async () => {
       return new Response(
         await renderToReadableStream(createElement(Yönet), {
-          bootstrapScripts: ['/public/yönet.js']
+          bootstrapScripts: ['/public/yonet.js']
         }),
         {
           headers: { 'Content-Type': 'text/html' }
@@ -81,7 +81,7 @@ export default function sunucuyuOluştur() {
     .get('/randevularim', async () => {
       return new Response(
         await renderToReadableStream(createElement(Randevularım), {
-          bootstrapScripts: ['/public/randevularım.js']
+          bootstrapScripts: ['/public/randevularim.js']
         }),
         {
           headers: { 'Content-Type': 'text/html' }
@@ -91,7 +91,7 @@ export default function sunucuyuOluştur() {
     .get('/giris', async () => {
       return new Response(
         await renderToReadableStream(createElement(Giriş), {
-          bootstrapScripts: ['/public/giriş.js']
+          bootstrapScripts: ['/public/giris.js']
         }),
         {
           headers: { 'Content-Type': 'text/html' }
