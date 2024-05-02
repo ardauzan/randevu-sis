@@ -1,7 +1,7 @@
 {
   "name": "randevu-sis",
-  "description": "SDU Randevu Yönetim Sistemi",
-  "version": "1.0.50",
+  "description": "SDÜ Randevu Yönetim Sistemi",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "bun run --watch src/index.ts",

@@ -8,7 +8,7 @@ export default function Bulunamadı() {
         <title>Sayfa Bulunamadı</title>
         <meta
           name="description"
-          content="SDU randevu sisteminde bu sayfa mevcut değil."
+          content="SDÜ Randevu Sistemi'nde bu sayfa mevcut değil."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/public/favicon.ico" />

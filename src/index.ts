@@ -18,21 +18,35 @@ const anasayfa = await Bun.build({
   minify: true,
   naming: '[dir]/anasayfa.[ext]'
 })
-console.info('Anasayfa', anasayfa)
-const admin = await Bun.build({
-  entrypoints: ['src/client/admin/index.tsx'],
+console.info('Anasayfa:', anasayfa)
+const yönet = await Bun.build({
+  entrypoints: ['src/client/yönet/index.tsx'],
   outdir: 'public',
   minify: true,
-  naming: '[dir]/admin.[ext]'
+  naming: '[dir]/yönet.[ext]'
 })
-console.info('Admin', admin)
+console.info('Yönetici sayfası:', yönet)
 const bulunamadı = await Bun.build({
   entrypoints: ['src/client/404/index.tsx'],
   outdir: 'public',
   minify: true,
   naming: '[dir]/404.[ext]'
 })
-console.info('Bulunamadı', bulunamadı)
+console.info('Bulunamadı sayfası:', bulunamadı)
+const randevularım = await Bun.build({
+  entrypoints: ['src/client/randevularım/index.tsx'],
+  outdir: 'public',
+  minify: true,
+  naming: '[dir]/randevularım.[ext]'
+})
+console.info('Randevularım sayfası:', randevularım)
+const giriş = await Bun.build({
+  entrypoints: ['src/client/giriş/index.tsx'],
+  outdir: 'public',
+  minify: true,
+  naming: '[dir]/giriş.[ext]'
+})
+console.info('Giriş sayfası:', giriş)
 
 //info Son olarak da sunucumuzu oluşturuyoruz.
 sunucuyuOluştur()

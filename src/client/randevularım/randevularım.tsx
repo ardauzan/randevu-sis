@@ -1,17 +1,20 @@
 import React from 'react'
 
-export default function Admin() {
+export default function Randevularım() {
   return (
     <html lang="tr" className="h-full bg-white">
       <head>
         <meta charSet="utf-8" />
-        <title>Admin</title>
-        <meta name="description" content="SDU randevu sistemi admin sayfası." />
+        <title>Randevularım</title>
+        <meta
+          name="description"
+          content="SDÜ Randevu Sistemi'nde kayıtlı olan randevularınız."
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/public/favicon.ico" />
         <link rel="stylesheet" href="/public/styles.css" />
       </head>
-      <body>admin</body>
+      <body>randevularım</body>
     </html>
   )
 }

@@ -1,17 +1,20 @@
 import React from 'react'
 
-export default function Anasayfa() {
+export default function Giriş() {
   return (
     <html lang="tr" className="h-full bg-white">
       <head>
         <meta charSet="utf-8" />
-        <title>Anasayfa</title>
-        <meta name="description" content="SDÜ randevu sistemi güncel takvim." />
+        <title>Giriş Yap</title>
+        <meta
+          name="description"
+          content="SDÜ Randevu Sistemi'ne giriş yapın."
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/public/favicon.ico" />
         <link rel="stylesheet" href="/public/styles.css" />
       </head>
-      <body>anasayfa</body>
+      <body>giriş</body>
     </html>
   )
 }

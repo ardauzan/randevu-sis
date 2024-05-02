@@ -1,8 +1,15 @@
-# SDU Randevu Yönetim Sistemi
+# SDÜ Randevu Yönetim Sistemi
+
+***SDÜ Randevu Yönetim Sistemi, SDÜ bünyesindeki Prototip Atölyesi için geliştirilmiş, typescript ile ve Bun çalışma zamanında çalışacak şekilde yazılmış bir uygulamadır. Bu uygulama ile atölye hizmetlerinden faydalanmak isteyen öğrenciler, öğretim elemanları ve personeller randevu alabilirler.***
+
+## Gerekli yazılımlar
+
+1. PostgreSQL veritabanı (16.2) [https://www.postgresql.org/download/](www.postgresql.org)
+2. Bun çalışma zamanı (1.1.6) [https://bun.sh/](bun.sh)
 
 ## Kurulum
 
-Bu proje bun ile çalışır ve versiyon 1.1.6 ile test edilmiştir
+Bu proje Bun ile çalışır ve versiyon 1.1.6 ile test edilmiştir.
 
 Öncelikle bun'u kurun:
 
@@ -27,17 +34,12 @@ bun start
 ### Notlar
 
 - Proje varsayılan olarak `http://localhost:3000` adresinde çalışır.
-- PostgreSql veritabanı kullanır. Veritabanı ayarlarını `.env.local` dosyasından yapabilirsiniz.
-- Proje ilk çalıştırıldığında veritabanı şemasını oluşturmak için aşağıdaki komutu çalıştırın:
-  
-  ```bash
-  bun run db:generate
-  ```
+- PostgreSQL veritabanı kullanır. Veritabanı bağlantı ayarlarını `.env.local` dosyasından yapabilirsiniz.
+- Drizzle kullanılarak veritabanı şeması oluşturulmuştur. `package.json` dosyasındaki `db` komutları ile veritabanı işlemleri yapılabilir.
+- Geliştirme için VSCode önerilir. `.vscode` dizininde tanımlanmış ayarlar mevcuttur.
 
-- Sonrada aşağıdaki komutu çalıştırarak veritabanına şemayı yükleyin:
+#### Dikkat
 
-  ```bash
-  bun run db:migrate
-  ```
+*Bu yazılım güncel olarak geliştirilme aşamasındadır ve bilinen/bilinmeyen güvenlik açıkları ve/veya optimize olmayan mantıklar içerir. Bu repo dan kod alıp kullanırsanız bunu bilerek yapın.*
 
-#### Prototip atölyesi için A.A.U. tarafından geliştirilmiştir
+##### SDÜ bünyesindeki Prototip Atölyesi için A.A.U. tarafından geliştirilmiştir

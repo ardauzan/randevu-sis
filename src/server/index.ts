@@ -4,8 +4,10 @@ import { staticPlugin } from '@elysiajs/static'
 import { renderToReadableStream } from 'react-dom/server'
 import { createElement } from 'react'
 import Anasayfa from '@/client/anasayfa/anasayfa'
-import Admin from '@/client/admin/admin'
+import Yönet from '@/client/yönet/yönet'
 import Bulunamadı from '@/client/404/404'
+import Randevularım from '@/client/randevularım/randevularım'
+import Giriş from '@/client/giriş/giriş'
 import {
   kişileriSay,
   kişileriOku,
@@ -66,10 +68,30 @@ export default function sunucuyuOluştur() {
         }
       )
     })
-    .get('/admin', async () => {
+    .get('/yonet', async () => {
       return new Response(
-        await renderToReadableStream(createElement(Admin), {
-          bootstrapScripts: ['/public/admin.js']
+        await renderToReadableStream(createElement(Yönet), {
+          bootstrapScripts: ['/public/yönet.js']
+        }),
+        {
+          headers: { 'Content-Type': 'text/html' }
+        }
+      )
+    })
+    .get('/randevularim', async () => {
+      return new Response(
+        await renderToReadableStream(createElement(Randevularım), {
+          bootstrapScripts: ['/public/randevularım.js']
+        }),
+        {
+          headers: { 'Content-Type': 'text/html' }
+        }
+      )
+    })
+    .get('/giris', async () => {
+      return new Response(
+        await renderToReadableStream(createElement(Giriş), {
+          bootstrapScripts: ['/public/giriş.js']
         }),
         {
           headers: { 'Content-Type': 'text/html' }
