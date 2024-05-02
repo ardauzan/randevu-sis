@@ -15,8 +15,8 @@
     "drizzle-orm": "^0.30.9",
     "elysia": "^1.0.15",
     "pg": "^8.11.5",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react": "^19.0.0-beta-4508873393-20240430",
+    "react-dom": "^19.0.0-beta-4508873393-20240430"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.7",

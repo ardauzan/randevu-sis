@@ -15,7 +15,7 @@ const {
   projeler,
   kişilerProjeler,
   gereçler,
-  sarflar,
+  araçlar,
   randevular,
   tatiller,
   ziyaretler
@@ -29,7 +29,7 @@ const main = async () => {
     await db.delete(projeler)
     await db.delete(kişilerProjeler)
     await db.delete(gereçler)
-    await db.delete(sarflar)
+    await db.delete(araçlar)
     await db.delete(randevular)
     await db.delete(tatiller)
     await db.delete(ziyaretler)
@@ -41,7 +41,7 @@ const main = async () => {
         soyAd: 'Uzan',
         email: 'arda.uzan@protonmail.com',
         şifreHash:
-          '$argon2id$v=19$m=65536,t=2,p=1$FqEit14mHfP9mRIeM/xR5OmkOtCpKUpoF3bkcPwtR5E$2T+QDIA57p6WyB6X/aT2pjOgEmlF+B6DRGipTJYtYGU'
+          '$argon2id$v=19$m=65536,t=2,p=1$VCLAJ0wncHSr/fPp/9IdO7yafqlQmIH17nn+h8yHvFM$61paoxFJfO64EQqL9N0VbdaIhuX6Y3iNLJVfJN36TcM' //# Şifre: tets1234
       }
     ])
     console.info('Veritabanı sıfırlandı ve örnek veri eklendi.')

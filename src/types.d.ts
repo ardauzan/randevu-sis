@@ -1,5 +1,4 @@
 //info Burada tüm veri tiplerini tanımlıyoruz.
-
 //# Kişiler
 type Kişiler = Kişi[]
 type Kişi = SunucuKaynaklıKişi | İstemciKaynaklıKişi
@@ -33,7 +32,7 @@ type SunucuKaynaklıProje = {
   başlangıçTarihi: string
   bitişTarihi: string
   açıklama: string
-  üyeler?: Kişiler | number[]
+  üyeler?: SunucuKaynaklıKişiler | number[]
 }
 type İstemciKaynaklıProjeler = İstemciKaynaklıProje[]
 type İstemciKaynaklıProje = {
@@ -45,52 +44,98 @@ type İstemciKaynaklıProje = {
 }
 
 //# Gereçler
-type Gereç = {
-  id?: number //# primary key
+type Gereçler = Gereç[]
+type Gereç = SunucuKaynaklıGereç | İstemciKaynaklıGereç
+type SunucuKaynaklıGereçler = SunucuKaynaklıGereç[]
+type SunucuKaynaklıGereç = {
+  id: number
+  ad: string
+  adet: number
+}
+type İstemciKaynaklıGereçler = İstemciKaynaklıGereç[]
+type İstemciKaynaklıGereç = {
   ad: string
   adet: number
 }
 
-type Gereçler = Gereç[]
-
-type Sarf = {
-  id?: number //# primary key
+//# Araçlar
+type Araçlar = Araç[]
+type Araç = SunucuKaynaklıAraç | İstemciKaynaklıAraç
+type SunucuKaynaklıAraçlar = SunucuKaynaklıAraç[]
+type SunucuKaynaklıAraç = {
+  id: number
+  ad: string
+  açıklama: string
+  arızalı: boolean
+}
+type İstemciKaynaklıAraçlar = İstemciKaynaklıAraç[]
+type İstemciKaynaklıAraç = {
   ad: string
   açıklama: string
   arızalı: boolean
 }
 
-type Sarflar = Sarf[]
-
-type Randevu = {
-  id?: number //# primary key
+//# Randevular
+type Randevular = Randevu[]
+type Randevu = SunucuKaynaklıRandevu | İstemciKaynaklıRandevu
+type SunucuKaynaklıRandevular = SunucuKaynaklıRandevu[]
+type SunucuKaynaklıRandevu = {
+  id: number
+  açıklama: string
+  proje?: SunucuKaynaklıProje | number
+  gereçler?:
+    | [SunucuKaynaklıGereç, adet: number][]
+    | [gereç: number, adet: number][]
+  araçlar?: SunucuKaynaklıAraçlar | string[]
+  gün: string
+  başlangıçZamanı: string
+  bitişZamanı: string
+}
+type İstemciKaynaklıRandevular = İstemciKaynaklıRandevu[]
+type İstemciKaynaklıRandevu = {
   açıklama: string
   proje: number
   gereçler: [gereç: number, adet: number][]
-  sarflar: string[]
+  araçlar: string[]
   gün: string
   başlangıçzamanı: string
   bitişzamanı: string
 }
 
-type Randevular = Randevu[]
-
-type Tatil = {
-  id?: number //# primary key
-  başlangıçtarihi: string
-  bitiştarihi: string
+//# Tatiller
+type Tatiller = Tatil[]
+type Tatil = SunucuKaynaklıTatil | İstemciKaynaklıTatil
+type SunucuKaynaklıTatiller = SunucuKaynaklıTatil[]
+type SunucuKaynaklıTatil = {
+  id: number
+  başlangıçTarihi: string
+  bitişTarihi: string
+  açıklama: string
+}
+type İstemciKaynaklıTatiller = İstemciKaynaklıTatil[]
+type İstemciKaynaklıTatil = {
+  başlangıçTarihi: string
+  bitişTarihi: string
   açıklama: string
 }
 
-type Tatiller = Tatil[]
-
-type Ziyaret = {
-  id?: number //# primary key
+//# Ziyaretler
+type Ziyaretler = Ziyaret[]
+type Ziyaret = SunucuKaynaklıZiyaret | İstemciKaynaklıZiyaret
+type SunucuKaynaklıZiyaretler = SunucuKaynaklıZiyaret[]
+type SunucuKaynaklıZiyaret = {
+  id: number
+  gün: string
+  başlangıçZamanı: string
+  bitişZamanı: string
+  ziyareteden: string
+  ziyaretçiSayısı: number
+}
+type İstemciKaynaklıZiyaretler = İstemciKaynaklıZiyaret[]
+type İstemciKaynaklıZiyaret = {
   gün: string
   başlangıçzamanı: string
   bitişzamanı: string
   ziyareteden: string
   ziyaretçisayısı: number
 }
-
-type Ziyaretler = Ziyaret[]

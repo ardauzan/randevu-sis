@@ -401,21 +401,21 @@ export async function gereçSil(id: number, pool: Pool): Promise<void> {
   await pool.query(query)
 }
 
-//info Sarf işlemleri
+//info Araç işlemleri
 
-//# Sarfları say
-export async function sarflarıSay(
+//# Araçları say
+export async function araçlarıSay(
   arama: string,
   pool: Pool
 ): Promise<number | void> {
   const res = await pool.query({
-    text: `SELECT COUNT(*) FROM sarf WHERE ad LIKE '%${arama}%' OR sicilno LIKE '%${arama}%'`
+    text: `SELECT COUNT(*) FROM araç WHERE ad LIKE '%${arama}%' OR sicilno LIKE '%${arama}%'`
   })
   return parseInt(res.rows[0].count)
 }
 
-//# Sarfları oku
-export async function sarflarıOku(
+//# Araçları oku
+export async function araçlarıOku(
   arama: string,
   sayfa: number,
   sayfaBoyutu: number,
@@ -429,8 +429,8 @@ export async function sarflarıOku(
   return res.rows as Sarflar
 }
 
-//# Sarf oku
-export async function sarfOku(id: number, pool: Pool): Promise<Sarf | void> {
+//# Araç oku
+export async function araçOku(id: number, pool: Pool): Promise<Sarf | void> {
   const res = await pool.query({
     text: 'SELECT * FROM sarf WHERE id = $1',
     values: [id]
@@ -438,8 +438,8 @@ export async function sarfOku(id: number, pool: Pool): Promise<Sarf | void> {
   return res.rows[0] as Sarf
 }
 
-//# Sarf yarat
-export async function sarfYarat(
+//# Araç yarat
+export async function araçYarat(
   ad: string,
   açıklama: string,
   arızalı: boolean,
@@ -452,8 +452,8 @@ export async function sarfYarat(
   await pool.query(query)
 }
 
-//# Sarf güncelle
-export async function sarfGüncelle(
+//# Araç güncelle
+export async function araçGüncelle(
   id: number,
   {
     ad,
@@ -474,8 +474,8 @@ export async function sarfGüncelle(
   await pool.query(query)
 }
 
-//# Sarf sil
-export async function sarfSil(id: number, pool: Pool): Promise<void> {
+//# Araç sil
+export async function araçSil(id: number, pool: Pool): Promise<void> {
   const query = {
     text: 'DELETE FROM sarf WHERE id = $1',
     values: [id]

@@ -1,8 +1,7 @@
 //info Burası sunucu tarafının giriş noktasıdır.
 import { Elysia } from 'elysia'
 import { staticPlugin } from '@elysiajs/static'
-//@ts-ignore
-import { renderToReadableStream } from 'react-dom/server.browser'
+import { renderToReadableStream } from 'react-dom/server'
 import { createElement } from 'react'
 import Anasayfa from '@/client/anasayfa/anasayfa'
 import Admin from '@/client/admin/admin'
@@ -26,12 +25,12 @@ import {
   gereçYarat,
   gereçGüncelle,
   gereçSil,
-  sarflarıSay,
-  sarflarıOku,
-  sarfOku,
-  sarfYarat,
-  sarfGüncelle,
-  sarfSil,
+  araçlarıSay,
+  araçlarıOku,
+  araçOku,
+  araçYarat,
+  araçGüncelle,
+  araçSil,
   randevularıSay,
   randevularıOku,
   randevuOku,
@@ -133,7 +132,6 @@ export default function sunucuyuOluştur() {
         return { durum: 'Başarısız' }
       }
     })
-    /*
     .get('/api/proje', async ({ query: { arama, sayfa, sayfaBoyutu } }) => {
       const _arama = arama || ''
       const _sayfa = sayfa ? parseInt(sayfa) : 1
@@ -253,7 +251,7 @@ export default function sunucuyuOluştur() {
         return { durum: 'Başarısız' }
       }
     })
-    .get('/api/sarf', async ({ query: { arama, sayfa, sayfaBoyutu } }) => {
+    .get('/api/arac', async ({ query: { arama, sayfa, sayfaBoyutu } }) => {
       const _arama = arama || ''
       const _sayfa = sayfa ? parseInt(sayfa) : 1
       const _sayfaBoyutu = sayfaBoyutu ? parseInt(sayfaBoyutu) : 10
@@ -272,7 +270,7 @@ export default function sunucuyuOluştur() {
         return { durum: 'Başarısız' }
       }
     })
-    .get('/api/sarf/:id', async ({ params: { id } }) => {
+    .get('/api/arac/:id', async ({ params: { id } }) => {
       try {
         const içerik = await sarfOku(parseInt(id), pool)
         return { durum: 'Başarılı', içerik }
@@ -281,7 +279,7 @@ export default function sunucuyuOluştur() {
         return { durum: 'Başarısız' }
       }
     })
-    .post('/api/sarf', async ({ body }) => {
+    .post('/api/arac', async ({ body }) => {
       const { ad, açıklama, arızalı } = body as Sarf
       try {
         await sarfYarat(ad, açıklama, arızalı, pool)
@@ -291,7 +289,7 @@ export default function sunucuyuOluştur() {
         return { durum: 'Başarısız' }
       }
     })
-    .patch('/api/sarf/:id', async ({ params: { id }, body }) => {
+    .patch('/api/arac/:id', async ({ params: { id }, body }) => {
       try {
         await sarfGüncelle(parseInt(id), body as Sarf, pool)
         return { durum: 'Başarılı' }
@@ -300,7 +298,7 @@ export default function sunucuyuOluştur() {
         return { durum: 'Başarısız' }
       }
     })
-    .delete('/api/sarf/:id', async ({ params: { id } }) => {
+    .delete('/api/arac/:id', async ({ params: { id } }) => {
       try {
         await sarfSil(parseInt(id), pool)
         return { durum: 'Başarılı' }
@@ -467,7 +465,7 @@ export default function sunucuyuOluştur() {
       await ziyaretSil(parseInt(id), pool)
       return { message: 'Ziyaret silindi' }
     })
-    */ .onError(async ({ code }) => {
+    .onError(async ({ code }) => {
       if (code === 'NOT_FOUND')
         return new Response(
           await renderToReadableStream(createElement(Bulunamadı), {

@@ -47,7 +47,7 @@ export const gereçler = pgTable('gereçler', {
   ad: text('ad').notNull(),
   adet: integer('miktar').notNull()
 })
-export const sarflar = pgTable('sarflar', {
+export const araçlar = pgTable('araçlar', {
   id: serial('id').primaryKey(),
   ad: text('ad').notNull(),
   açıklama: text('açıklama').notNull(),
@@ -56,7 +56,7 @@ export const sarflar = pgTable('sarflar', {
 export const randevular = pgTable('randevular', {
   id: serial('id').primaryKey(),
   açıklama: text('açıklama').notNull(),
-  projeId: integer('proje_id')
+  proje: integer('proje_id')
     .references(() => projeler.id)
     .notNull(),
   gün: date('gün').notNull(),
