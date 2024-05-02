@@ -14,7 +14,7 @@ export default function Yönet() {
         <link rel="icon" href="/public/favicon.ico" />
         <link rel="stylesheet" href="/public/styles.css" />
       </head>
-      <body>yönet</body>
+      <body>yönet! haha neden böyle oluyor</body>
     </html>
   )
 }

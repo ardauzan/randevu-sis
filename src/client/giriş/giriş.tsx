@@ -1,4 +1,6 @@
+//info Giriş sayfası bu dosyada tanımlanır.
 import React from 'react'
+import Main from '@/client/giriş/main'
 
 export default function Giriş() {
   return (
@@ -14,7 +16,9 @@ export default function Giriş() {
         <link rel="icon" href="/public/favicon.ico" />
         <link rel="stylesheet" href="/public/styles.css" />
       </head>
-      <body>giriş</body>
+      <body>
+        <Main />
+      </body>
     </html>
   )
 }

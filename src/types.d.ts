@@ -5,6 +5,7 @@ type Kişi = SunucuKaynaklıKişi | İstemciKaynaklıKişi
 type SunucuKaynaklıKişiler = SunucuKaynaklıKişi[]
 type SunucuKaynaklıKişi = {
   id: number
+  yönetici: boolean
   öğrenciNo: number
   ad: string
   soyAd: string

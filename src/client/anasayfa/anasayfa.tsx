@@ -1,6 +1,11 @@
+//info Anasayfa bu dosyada tanımlanır.
 import React from 'react'
 
-export default function Anasayfa() {
+interface Props {
+  readonly girişYapıldı: boolean
+}
+
+export default function Anasayfa({ girişYapıldı }: Props) {
   return (
     <html lang="tr">
       <head>
@@ -11,7 +16,7 @@ export default function Anasayfa() {
         <link rel="icon" href="/public/favicon.ico" />
         <link rel="stylesheet" href="/public/styles.css" />
       </head>
-      <body>anasayfa</body>
+      <body>{girişYapıldı && <p>Giriş yapıldı!</p>}</body>
     </html>
   )
 }

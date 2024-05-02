@@ -42,7 +42,7 @@ const main = async () => {
         soyAd: 'Uzan',
         email: 'arda.uzan@protonmail.com',
         şifreHash:
-          '$argon2id$v=19$m=65536,t=2,p=1$VCLAJ0wncHSr/fPp/9IdO7yafqlQmIH17nn+h8yHvFM$61paoxFJfO64EQqL9N0VbdaIhuX6Y3iNLJVfJN36TcM' //# Şifre: tets1234
+          '$argon2id$v=19$m=65536,t=2,p=1$V8GZjeEzEVK5GXwdKif5adspNmSjxPdqzGxg8GG6D7Q$MfhKjRc0iP+E7K02fWAdhE+Yf2Izx5rEf8/ICBpSNtU' //# Şifre: test1234
       }
     ])
     console.info('Veritabanı sıfırlandı ve örnek veriler eklendi.')

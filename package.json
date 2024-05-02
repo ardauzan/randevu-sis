@@ -13,6 +13,7 @@
     "db:seed": "bun run src/db/seed.ts"
   },
   "dependencies": {
+    "@elysiajs/jwt": "^1.0.2",
     "@elysiajs/static": "^1.0.3",
     "drizzle-orm": "^0.30.9",
     "elysia": "^1.0.15",

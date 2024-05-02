@@ -14,7 +14,7 @@ export default function Bulunamadı() {
         <link rel="icon" href="/public/favicon.ico" />
         <link rel="stylesheet" href="/public/styles.css" />
       </head>
-      <body>bulunamadı</body>
+      <body>bulunamadı haha</body>
     </html>
   )
 }
