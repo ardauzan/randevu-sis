@@ -12,7 +12,7 @@ export default function GirişFormu() {
   const başarısızlıkMesajı = 'Kimlik doğrulanamadı.'
   return (
     <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
-      <h2 className="mb-6 text-center text-2xl font-semibold">
+      <h2 className="mb-6 text-center font-mono text-2xl font-semibold">
         SDÜ Randevu Sistemi'ne giriş yap
       </h2>
       <form
@@ -117,7 +117,7 @@ export default function GirişFormu() {
           <a
             target="_blank"
             href="https://prototip.sdu.edu.tr"
-            className="text-blue-500"
+            className="font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline"
           >
             Prototip Atölyesi'ni keşfet
           </a>

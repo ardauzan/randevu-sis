@@ -14,6 +14,9 @@
   "gitlens.showWhatsNewAfterUpgrades": false,
   "gitlens.virtualRepositories.enabled": false,
   "gitlens.codeLens.includeSingleLineSymbols": true,
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },

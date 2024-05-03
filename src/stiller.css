@@ -1,3 +1,39 @@
+/*
+    Uygulamanın bütün stilleri tailwindcss kullanılarak bileşenler ile iç içe oluşturulmuştur.
+    Bileşenlerin tanımlandıkları dosyalarda stilleri classname değerlerinin içinde görebilirsiniz.
+*/
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* 
+    Uygulamanın farklı yerlerinde kullanabiliceğimiz üç adet font sunuyoruz.
+    Bunlar:
+    - Inter Regular (sans)
+    - Domine Regular (serif)
+    - Ubuntu Sans Mono Regular (mono)
+ */
+@font-face {
+  font-family: 'interregular';
+  src:
+    url('/public/inter-variablefont_slntwght.woff2') format('woff2'),
+    url('/public/inter-variablefont_slntwght.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'domineregular';
+  src:
+    url('/public/domine-variablefont_wght.woff2') format('woff2'),
+    url('/public/domine-variablefont_wght.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'ubuntu_sans_monoregular';
+  src:
+    url('/public/ubuntusansmono-variablefont_wght.woff2') format('woff2'),
+    url('/public/ubuntusansmono-variablefont_wght.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}

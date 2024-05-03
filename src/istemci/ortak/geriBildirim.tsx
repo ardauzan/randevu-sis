@@ -34,7 +34,7 @@ export default function GeriBildirim({
         {tip === 'başarılı' && <CheckCircleIcon className="h-6 w-6" />}
         {tip === 'başarısız' && <XCircleIcon className="h-6 w-6" />}
       </span>
-      <p className="text-sm">{mesaj}</p>
+      <p className="font-serif text-sm tracking-tight">{mesaj}</p>
       <button
         onClick={() => mesajıKapat()}
         className="ml-auto focus:outline-none"
