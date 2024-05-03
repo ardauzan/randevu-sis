@@ -1,6 +1,8 @@
 //info Giriş sayfası bu dosyada tanımlanır.
 import React from 'react'
-import Main from '@/istemci/giriş/main'
+import Başlık from '@/istemci/ortak/başlık'
+import İçerik from '@/istemci/giriş/içerik'
+import Altlık from '@/istemci/ortak/altlık'
 
 export default function Giriş() {
   return (
@@ -17,7 +19,9 @@ export default function Giriş() {
         <link rel="stylesheet" href="/public/stiller.css" />
       </head>
       <body className="bg-gray-100">
-        <Main />
+        <Başlık />
+        <İçerik />
+        <Altlık />
       </body>
     </html>
   )

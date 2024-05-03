@@ -7,7 +7,7 @@
   "repository": "github:ardauzan/randevu-sis",
   "scripts": {
     "geliştir": "bun run --watch src/index.ts",
-    "başlat": "bun run src/index.ts",
+    "sun": "bun run src/index.ts",
     "veritabanı:oluştur": "drizzle-kit generate:pg --schema src/veritabanı/şema.ts --out=src/veritabanı/migrasyonlar",
     "veritabanı:migrasyon": "bun run src/veritabanı/migrasyon.ts",
     "veritabanı:örnekler": "bun run src/veritabanı/örnekler.ts"
@@ -38,6 +38,5 @@
   "engines": {
     "bun": ">=1.1.6"
   },
-  "private": true,
-  "module": "src/index.js"
+  "private": true
 }
