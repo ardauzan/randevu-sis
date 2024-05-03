@@ -35,6 +35,7 @@ bun start
 
 - Proje varsayılan olarak `http://localhost:3000` adresinde çalışır.
 - PostgreSQL veritabanı kullanır. Veritabanı bağlantı ayarlarını `.env.local` dosyasından yapabilirsiniz.
+- JWT ile kimlik doğrulama yapılır. JWT nin koruyucu olabilmesi için `.env.local` dosyasında kırılması çok zor bir `JWT_SECRET` tanımlanmalıdır.
 - Drizzle kullanılarak veritabanı şeması oluşturulmuştur. `package.json` dosyasındaki `veritabanı` komutları ile veritabanı işlemleri yapılabilir.
 - Geliştirme için VSCode önerilir. `.vscode` dizininde tanımlanmış ayarlar mevcuttur.
 
@@ -42,4 +43,6 @@ bun start
 
 *Bu yazılım güncel olarak geliştirilme aşamasındadır ve bilinen/bilinmeyen güvenlik açıkları ve/veya optimize olmayan mantıklar içerir. Bu repo dan kod alıp kullanırsanız bunu bilerek yapın.*
 
-##### SDÜ bünyesindeki Prototip Atölyesi için A.A.U. tarafından geliştirilmiştir
+##### Bu yazılım MIT lisansı ile lisanslanmıştır, daha fazla bilgi için LICENSE dosyasına bakınız
+
+##### Bu yazılım SDÜ bünyesindeki Prototip Atölyesi için Ali Arda Uzan tarafından 2024 yılında geliştirilmeye başlanmıştır ve halen geliştirilmektedir

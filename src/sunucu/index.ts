@@ -12,13 +12,18 @@ import Giriş from '@/istemci/giriş/giriş'
 import {
   emailVeŞifreİleKimlikDoğrula,
   değerKimlikÇerezininMisalimi
-} from '@/sunucu/lib'
+} from '@/sunucu/kütüphane'
 
 //info Sunucumuzu oluşturuyoruz.
 //info /public dizinini statik dosyalar için kullanacağız.
 //info kimlik doğrulama için JWT kullanacağız.
-//info Bu dosyada ve api dizinindeki dosyalarda kullanıcağımız bütün uç noktaları tanımlıyoruz.
-//info Tanımlamadığımız bir uç noktaya erişilmeye çalışırsa 404 sayfasını gönderiyoruz.
+//info Bu dosyada sunucummuzun bütün uç noktaları tanımlıyoruz.
+//info Tanımlamadığımız bir uç noktaya GET ile erişilmeye çalışırsa 404 sayfasını gönderiyoruz.
+//info Malesef şuan sunucu tarafında oluşturduğumuz html in, beraberinde gönderdiğimiz istemci paketinden oluşturulucak olan arayüz ile eşit olması gerekiyor.
+//info Aslında gönül isterdiki istemciye arayüzün son halini gönderelim, lakin, arayüzdeki dinamik kısımlar bunu engelliyor çünkü istemci paketini derlediğimizde bu dinamik kısımları oluşturucak olan veriler elimizde değil.
+//info Bu yüzden arayüzü dinamik kısımlarda o kısmın daha yüklenmediğini ifade edeicek şekilde tasarlıyoruz.
+//info İstemci çalışır duruma geldiğinde tekrar sunucuya istek atıp, dinamik kısımları oluşturucak verileri sorguluyor.
+//info Gelecekte React bu problemi server components ile çözecek.
 export default function sunucuyuOluştur() {
   const app = new Elysia()
     .use(staticPlugin())
