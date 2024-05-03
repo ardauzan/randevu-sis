@@ -4,17 +4,17 @@ import { drizzle } from 'drizzle-orm/node-postgres'
 import { Pool } from 'pg'
 
 //info Veritabanı bağlantısı oluşturulur ve drizzle-orm kullanılarak bağlantı sağlanır.
-const pool = new Pool()
-const db = drizzle(pool)
+const havuz = new Pool()
+const veritabanı = drizzle(havuz)
 
 //info Migrasyonu yapıcak olan fonksiyon tanımlanır.
 const main = async () => {
   try {
-    console.info('Migrasyon yapılıyor.')
-    await migrate(db, {
-      migrationsFolder: 'src/db/migrations'
+    console.info('Migrasyonlar uygulanıyor.')
+    await migrate(veritabanı, {
+      migrationsFolder: 'src/veritabanı/migrasyonlar'
     })
-    console.info('Migrasyon başarılı.')
+    console.info('Migrasyonlar başarılı birşekilde uygulandı.')
     process.exit(0)
   } catch (error) {
     console.error(error)

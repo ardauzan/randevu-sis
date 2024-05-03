@@ -1,20 +1,20 @@
 import React from 'react'
 
-export default function Randevularım() {
+export default function Bulunamadı() {
   return (
     <html lang="tr">
       <head>
         <meta charSet="utf-8" />
-        <title>Randevularım</title>
+        <title>Sayfa Bulunamadı</title>
         <meta
           name="description"
-          content="SDÜ Randevu Sistemi'nde kayıtlı olan randevularınız."
+          content="SDÜ Randevu Sistemi'nde bu sayfa mevcut değil."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/public/favicon.ico" />
-        <link rel="stylesheet" href="/public/styles.css" />
+        <link rel="stylesheet" href="/public/stiller.css" />
       </head>
-      <body>randevularım</body>
+      <body>bulunamadı haha</body>
     </html>
   )
 }

@@ -1,6 +1,6 @@
 //info Giriş yapmak için kullanılan form bu dosyada tanımlanır.
 import React, { useState } from 'react'
-import GeriBildirim from '@/client/ortak/geriBildirim'
+import GeriBildirim from '@/istemci/ortak/geriBildirim'
 
 export default function GirişFormu() {
   const [email, setEmail] = useState('')

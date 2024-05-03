@@ -1,6 +1,6 @@
 //info Giriş sayfası bu dosyada tanımlanır.
 import React from 'react'
-import Main from '@/client/giriş/main'
+import Main from '@/istemci/giriş/main'
 
 export default function Giriş() {
   return (
@@ -14,7 +14,7 @@ export default function Giriş() {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/public/favicon.ico" />
-        <link rel="stylesheet" href="/public/styles.css" />
+        <link rel="stylesheet" href="/public/stiller.css" />
       </head>
       <body className="bg-gray-100">
         <Main />

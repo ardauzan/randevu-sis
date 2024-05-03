@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS "gereçler" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "kişiler" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"yönetici" boolean NOT NULL,
+	"yönetici" boolean DEFAULT false NOT NULL,
 	"öğrenci_no" bigint NOT NULL,
 	"ad" text NOT NULL,
 	"soy_ad" text NOT NULL,

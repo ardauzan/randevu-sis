@@ -2,6 +2,6 @@
 /// <reference lib="dom.iterable" />
 import React from 'react'
 import { hydrateRoot } from 'react-dom/client'
-import Bulunamadı from '@/client/404/404'
+import Yönet from '@/istemci/yönet/yönet'
 
-hydrateRoot(document, <Bulunamadı />)
+hydrateRoot(document, <Yönet />)

@@ -1,11 +1,7 @@
 //info Anasayfa bu dosyada tanımlanır.
 import React from 'react'
 
-export interface AnasayfaProps {
-  readonly girişYapıldı: boolean
-}
-
-export default function Anasayfa({ girişYapıldı }: AnasayfaProps) {
+export default function Anasayfa() {
   return (
     <html lang="tr">
       <head>
@@ -14,9 +10,9 @@ export default function Anasayfa({ girişYapıldı }: AnasayfaProps) {
         <meta name="description" content="SDÜ randevu sistemi güncel takvim." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/public/favicon.ico" />
-        <link rel="stylesheet" href="/public/styles.css" />
+        <link rel="stylesheet" href="/public/stiller.css" />
       </head>
-      <body>{girişYapıldı && <p>Giriş yapıldı!!</p>}</body>
+      <body>anasayfa</body>
     </html>
   )
 }

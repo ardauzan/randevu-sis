@@ -1,14 +1,14 @@
 //info Bu dosya, drizzle-orm'un kullanımı için gerekli olan veritabanı bağlantısını sağlar.
 import { drizzle } from 'drizzle-orm/node-postgres'
 import { Pool } from 'pg'
-import * as schema from '@/db/schema'
+import * as şema from '@/veritabanı/şema'
 
 //info Veritabanı bağlantısı oluşturulur ve drizzle-orm kullanılarak şema ile birlikte bağlantı sağlanır.
-const pool = new Pool()
-const db = drizzle(pool, {
-  schema
+const havuz = new Pool()
+const veritabanı = drizzle(havuz, {
+  schema: şema
 })
 console.info('Veritabanı bağlantısı sağlandı.')
 
-//info db değişkeni export edilir.
-export default db
+//info veritabanı değişkeni export edilir.
+export default veritabanı

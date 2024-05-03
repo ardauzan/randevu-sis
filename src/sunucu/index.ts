@@ -4,15 +4,15 @@ import { staticPlugin } from '@elysiajs/static'
 import { jwt } from '@elysiajs/jwt'
 import { renderToReadableStream } from 'react-dom/server'
 import { createElement } from 'react'
-import Anasayfa from '@/client/anasayfa/anasayfa'
-import Yönet from '@/client/yönet/yönet'
-import Bulunamadı from '@/client/404/404'
-import Randevularım from '@/client/randevularım/randevularım'
-import Giriş from '@/client/giriş/giriş'
+import Anasayfa from '@/istemci/anasayfa/anasayfa'
+import Yönet from '@/istemci/yönet/yönet'
+import Bulunamadı from '@/istemci/404/404'
+import Randevularım from '@/istemci/randevularım/randevularım'
+import Giriş from '@/istemci/giriş/giriş'
 import {
   emailVeŞifreİleKimlikDoğrula,
   değerKimlikÇerezininMisalimi
-} from '@/server/lib'
+} from '@/sunucu/lib'
 
 //info Sunucumuzu oluşturuyoruz.
 //info /public dizinini statik dosyalar için kullanacağız.
@@ -30,12 +30,9 @@ export default function sunucuyuOluştur() {
     )
     .get('/', async () => {
       return new Response(
-        await renderToReadableStream(
-          createElement(Anasayfa, { girişYapıldı: true }),
-          {
-            bootstrapScripts: ['/public/anasayfa.js']
-          }
-        ),
+        await renderToReadableStream(createElement(Anasayfa), {
+          bootstrapScripts: ['/public/anasayfa.js']
+        }),
         {
           headers: { 'Content-Type': 'text/html' }
         }

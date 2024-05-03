@@ -1,49 +1,49 @@
 //info Bu dosya, projemizin giriş noktasıdır. Bu dosyayı çalıştırdığımızda projemiz çalışmaya başlar.
-import sunucuyuOluştur from '@/server'
+import sunucuyuOluştur from '@/sunucu'
 
 //info Önce tailwindcss in çalışması için gerekli olan css dosyasını oluşturuyoruz.
 const tailwindcss = Bun.spawnSync([
   'bunx',
   'tailwindcss',
   '-i',
-  'src/styles.css',
+  'src/stiller.css',
   '-o',
-  'public/styles.css',
+  'public/stiller.css',
   '--minify'
 ])
 console.info('Tailwindcss dosyası oluşturuldu:', tailwindcss.success)
 
-//info Sonra da react arayüzlerimizin client bundle larını oluşturuyoruz.
+//info Sonra da react arayüzlerimizin istemci paketlerini larını oluşturuyoruz.
 const anasayfa = await Bun.build({
-  entrypoints: ['src/client/anasayfa/index.tsx'],
+  entrypoints: ['src/istemci/anasayfa/index.tsx'],
   outdir: 'public',
   minify: true,
   naming: '[dir]/anasayfa.[ext]'
 })
 console.info('Anasayfa derlendi:', anasayfa.success)
 const yönet = await Bun.build({
-  entrypoints: ['src/client/yönet/index.tsx'],
+  entrypoints: ['src/istemci/yönet/index.tsx'],
   outdir: 'public',
   minify: true,
   naming: '[dir]/yonet.[ext]'
 })
 console.info('Yönetici sayfası derlendi:', yönet.success)
 const randevularım = await Bun.build({
-  entrypoints: ['src/client/randevularım/index.tsx'],
+  entrypoints: ['src/istemci/randevularım/index.tsx'],
   outdir: 'public',
   minify: true,
   naming: '[dir]/randevularim.[ext]'
 })
 console.info('Randevularım sayfası derlendi:', randevularım.success)
 const giriş = await Bun.build({
-  entrypoints: ['src/client/giriş/index.tsx'],
+  entrypoints: ['src/istemci/giriş/index.tsx'],
   outdir: 'public',
   minify: true,
   naming: '[dir]/giris.[ext]'
 })
 console.info('Giriş sayfası derlendi:', giriş.success)
 const bulunamadı = await Bun.build({
-  entrypoints: ['src/client/404/index.tsx'],
+  entrypoints: ['src/istemci/404/index.tsx'],
   outdir: 'public',
   minify: true,
   naming: '[dir]/404.[ext]'

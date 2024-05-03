@@ -1,7 +1,7 @@
 //info Burda uygulamayı çalıştıran sunucu tarafı mantığı tanımlıyoruz.
 import { eq } from 'drizzle-orm'
-import db from '@/db'
-import { kişiler } from '@/db/schema'
+import veritabanı from '@/veritabanı'
+import { kişiler } from '@/veritabanı/şema'
 
 //# Kimlik doğrulama ve yönetim işlemleri için tanımlanan mantıklar
 
@@ -47,7 +47,7 @@ export async function emailVeŞifreİleKimlikDoğrula(
   şifre: string
 ): Promise<'Kimlik doğrulanamadı.' | number> {
   const negatifSonuç = 'Kimlik doğrulanamadı.'
-  const kullanıcı = await db.query.kişiler.findFirst({
+  const kullanıcı = await veritabanı.query.kişiler.findFirst({
     where: eq(kişiler.email, email),
     columns: {
       id: true,

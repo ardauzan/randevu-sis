@@ -35,7 +35,7 @@ bun start
 
 - Proje varsayılan olarak `http://localhost:3000` adresinde çalışır.
 - PostgreSQL veritabanı kullanır. Veritabanı bağlantı ayarlarını `.env.local` dosyasından yapabilirsiniz.
-- Drizzle kullanılarak veritabanı şeması oluşturulmuştur. `package.json` dosyasındaki `db` komutları ile veritabanı işlemleri yapılabilir.
+- Drizzle kullanılarak veritabanı şeması oluşturulmuştur. `package.json` dosyasındaki `veritabanı` komutları ile veritabanı işlemleri yapılabilir.
 - Geliştirme için VSCode önerilir. `.vscode` dizininde tanımlanmış ayarlar mevcuttur.
 
 #### Dikkat

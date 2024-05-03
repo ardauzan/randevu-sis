@@ -1,6 +1,6 @@
 //info Giriş sayfasının gövdesi bu dosyada tanımlanır.
 import React from 'react'
-import GirişFormu from '@/client/giriş/girişFormu'
+import GirişFormu from '@/istemci/giriş/girişFormu'
 
 export default function Main() {
   return (

@@ -1,15 +1,15 @@
 //info Bu dosya, veritabanına örnek veri eklemek için kullanılır.
-import * as schema from '@/db/schema'
+import * as şema from '@/veritabanı/şema'
 import { drizzle } from 'drizzle-orm/node-postgres'
 import { Pool } from 'pg'
 
 //info Veritabanı bağlantısı oluşturulur ve drizzle-orm kullanılarak şema ile birlikte bağlantı sağlanır.
-const pool = new Pool()
-const db = drizzle(pool, {
-  schema
+const havuz = new Pool()
+const veritabanı = drizzle(havuz, {
+  schema: şema
 })
 
-//info Schema'dan tablolar destrüktüre edilir.
+//info Şemadan tablolar destrüktüre edilir.
 const {
   kişiler,
   projeler,
@@ -19,21 +19,21 @@ const {
   randevular,
   tatiller,
   ziyaretler
-} = schema
+} = şema
 
 //info Bu fonksiyon, tabloları sıfırlar ve örnek veri ekler.
 const main = async () => {
   try {
     console.info('Veritabanı sıfırlanıyor ve örnek veri ekleniyor.')
-    await db.delete(kişiler)
-    await db.delete(projeler)
-    await db.delete(kişilerProjeler)
-    await db.delete(gereçler)
-    await db.delete(araçlar)
-    await db.delete(randevular)
-    await db.delete(tatiller)
-    await db.delete(ziyaretler)
-    await db.insert(kişiler).values([
+    await veritabanı.delete(kişiler)
+    await veritabanı.delete(projeler)
+    await veritabanı.delete(kişilerProjeler)
+    await veritabanı.delete(gereçler)
+    await veritabanı.delete(araçlar)
+    await veritabanı.delete(randevular)
+    await veritabanı.delete(tatiller)
+    await veritabanı.delete(ziyaretler)
+    await veritabanı.insert(kişiler).values([
       {
         id: 1,
         yönetici: true,

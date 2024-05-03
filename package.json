@@ -6,11 +6,11 @@
   "author": "Ali Arda Uzan <arda.uzan@protonmail.com> (https://github.com/ardauzan)",
   "repository": "github:ardauzan/randevu-sis",
   "scripts": {
-    "dev": "bun run --watch src/index.ts",
-    "start": "bun run src/index.ts",
-    "db:generate": "drizzle-kit generate:pg --schema src/db/schema.ts --out=src/db/migrations",
-    "db:migrate": "bun run src/db/migrate.ts",
-    "db:seed": "bun run src/db/seed.ts"
+    "geliştir": "bun run --watch src/index.ts",
+    "başlat": "bun run src/index.ts",
+    "veritabanı:oluştur": "drizzle-kit generate:pg --schema src/veritabanı/şema.ts --out=src/veritabanı/migrasyonlar",
+    "veritabanı:migrasyon": "bun run src/veritabanı/migrasyon.ts",
+    "veritabanı:örnekler": "bun run src/veritabanı/örnekler.ts"
   },
   "dependencies": {
     "@elysiajs/jwt": "^1.0.2",
