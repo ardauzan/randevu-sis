@@ -174,17 +174,30 @@ export default function sunucuyuOluştur() {
         })
       }
     )
-    .onError(async ({ code, request: { method } }) => {
-      if (code === 'NOT_FOUND' && method === 'GET')
+    .onError(async ({ code, request: { method, headers }, jwt }) => {
+      if (code === 'NOT_FOUND' && method === 'GET') {
+        const cookie = headers.get('Cookie')?.split('=')[1]
+        const kimlik = cookie ? await jwt.verify(cookie) : null
+        const kimlikVerisi = kimlik
+          ? await kimlikVerisiniAl(kimlik)
+          : ([0, 'yok'] as KimlikVerisi)
         return new Response(
-          await renderToReadableStream(createElement(Bulunamadı), {
-            bootstrapScripts: ['/statik/404.js']
-          }),
+          await renderToReadableStream(
+            createElement(Bulunamadı, {
+              kimlikDurumu: kimlikVerisi[1] ?? 'yok'
+            }),
+            {
+              bootstrapScripts: ['/statik/404.js']
+            }
+          ),
           {
             headers: { 'Content-Type': 'text/html' }
           }
         )
-      return new Response('Sunucu tarafında bir hata oluştu.', { status: 500 })
+      }
+      return new Response('Sunucu tarafında bir hata oluştu.', {
+        status: 500
+      })
     })
     .listen(3000)
 

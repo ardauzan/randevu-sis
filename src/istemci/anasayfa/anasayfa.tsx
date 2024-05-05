@@ -23,6 +23,7 @@ export default function Anasayfa(props: AnasayfaProps) {
     window.addEventListener('resize', handleResize, { passive: true })
     return () => window.removeEventListener('resize', handleResize)
   }, [])
+
   return (
     <html lang="tr" data-props={JSON.stringify(props)}>
       <head>
