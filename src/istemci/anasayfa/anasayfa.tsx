@@ -41,7 +41,7 @@ export default function Anasayfa(props: AnasayfaProps) {
         />
         <div className="flex">
           <MobilMenü
-            konum="/giris"
+            konum="/"
             kimlikDurumu={kimlikDurumu}
             mobilMenüAçık={mobilMenüAçık}
             setMobilMenüAçık={setMobilMenüAçık}
