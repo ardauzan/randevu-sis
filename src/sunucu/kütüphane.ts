@@ -26,16 +26,43 @@ export function hashlenmişStringiAnahtarıylaÇözmeyeÇalış(
 //info Bu değer kimlik adıyla tanımlanan çerezin bir misali mi kontrol et.
 //info Eğer öyleyse true, değilse false döndür.
 export function değerKimlikÇerezininMisalimi(
-  value: unknown
-): value is { id: number } & { [key: string]: never } {
+  değer: unknown
+): değer is { id: number } & { [key: string]: never } {
   return (
-    typeof value === 'object' &&
-    value !== null &&
-    Object.keys(value).length === 1 &&
-    'id' in value &&
-    typeof value.id === 'number' &&
-    value.id > 0
+    typeof değer === 'object' &&
+    değer !== null &&
+    Object.keys(değer).length === 1 &&
+    'id' in değer &&
+    typeof değer.id === 'number' &&
+    değer.id > 0
   )
+}
+//info Bir değer al.
+//info Bu değer kimlik adıyla tanımlanan çerezin bir misali mi kontrol et.
+//info Eğer öyleyse bu çerezin id'sini ve kimlik durumunu döndür, değilse [0, 'yok'] döndür.
+export async function kimlikVerisiniAl(değer: unknown): Promise<KimlikVerisi> {
+  const negatifSonuç: [0, 'yok'] = [0, 'yok']
+  if (!değerKimlikÇerezininMisalimi(değer)) return negatifSonuç
+  const kullanıcı = await veritabanı.query.kişiler.findFirst({
+    where: eq(kişiler.id, değer.id),
+    columns: {
+      yönetici: true
+    }
+  })
+  if (!kullanıcı) return negatifSonuç
+  return [değer.id, kullanıcı.yönetici ? 'yönetici' : 'kullanıcı']
+}
+
+//info Bir kimlik verisi ve bir sayfa adı al, bir de navigasyon objesi al.
+//info Bu kimlik verisi o sayfayı görebilir mi, navigasyon objesine bakarak karar ver.
+//info Eğer görebilirse true, göremiyorsa false döndür.
+export async function kimlikVerisiSayfayıGörebilirMi(
+  kimlikVerisi: KimlikVerisi,
+  sayfa: string,
+  navigasyon: Navigasyon
+): Promise<boolean> {
+  const [_, durum] = kimlikVerisi
+  return navigasyon[sayfa]![2].includes(durum)
 }
 
 //info Bir email ve şifre al.

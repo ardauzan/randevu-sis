@@ -2,10 +2,13 @@
 //# Diğer
 type KimlikDurumu = 'yok' | 'kullanıcı' | 'yönetici'
 
+type KimlikVerisi = [id: number, durum: KimlikDurumu]
+
 type Navigasyon = {
   [sayfa: string]: [
     adres: string,
     ikon: React.ReactElement,
-    kimlikİçinGöster: KimlikDurumu[]
+    kimlikİçinGöster: KimlikDurumu[],
+    yönlendir: string
   ]
 }

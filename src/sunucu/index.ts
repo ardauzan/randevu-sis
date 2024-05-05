@@ -12,8 +12,10 @@ import Randevularım from '@/istemci/randevularım/randevularım'
 import Giriş from '@/istemci/giriş/giriş'
 import {
   emailVeŞifreİleKimlikDoğrula,
-  değerKimlikÇerezininMisalimi
+  kimlikVerisiniAl,
+  kimlikVerisiSayfayıGörebilirMi
 } from '@/sunucu/kütüphane'
+import navigasyon from '@/istemci/ortak/navigasyon'
 
 //info Sunucumuzu oluşturuyoruz.
 //info /statik dizinini statik dosyalar için kullanacağız.
@@ -29,19 +31,38 @@ export default function sunucuyuOluştur() {
         secret: process.env['JWT_SECRET']!
       })
     )
-    .get('/', async () => {
-      return new Response(
-        await renderToReadableStream(
-          createElement(Anasayfa, { kimlikDurumu: 'yok' }),
+    .get(
+      '/',
+      async ({ cookie: { kimlik }, jwt, redirect }) => {
+        const kimlikVerisi = await kimlikVerisiniAl(
+          await jwt.verify(kimlik.value)
+        )
+        if (
+          !(await kimlikVerisiSayfayıGörebilirMi(
+            kimlikVerisi,
+            'Anasayfa',
+            navigasyon
+          ))
+        )
+          return redirect(navigasyon['Anasayfa']![3])
+        return new Response(
+          await renderToReadableStream(
+            createElement(Anasayfa, { kimlikDurumu: kimlikVerisi[1] }),
+            {
+              bootstrapScripts: ['/statik/anasayfa.js']
+            }
+          ),
           {
-            bootstrapScripts: ['/statik/anasayfa.js']
+            headers: { 'Content-Type': 'text/html' }
           }
-        ),
-        {
-          headers: { 'Content-Type': 'text/html' }
-        }
-      )
-    })
+        )
+      },
+      {
+        cookie: t.Object({
+          kimlik: t.String()
+        })
+      }
+    )
     .get('/bilgilendirme', async () => {
       return new Response(
         await renderToReadableStream(createElement(Bilgilendirme), {
@@ -75,14 +96,20 @@ export default function sunucuyuOluştur() {
     .get(
       '/giris',
       async ({ cookie: { kimlik }, jwt, redirect }) => {
-        //info Eğer giriş yapılmamışsa giriş sayfasını göster, yapılmışsa randevularım sayfasına yönlendir.
-        const kimlikGeçerli = değerKimlikÇerezininMisalimi(
+        const kimlikVerisi = await kimlikVerisiniAl(
           await jwt.verify(kimlik.value)
         )
-        if (kimlikGeçerli) return redirect('/randevularim', 303)
+        if (
+          !(await kimlikVerisiSayfayıGörebilirMi(
+            kimlikVerisi,
+            'Giriş',
+            navigasyon
+          ))
+        )
+          return redirect(navigasyon['Giriş']![3])
         return new Response(
           await renderToReadableStream(
-            createElement(Giriş, { kimlikDurumu: 'yok' }),
+            createElement(Giriş, { kimlikDurumu: kimlikVerisi[1] }),
             {
               bootstrapScripts: ['/statik/giris.js']
             }

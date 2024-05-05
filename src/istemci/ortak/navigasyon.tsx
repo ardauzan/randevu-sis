@@ -13,19 +13,32 @@ const navigasyon: Navigasyon = {
   Anasayfa: [
     '/',
     <HomeIcon className="size-8" />,
-    ['yok', 'kullanıcı', 'yönetici']
+    ['yok', 'kullanıcı', 'yönetici'],
+    '/'
   ],
-  Giriş: ['/giris', <LockOpenIcon className="size-8" />, ['yok']],
+  Giriş: [
+    '/giris',
+    <LockOpenIcon className="size-8" />,
+    ['yok'],
+    '/randevularim'
+  ],
   Randevularım: [
     '/randevularim',
     <CalendarIcon className="size-8" />,
-    ['kullanıcı', 'yönetici']
+    ['kullanıcı', 'yönetici'],
+    '/giris'
   ],
-  Yönet: ['/yonet', <WrenchScrewdriverIcon className="size-8" />, ['yönetici']],
+  Yönet: [
+    '/yonet',
+    <WrenchScrewdriverIcon className="size-8" />,
+    ['yönetici'],
+    '/'
+  ],
   Bilgilendirme: [
     '/bilgilendirme',
     <InformationCircleIcon className="size-8" />,
-    ['yok', 'kullanıcı', 'yönetici']
+    ['yok', 'kullanıcı', 'yönetici'],
+    '/bilgilendirme'
   ]
 }
 
