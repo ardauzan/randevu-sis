@@ -9,6 +9,6 @@ type Navigasyon = {
     adres: string,
     ikon: React.ReactElement,
     kimlikİçinGöster: KimlikDurumu[],
-    yönlendir: string
+    yönlendir?: string
   ]
 }

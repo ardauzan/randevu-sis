@@ -13,8 +13,7 @@ const navigasyon: Navigasyon = {
   Anasayfa: [
     '/',
     <HomeIcon className="size-8" />,
-    ['yok', 'kullanıcı', 'yönetici'],
-    '/'
+    ['yok', 'kullanıcı', 'yönetici']
   ],
   Giriş: [
     '/giris',
@@ -37,8 +36,7 @@ const navigasyon: Navigasyon = {
   Bilgilendirme: [
     '/bilgilendirme',
     <InformationCircleIcon className="size-8" />,
-    ['yok', 'kullanıcı', 'yönetici'],
-    '/bilgilendirme'
+    ['yok', 'kullanıcı', 'yönetici']
   ]
 }
 

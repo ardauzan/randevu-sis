@@ -33,18 +33,10 @@ export default function sunucuyuOluştur() {
     )
     .get(
       '/',
-      async ({ cookie: { kimlik }, jwt, redirect }) => {
+      async ({ cookie: { kimlik }, jwt }) => {
         const kimlikVerisi = await kimlikVerisiniAl(
           await jwt.verify(kimlik.value)
         )
-        if (
-          !(await kimlikVerisiSayfayıGörebilirMi(
-            kimlikVerisi,
-            'Anasayfa',
-            navigasyon
-          ))
-        )
-          return redirect(navigasyon['Anasayfa']![3])
         return new Response(
           await renderToReadableStream(
             createElement(Anasayfa, { kimlikDurumu: kimlikVerisi[1] }),
@@ -106,7 +98,7 @@ export default function sunucuyuOluştur() {
             navigasyon
           ))
         )
-          return redirect(navigasyon['Giriş']![3])
+          return redirect(navigasyon['Giriş']![3]!)
         return new Response(
           await renderToReadableStream(
             createElement(Giriş, { kimlikDurumu: kimlikVerisi[1] }),
