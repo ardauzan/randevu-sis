@@ -7,9 +7,14 @@ import { geçerliKimlikDurumuKabulEdiliyor } from '@/istemci/kütüphane'
 export interface BaşlıkProps {
   readonly konum: string
   readonly kimlikDurumu: KimlikDurumu
+  readonly setMobilMenüAçık: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function Başlık({ konum, kimlikDurumu }: BaşlıkProps) {
+export default function Başlık({
+  konum,
+  kimlikDurumu,
+  setMobilMenüAçık
+}: BaşlıkProps) {
   return (
     <header className="bg-blue-500 py-4">
       <div className="container mx-auto flex w-full items-center justify-between px-4">
@@ -34,7 +39,7 @@ export default function Başlık({ konum, kimlikDurumu }: BaşlıkProps) {
             />
           </a>
         )}
-        <nav className="hidden gap-4 md:flex">
+        <nav className="hidden gap-4 sm:flex">
           {Object.entries(navigasyon).map(
             ([sayfa, [adres, ikon, kabulEdilenKimlikDurumları]], index) => {
               return geçerliKimlikDurumuKabulEdiliyor(
@@ -42,7 +47,7 @@ export default function Başlık({ konum, kimlikDurumu }: BaşlıkProps) {
                 kabulEdilenKimlikDurumları
               ) ? (
                 konum === adres ? (
-                  <span key={index} className="cursor-default text-gray-300">
+                  <span key={index} className="cursor-default text-gray-600">
                     <div className="flex flex-col items-center justify-center">
                       {ikon}
                       <span>{sayfa}</span>
@@ -60,7 +65,10 @@ export default function Başlık({ konum, kimlikDurumu }: BaşlıkProps) {
             }
           )}
         </nav>
-        <button className="block text-white md:hidden">
+        <button
+          className="block text-white sm:hidden"
+          onClick={() => setMobilMenüAçık(true)}
+        >
           <Bars3Icon className="size-8" />
         </button>
       </div>
