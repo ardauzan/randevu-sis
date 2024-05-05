@@ -1,8 +1,10 @@
 //info Anasayfa bu dosyada tanımlanır.
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import clsx from 'clsx'
 import Başlık from '@/istemci/ortak/başlık'
 import İçerik from '@/istemci/anasayfa/içerik'
 import Altlık from '@/istemci/ortak/altlık'
+import MobilMenü from '@/istemci/ortak/mobilMenü'
 
 export interface AnasayfaProps {
   readonly kimlikDurumu: KimlikDurumu
@@ -10,6 +12,17 @@ export interface AnasayfaProps {
 
 export default function Anasayfa(props: AnasayfaProps) {
   const { kimlikDurumu } = props
+  const [mobilMenüAçık, setMobilMenüAçık] = useState(false)
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 640) {
+        setMobilMenüAçık(false)
+      }
+    }
+    window.addEventListener('resize', handleResize, { passive: true })
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
   return (
     <html lang="tr" data-props={JSON.stringify(props)}>
       <head>
@@ -21,9 +34,30 @@ export default function Anasayfa(props: AnasayfaProps) {
         <link rel="stylesheet" href="/statik/stiller.css" />
       </head>
       <body>
-        <Başlık konum="/" kimlikDurumu={kimlikDurumu} />
-        <İçerik />
+        <Başlık
+          konum="/giris"
+          kimlikDurumu={kimlikDurumu}
+          setMobilMenüAçık={setMobilMenüAçık}
+        />
+        <div className="flex">
+          <MobilMenü
+            konum="/giris"
+            kimlikDurumu={kimlikDurumu}
+            mobilMenüAçık={mobilMenüAçık}
+            setMobilMenüAçık={setMobilMenüAçık}
+          />
+          <div
+            className={clsx(
+              'fixed top-0 z-10 h-lvh w-screen backdrop-blur-md sm:hidden',
+              mobilMenüAçık && 'block',
+              !mobilMenüAçık && 'hidden'
+            )}
+            onClick={() => setMobilMenüAçık(false)}
+          />
+          <İçerik />
+        </div>
         <Altlık />
+        <div />
       </body>
     </html>
   )
