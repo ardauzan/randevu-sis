@@ -22,5 +22,5 @@ yarn-error.log*
 **/*.log
 package-lock.json
 **/*.bun
-public/*.js
-public/*.css
+statik/*.js
+statik/*.css

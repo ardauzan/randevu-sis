@@ -8,7 +8,6 @@ const havuz = new Pool()
 const veritabanı = drizzle(havuz, {
   schema: şema
 })
-console.info('Veritabanı bağlantısı sağlandı.')
 
 //info veritabanı değişkeni export edilir.
 export default veritabanı

@@ -11,8 +11,8 @@ export default function Bulunamadı() {
           content="SDÜ Randevu Sistemi'nde bu sayfa mevcut değil."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/public/favicon.ico" />
-        <link rel="stylesheet" href="/public/stiller.css" />
+        <link rel="icon" href="/statik/favicon.ico" />
+        <link rel="stylesheet" href="/statik/stiller.css" />
       </head>
       <body>bulunamadı haha</body>
     </html>

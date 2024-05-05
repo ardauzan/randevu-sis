@@ -140,3 +140,14 @@ type İstemciKaynaklıZiyaret = {
   ziyareteden: string
   ziyaretçisayısı: number
 }
+
+//# Diğer
+type KimlikTürü = 'herkes' | 'girişYapmamış' | 'girişYapmış' | 'yönetici'
+
+type Navigasyon = {
+  [sayfa: string]: [
+    adres: string,
+    ikon: React.ReactElement,
+    kimlikTürü: KimlikTürü
+  ]
+}

@@ -9,8 +9,8 @@ export default function Anasayfa() {
         <title>Anasayfa</title>
         <meta name="description" content="SDÜ randevu sistemi güncel takvim." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/public/favicon.ico" />
-        <link rel="stylesheet" href="/public/stiller.css" />
+        <link rel="icon" href="/statik/favicon.ico" />
+        <link rel="stylesheet" href="/statik/stiller.css" />
       </head>
       <body>anasayfa</body>
     </html>

@@ -6,8 +6,8 @@
   "author": "Ali Arda Uzan <arda.uzan@protonmail.com> (https://github.com/ardauzan)",
   "repository": "github:ardauzan/randevu-sis",
   "scripts": {
+    "sun": "NODE_ENV=production bun run src/index.ts",
     "geliştir": "bun run --watch src/index.ts",
-    "sun": "bun run src/index.ts",
     "veritabanı:oluştur": "drizzle-kit generate:pg --schema src/veritabanı/şema.ts --out=src/veritabanı/migrasyonlar",
     "veritabanı:migrasyon": "bun run src/veritabanı/migrasyon.ts",
     "veritabanı:örnekler": "bun run src/veritabanı/örnekler.ts"

@@ -11,8 +11,8 @@ export default function Yönet() {
           content="SDÜ Randevu Sistemi'nde mevcut olan verileri yönetin.'"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/public/favicon.ico" />
-        <link rel="stylesheet" href="/public/stiller.css" />
+        <link rel="icon" href="/statik/favicon.ico" />
+        <link rel="stylesheet" href="/statik/stiller.css" />
       </head>
       <body>yönet! haha neden böyle oluyor??</body>
     </html>

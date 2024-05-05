@@ -12,9 +12,9 @@ export default function GirişFormu() {
   const başarısızlıkMesajı = 'Kimlik doğrulanamadı.'
   return (
     <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
-      <h2 className="mb-6 text-center font-mono text-2xl font-semibold">
+      <h1 className="mb-6 text-center font-mono text-2xl font-semibold tracking-tight">
         SDÜ Randevu Sistemi'ne giriş yap
-      </h2>
+      </h1>
       <form
         onSubmit={async (e) => {
           e.preventDefault()
@@ -42,7 +42,7 @@ export default function GirişFormu() {
         }}
       >
         <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-600">
+          <label htmlFor="email" className="text-center text-sm text-gray-600">
             Email
           </label>
           <input
@@ -57,7 +57,7 @@ export default function GirişFormu() {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="şifre" className="block text-gray-600">
+          <label htmlFor="şifre" className="text-center text-sm text-gray-600">
             Şifre
           </label>
           <input
@@ -82,7 +82,7 @@ export default function GirişFormu() {
           />
           <label
             htmlFor="beniHatırla"
-            className="ml-1 block text-xs text-gray-600"
+            className="ml-1 text-center text-sm text-gray-600"
           >
             Beni hatırla
           </label>
@@ -98,7 +98,7 @@ export default function GirişFormu() {
           />
           <label
             htmlFor="şifreGöster"
-            className="ml-1 block text-xs text-gray-600"
+            className="ml-1 text-center text-sm text-gray-600"
           >
             Şifreyi göster
           </label>

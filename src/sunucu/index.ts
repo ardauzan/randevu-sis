@@ -5,6 +5,7 @@ import { jwt } from '@elysiajs/jwt'
 import { renderToReadableStream } from 'react-dom/server'
 import { createElement } from 'react'
 import Anasayfa from '@/istemci/anasayfa/anasayfa'
+import Bilgilendirme from '@/istemci/bilgilendirme/bilgilendirme'
 import Yönet from '@/istemci/yönet/yönet'
 import Bulunamadı from '@/istemci/404/404'
 import Randevularım from '@/istemci/randevularım/randevularım'
@@ -15,18 +16,13 @@ import {
 } from '@/sunucu/kütüphane'
 
 //info Sunucumuzu oluşturuyoruz.
-//info /public dizinini statik dosyalar için kullanacağız.
+//info /statik dizinini statik dosyalar için kullanacağız.
 //info kimlik doğrulama için JWT kullanacağız.
 //info Bu dosyada sunucummuzun bütün uç noktaları tanımlıyoruz.
 //info Tanımlamadığımız bir uç noktaya GET ile erişilmeye çalışırsa 404 sayfasını gönderiyoruz.
-//info Malesef şuan sunucu tarafında oluşturduğumuz html in, beraberinde gönderdiğimiz istemci paketinden oluşturulucak olan arayüz ile eşit olması gerekiyor.
-//info Aslında gönül isterdiki istemciye arayüzün son halini gönderelim, lakin, arayüzdeki dinamik kısımlar bunu engelliyor çünkü istemci paketini derlediğimizde bu dinamik kısımları oluşturucak olan veriler elimizde değil.
-//info Bu yüzden arayüzü dinamik kısımlarda o kısmın daha yüklenmediğini ifade edeicek şekilde tasarlıyoruz.
-//info İstemci çalışır duruma geldiğinde tekrar sunucuya istek atıp, dinamik kısımları oluşturucak verileri sorguluyor.
-//info Gelecekte React bu problemi server components ile çözecek.
 export default function sunucuyuOluştur() {
   const app = new Elysia()
-    .use(staticPlugin())
+    .use(staticPlugin({ assets: 'statik', prefix: '/statik' }))
     .use(
       jwt({
         name: 'jwt',
@@ -36,7 +32,17 @@ export default function sunucuyuOluştur() {
     .get('/', async () => {
       return new Response(
         await renderToReadableStream(createElement(Anasayfa), {
-          bootstrapScripts: ['/public/anasayfa.js']
+          bootstrapScripts: ['/statik/anasayfa.js']
+        }),
+        {
+          headers: { 'Content-Type': 'text/html' }
+        }
+      )
+    })
+    .get('/bilgilendirme', async () => {
+      return new Response(
+        await renderToReadableStream(createElement(Bilgilendirme), {
+          bootstrapScripts: ['/statik/bilgilendirme.js']
         }),
         {
           headers: { 'Content-Type': 'text/html' }
@@ -46,7 +52,7 @@ export default function sunucuyuOluştur() {
     .get('/yonet', async () => {
       return new Response(
         await renderToReadableStream(createElement(Yönet), {
-          bootstrapScripts: ['/public/yonet.js']
+          bootstrapScripts: ['/statik/yonet.js']
         }),
         {
           headers: { 'Content-Type': 'text/html' }
@@ -56,7 +62,7 @@ export default function sunucuyuOluştur() {
     .get('/randevularim', async () => {
       return new Response(
         await renderToReadableStream(createElement(Randevularım), {
-          bootstrapScripts: ['/public/randevularim.js']
+          bootstrapScripts: ['/statik/randevularim.js']
         }),
         {
           headers: { 'Content-Type': 'text/html' }
@@ -73,7 +79,7 @@ export default function sunucuyuOluştur() {
         if (kimlikGeçerli) return redirect('/randevularim', 303)
         return new Response(
           await renderToReadableStream(createElement(Giriş), {
-            bootstrapScripts: ['/public/giris.js']
+            bootstrapScripts: ['/statik/giris.js']
           }),
           {
             headers: { 'Content-Type': 'text/html' }
@@ -140,7 +146,7 @@ export default function sunucuyuOluştur() {
       if (code === 'NOT_FOUND' && method === 'GET')
         return new Response(
           await renderToReadableStream(createElement(Bulunamadı), {
-            bootstrapScripts: ['/public/404.js']
+            bootstrapScripts: ['/statik/404.js']
           }),
           {
             headers: { 'Content-Type': 'text/html' }

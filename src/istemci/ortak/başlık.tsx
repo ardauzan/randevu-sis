@@ -1,56 +1,33 @@
 //info Bu dosyada uygulamanın başlık bileşeni bulunmaktadır.
 import React from 'react'
+import { Bars3Icon } from '@heroicons/react/20/solid'
+import navigasyon from '@/istemci/ortak/navigasyon'
 
 export default function Başlık() {
   return (
     <header className="bg-blue-500 py-4">
-      <div className="container mx-auto flex items-center justify-between px-4">
-        <img
-          src="/public/logo.png"
-          alt="Logo"
-          className="-mr-5 size-[55px]"
-          loading="lazy"
-          fetchPriority="low"
-        />
-        <nav className="hidden md:block">
-          <ul className="flex space-x-4">
-            <li>
-              <a href="#" className="text-white">
-                Home
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-white">
-                About
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-white">
-                Services
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-white">
-                Contact
-              </a>
-            </li>
-          </ul>
+      <div className="container mx-auto flex w-full items-center justify-between px-4">
+        <a className="contents" href="/">
+          <img
+            src="/statik/logo.png"
+            alt="Logo"
+            className="-mr-5 size-[55px]"
+            loading="lazy"
+            fetchPriority="low"
+          />
+        </a>
+        <nav className="hidden gap-4 md:flex">
+          {Object.entries(navigasyon).map(([sayfa, [adres, ikon]]) => (
+            <a key={sayfa} href={adres} className="text-white">
+              <div className="flex flex-col items-center justify-center">
+                {ikon}
+                <span>{sayfa}</span>
+              </div>
+            </a>
+          ))}
         </nav>
         <button className="block text-white md:hidden">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16m-7 6h7"
-            />
-          </svg>
+          <Bars3Icon className="size-8" />
         </button>
       </div>
     </header>
