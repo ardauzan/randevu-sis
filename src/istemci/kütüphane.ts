@@ -7,3 +7,12 @@ export function geçerliKimlikDurumuKabulEdiliyor(
 ): boolean {
   return kabulEdilenKimlikDurumları.includes(geçerliKimlikDurumu)
 }
+
+//info Çıkış yapma işlemini gerçekleştirir.
+export async function çıkışYap() {
+  await fetch('/api/kimlik/cikis', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' }
+  })
+  window.location.reload()
+}

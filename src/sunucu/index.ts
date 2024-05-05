@@ -159,9 +159,16 @@ export default function sunucuyuOluştur() {
                 })
               }
             )
-            .post('/cikis', ({ cookie: { kimlik } }) => {
+            .post('/cikis', async ({ jwt, cookie: { kimlik } }) => {
               //info Kimlik adında bir çerez varsa onu sil ve çıkış yapıldığını belirt.
-              kimlik.remove()
+              kimlik.set({
+                value: await jwt.sign({ id: 0 }),
+                httpOnly: true,
+                path: '/',
+                sameSite: 'strict',
+                secure: true,
+                priority: 'high'
+              })
               return 'Çıkış yapıldı.'
             })
         })

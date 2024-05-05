@@ -35,7 +35,7 @@ export default function Anasayfa(props: AnasayfaProps) {
       </head>
       <body>
         <Başlık
-          konum="/giris"
+          konum="/"
           kimlikDurumu={kimlikDurumu}
           setMobilMenüAçık={setMobilMenüAçık}
         />

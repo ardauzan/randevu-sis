@@ -1,8 +1,8 @@
 //info Bu dosyada uygulamanın başlık bileşeni bulunmaktadır.
 import React from 'react'
-import { Bars3Icon } from '@heroicons/react/20/solid'
+import { Bars3Icon, LockOpenIcon } from '@heroicons/react/20/solid'
 import navigasyon from '@/istemci/ortak/navigasyon'
-import { geçerliKimlikDurumuKabulEdiliyor } from '@/istemci/kütüphane'
+import { geçerliKimlikDurumuKabulEdiliyor, çıkışYap } from '@/istemci/kütüphane'
 
 export interface BaşlıkProps {
   readonly konum: string
@@ -65,12 +65,24 @@ export default function Başlık({
             }
           )}
         </nav>
-        <button
-          className="block text-white sm:hidden"
-          onClick={() => setMobilMenüAçık(true)}
-        >
-          <Bars3Icon className="size-8" />
-        </button>
+        <div className="flex gap-4">
+          {kimlikDurumu !== 'yok' && (
+            <button
+              className="flex flex-col items-center justify-center text-white"
+              onClick={çıkışYap}
+            >
+              <LockOpenIcon className="size-8" />
+              Çıkış yap
+            </button>
+          )}
+          <button
+            className="flex flex-col items-center justify-center text-white sm:hidden"
+            onClick={() => setMobilMenüAçık(true)}
+          >
+            <Bars3Icon className="size-8" />
+            Menü
+          </button>
+        </div>
       </div>
     </header>
   )

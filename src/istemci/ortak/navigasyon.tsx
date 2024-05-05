@@ -3,7 +3,7 @@
 import React from 'react'
 import {
   HomeIcon,
-  LockOpenIcon,
+  LockClosedIcon,
   CalendarIcon,
   WrenchScrewdriverIcon,
   InformationCircleIcon
@@ -17,7 +17,7 @@ const navigasyon: Navigasyon = {
   ],
   Giriş: [
     '/giris',
-    <LockOpenIcon className="size-8" />,
+    <LockClosedIcon className="size-8" />,
     ['yok'],
     '/randevularim'
   ],
