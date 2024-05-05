@@ -32,15 +32,15 @@ export const projeler = pgTable('projeler', {
 export const kişilerProjeler = pgTable(
   'kişiler_projeler',
   {
-    üyeId: integer('kişi')
+    üye: integer('kişi')
       .references(() => kişiler.id)
       .notNull(),
-    projeId: integer('proje')
+    proje: integer('proje')
       .references(() => projeler.id)
       .notNull()
   },
   (t) => ({
-    pk: primaryKey({ columns: [t.üyeId, t.projeId] })
+    pk: primaryKey({ columns: [t.üye, t.proje] })
   })
 )
 export const gereçler = pgTable('gereçler', {
@@ -90,11 +90,11 @@ export const kişilerProjelerRelations = relations(
   kişilerProjeler,
   ({ one }) => ({
     üye: one(kişiler, {
-      fields: [kişilerProjeler.üyeId],
+      fields: [kişilerProjeler.üye],
       references: [kişiler.id]
     }),
     proje: one(projeler, {
-      fields: [kişilerProjeler.projeId],
+      fields: [kişilerProjeler.proje],
       references: [projeler.id]
     })
   })
