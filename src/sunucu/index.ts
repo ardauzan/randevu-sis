@@ -31,30 +31,27 @@ export default function sunucuyuOluştur() {
         secret: process.env['JWT_SECRET']!
       })
     )
-    .get(
-      '/',
-      async ({ cookie: { kimlik }, jwt }) => {
-        const kimlikVerisi = await kimlikVerisiniAl(
-          await jwt.verify(kimlik.value)
-        )
-        return new Response(
-          await renderToReadableStream(
-            createElement(Anasayfa, { kimlikDurumu: kimlikVerisi[1] }),
-            {
-              bootstrapScripts: ['/statik/anasayfa.js']
-            }
-          ),
+    .guard({
+      cookie: t.Cookie({
+        kimlik: t.String()
+      })
+    })
+    .get('/', async ({ cookie: { kimlik }, jwt }) => {
+      const kimlikVerisi = await kimlikVerisiniAl(
+        await jwt.verify(kimlik.value)
+      )
+      return new Response(
+        await renderToReadableStream(
+          createElement(Anasayfa, { kimlikDurumu: kimlikVerisi[1] }),
           {
-            headers: { 'Content-Type': 'text/html' }
+            bootstrapScripts: ['/statik/anasayfa.js']
           }
-        )
-      },
-      {
-        cookie: t.Object({
-          kimlik: t.String()
-        })
-      }
-    )
+        ),
+        {
+          headers: { 'Content-Type': 'text/html' }
+        }
+      )
+    })
     .get('/bilgilendirme', async () => {
       return new Response(
         await renderToReadableStream(createElement(Bilgilendirme), {
@@ -85,95 +82,79 @@ export default function sunucuyuOluştur() {
         }
       )
     })
-    .get(
-      '/giris',
-      async ({ cookie: { kimlik }, jwt, redirect }) => {
-        const kimlikVerisi = await kimlikVerisiniAl(
-          await jwt.verify(kimlik.value)
-        )
-        if (
-          !(await kimlikVerisiSayfayıGörebilirMi(
-            kimlikVerisi,
-            'Giriş',
-            navigasyon
-          ))
-        )
-          return redirect(navigasyon['Giriş']![3]!)
-        return new Response(
-          await renderToReadableStream(
-            createElement(Giriş, { kimlikDurumu: kimlikVerisi[1] }),
-            {
-              bootstrapScripts: ['/statik/giris.js']
-            }
-          ),
+    .get('/giris', async ({ cookie: { kimlik }, jwt, redirect }) => {
+      const kimlikVerisi = await kimlikVerisiniAl(
+        await jwt.verify(kimlik.value)
+      )
+      if (
+        !(await kimlikVerisiSayfayıGörebilirMi(
+          kimlikVerisi,
+          'Giriş',
+          navigasyon
+        ))
+      )
+        return redirect(navigasyon['Giriş']![3]!)
+      return new Response(
+        await renderToReadableStream(
+          createElement(Giriş, { kimlikDurumu: kimlikVerisi[1] }),
           {
-            headers: { 'Content-Type': 'text/html' }
+            bootstrapScripts: ['/statik/giris.js']
           }
-        )
-      },
-      {
-        cookie: t.Object({
-          kimlik: t.String()
-        })
-      }
-    )
-    .group(
-      '/api',
-      {
-        cookie: t.Cookie({
-          kimlik: t.String()
-        })
-      },
-      (app) => {
-        return app.group('/kimlik', (app) => {
-          //# Kimlik doğrulama ve yönetimi
-          return app
-            .post(
-              '/giris',
-              async ({
-                body: { email, şifre, beniHatırla },
-                jwt,
-                cookie: { kimlik }
-              }) => {
-                //info Giriş yapmaya çalış, başarırsan kimlik adındaki çereze jwt yi koy ve başarılı olduğunu belirt, başaramazsan başaramadığını belirt.
-                const sonuç = await emailVeŞifreİleKimlikDoğrula(email, şifre)
-                if (sonuç === 'Kimlik doğrulanamadı.') return sonuç
-                kimlik.set({
-                  value: await jwt.sign({ id: sonuç }),
-                  httpOnly: true,
-                  path: '/',
-                  sameSite: 'strict',
-                  secure: true,
-                  expires: beniHatırla
-                    ? new Date(Date.now() + 7 * 86400 * 1000)
-                    : undefined,
-                  priority: 'high'
-                })
-                return 'Giriş yapıldı.'
-              },
-              {
-                body: t.Object({
-                  email: t.String(),
-                  şifre: t.String(),
-                  beniHatırla: t.Boolean()
-                })
-              }
-            )
-            .post('/cikis', async ({ jwt, cookie: { kimlik } }) => {
-              //info Kimlik adında bir çerez varsa onu sil ve çıkış yapıldığını belirt.
+        ),
+        {
+          headers: { 'Content-Type': 'text/html' }
+        }
+      )
+    })
+    .group('/api', (app) => {
+      return app.group('/kimlik', (app) => {
+        //# Kimlik doğrulama ve yönetimi
+        return app
+          .post(
+            '/giris',
+            async ({
+              body: { email, şifre, beniHatırla },
+              jwt,
+              cookie: { kimlik }
+            }) => {
+              //info Giriş yapmaya çalış, başarırsan kimlik adındaki çereze jwt yi koy ve başarılı olduğunu belirt, başaramazsan başaramadığını belirt.
+              const sonuç = await emailVeŞifreİleKimlikDoğrula(email, şifre)
+              if (sonuç === 'Kimlik doğrulanamadı.') return sonuç
               kimlik.set({
-                value: await jwt.sign({ id: 0 }),
+                value: await jwt.sign({ id: sonuç }),
                 httpOnly: true,
                 path: '/',
                 sameSite: 'strict',
                 secure: true,
+                expires: beniHatırla
+                  ? new Date(Date.now() + 7 * 86400 * 1000)
+                  : undefined,
                 priority: 'high'
               })
-              return 'Çıkış yapıldı.'
+              return 'Giriş yapıldı.'
+            },
+            {
+              body: t.Object({
+                email: t.String(),
+                şifre: t.String(),
+                beniHatırla: t.Boolean()
+              })
+            }
+          )
+          .post('/cikis', async ({ jwt, cookie: { kimlik } }) => {
+            //info Kimlik adında bir çerez varsa onu sil ve çıkış yapıldığını belirt.
+            kimlik.set({
+              value: await jwt.sign({ id: 0 }),
+              httpOnly: true,
+              path: '/',
+              sameSite: 'strict',
+              secure: true,
+              priority: 'high'
             })
-        })
-      }
-    )
+            return 'Çıkış yapıldı.'
+          })
+      })
+    })
     .onError(async ({ code, request: { method, headers }, jwt }) => {
       if (code === 'NOT_FOUND' && method === 'GET') {
         const cookie = headers.get('Cookie')?.split('=')[1]
@@ -200,7 +181,6 @@ export default function sunucuyuOluştur() {
       })
     })
     .listen(3000)
-
   //info Sunucumuzun çalıştığını konsola yazdırıyoruz.
   console.info(
     `Sunucu şurda çalışıyor: ${app.server?.hostname}:${app.server?.port}`
