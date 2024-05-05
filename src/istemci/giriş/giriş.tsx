@@ -4,9 +4,14 @@ import Başlık from '@/istemci/ortak/başlık'
 import İçerik from '@/istemci/giriş/içerik'
 import Altlık from '@/istemci/ortak/altlık'
 
-export default function Giriş() {
+export interface GirişProps {
+  readonly kimlikDurumu: KimlikDurumu
+}
+
+export default function Giriş(props: GirişProps) {
+  const { kimlikDurumu } = props
   return (
-    <html lang="tr">
+    <html lang="tr" data-props={JSON.stringify(props)}>
       <head>
         <meta charSet="utf-8" />
         <title>Giriş Yap</title>
@@ -19,7 +24,7 @@ export default function Giriş() {
         <link rel="stylesheet" href="/statik/stiller.css" />
       </head>
       <body className="bg-gray-100">
-        <Başlık />
+        <Başlık konum="/giris" kimlikDurumu={kimlikDurumu} />
         <İçerik />
         <Altlık />
       </body>

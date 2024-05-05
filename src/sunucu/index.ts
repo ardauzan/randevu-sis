@@ -31,9 +31,12 @@ export default function sunucuyuOluştur() {
     )
     .get('/', async () => {
       return new Response(
-        await renderToReadableStream(createElement(Anasayfa), {
-          bootstrapScripts: ['/statik/anasayfa.js']
-        }),
+        await renderToReadableStream(
+          createElement(Anasayfa, { kimlikDurumu: 'yok' }),
+          {
+            bootstrapScripts: ['/statik/anasayfa.js']
+          }
+        ),
         {
           headers: { 'Content-Type': 'text/html' }
         }
@@ -78,9 +81,12 @@ export default function sunucuyuOluştur() {
         )
         if (kimlikGeçerli) return redirect('/randevularim', 303)
         return new Response(
-          await renderToReadableStream(createElement(Giriş), {
-            bootstrapScripts: ['/statik/giris.js']
-          }),
+          await renderToReadableStream(
+            createElement(Giriş, { kimlikDurumu: 'yok' }),
+            {
+              bootstrapScripts: ['/statik/giris.js']
+            }
+          ),
           {
             headers: { 'Content-Type': 'text/html' }
           }

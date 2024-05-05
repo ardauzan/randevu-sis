@@ -10,18 +10,22 @@ import {
 } from '@heroicons/react/20/solid'
 
 const navigasyon: Navigasyon = {
-  Anasayfa: ['/', <HomeIcon className="size-8" />, 'herkes'],
-  Giriş: ['/giris', <LockOpenIcon className="size-8" />, 'girişYapmamış'],
+  Anasayfa: [
+    '/',
+    <HomeIcon className="size-8" />,
+    ['yok', 'kullanıcı', 'yönetici']
+  ],
+  Giriş: ['/giris', <LockOpenIcon className="size-8" />, ['yok']],
   Randevularım: [
     '/randevularim',
     <CalendarIcon className="size-8" />,
-    'girişYapmış'
+    ['kullanıcı', 'yönetici']
   ],
-  Yönet: ['/yonet', <WrenchScrewdriverIcon className="size-8" />, 'yönetici'],
+  Yönet: ['/yonet', <WrenchScrewdriverIcon className="size-8" />, ['yönetici']],
   Bilgilendirme: [
     '/bilgilendirme',
     <InformationCircleIcon className="size-8" />,
-    'herkes'
+    ['yok', 'kullanıcı', 'yönetici']
   ]
 }
 

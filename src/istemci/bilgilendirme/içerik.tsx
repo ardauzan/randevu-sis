@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function İçerik() {
   return (
-    <main className="h-screen items-center justify-center">
+    <main className="flex h-screen items-center justify-center">
       <h1 className="my-6 text-center font-mono text-2xl font-semibold tracking-tight">
         Başlık
       </h1>
