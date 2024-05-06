@@ -75,6 +75,7 @@ export default function PanelKontrolleriMobil() {
             <section className="flex items-center justify-center">
               <MagnifyingGlassIcon className="size-4" />
               <input
+                name="arama"
                 type="text"
                 className="my-2 block w-full rounded-md border border-gray-300 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                 placeholder="Kişi Ara"
@@ -85,7 +86,10 @@ export default function PanelKontrolleriMobil() {
                 <PlusIcon className="size-4" />
                 Yeni Kişi Ekle
               </button>
-              <select className="block rounded-md border border-blue-600 text-center text-xs font-semibold text-black shadow-sm hover:border-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+              <select
+                name="sayfaBoyutu"
+                className="block rounded-md border border-blue-600 text-center text-xs font-semibold text-black shadow-sm hover:border-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+              >
                 <option value={10}> 10 </option>
                 <option value={100}> 100 </option>
               </select>
