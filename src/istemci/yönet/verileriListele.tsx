@@ -74,8 +74,8 @@ export default function VerileriListele() {
                               : değer}
                           </td>
                         ))}
-                        <td className="hidden px-3 py-3.5 text-right text-sm font-medium text-blue-600 sm:table-cell">
-                          <button className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+                        <td className="hidden w-4 px-3 py-3.5 text-right text-sm font-medium sm:table-cell">
+                          <button className="text-center font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline">
                             İncele
                           </button>
                         </td>

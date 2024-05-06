@@ -13,11 +13,11 @@ import {
 
 export default function PanelKontrolleriMobil() {
   return (
-    <article className="hidden h-full flex-col items-center overflow-visible rounded-lg bg-gray-300 p-6 sm:flex">
+    <article className="hidden h-full flex-col items-center overflow-visible rounded-lg bg-gray-300 p-6 pt-8 sm:flex">
       <h2 className="flex text-center font-mono text-xl tracking-tight">
         Kontrol paneli
       </h2>
-      <ul className="mt-6 grid grid-flow-col grid-rows-4 gap-4 space-y-2 rounded-lg border border-black bg-white p-4 shadow-md">
+      <ul className="mt-8 grid w-full grid-flow-col grid-rows-4 gap-4 space-y-2 rounded-lg border border-black bg-white p-4 shadow-md">
         <li className="flex justify-center">
           <button className="flex text-center font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline">
             <UserCircleIcon className="size-4" />
@@ -61,7 +61,7 @@ export default function PanelKontrolleriMobil() {
           </button>
         </li>
       </ul>
-      <section className="mt-6 flex w-full flex-col space-y-2 rounded-lg border border-black bg-white p-4 shadow-md">
+      <section className="mt-8 flex w-full flex-col space-y-2 rounded-lg border border-black bg-white p-4 shadow-md">
         <section className="flex flex-col items-center">
           <section className="flex-auto">
             <h1 className="text-center font-mono text-2xl font-semibold tracking-tight">
@@ -85,7 +85,7 @@ export default function PanelKontrolleriMobil() {
                 <PlusIcon className="size-4" />
                 Yeni Kişi Ekle
               </button>
-              <select className="block rounded-md border border-blue-600 text-center text-sm font-semibold text-black shadow-sm hover:border-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+              <select className="block rounded-md border border-blue-600 text-center text-xs font-semibold text-black shadow-sm hover:border-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
                 <option value={10}> 10 </option>
                 <option value={100}> 100 </option>
               </select>
