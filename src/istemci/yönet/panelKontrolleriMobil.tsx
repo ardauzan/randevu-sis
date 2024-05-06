@@ -23,7 +23,7 @@ export default function PanelKontrolleriMobil() {
     >
       <section
         className={clsx(
-          'relative overflow-hidden rounded-lg bg-gray-200 px-4 py-5 transition-all duration-300 ease-in-out',
+          'relative w-full overflow-hidden rounded-lg bg-gray-200 px-4 py-5 transition-all duration-300 ease-in-out',
           kontrollerGörünüyor ? 'h-[350px]' : 'h-0'
         )}
       >

@@ -18,16 +18,16 @@ export default function PanelKontrolleriMobil() {
   return (
     <article
       className={clsx(
-        'hidden w-full overflow-visible rounded-lg bg-gray-300 sm:inline-block'
+        'hidden h-full overflow-visible rounded-lg bg-gray-300 sm:inline-block'
       )}
     >
       <section
         className={clsx(
-          'relative overflow-hidden rounded-lg bg-gray-200 px-4 py-5 transition-all duration-300 ease-in-out',
-          kontrollerGörünüyor ? 'h-[350px]' : 'h-0'
+          'relative h-full overflow-hidden rounded-lg bg-gray-200 px-4 py-5 transition-all duration-300 ease-in-out',
+          kontrollerGörünüyor ? 'w-[350px]' : 'w-0'
         )}
       >
-        <h2 className="absolute inset-x-4 top-0 mt-1 text-center font-mono text-xl tracking-tight">
+        <h2 className="ml-1 flex rotate-90 text-start font-mono text-xl tracking-tight">
           Kontrol paneli
         </h2>
         <ul
