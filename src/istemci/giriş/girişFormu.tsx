@@ -11,7 +11,7 @@ export default function GirişFormu() {
     useState(false)
   const başarısızlıkMesajı = 'Kimlik doğrulanamadı.'
   return (
-    <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
+    <section className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
       <h1 className="mb-6 text-center font-mono text-2xl font-semibold tracking-tight">
         SDÜ Randevu Sistemi'ne giriş yap
       </h1>
@@ -41,7 +41,7 @@ export default function GirişFormu() {
           }
         }}
       >
-        <div className="mb-4">
+        <section className="mb-4">
           <label htmlFor="email" className="text-center text-sm text-gray-600">
             Email
           </label>
@@ -55,8 +55,8 @@ export default function GirişFormu() {
             className="w-full rounded-lg border px-4 py-2 focus:border-blue-400 focus:outline-none"
             placeholder="Email adresini buraya gir"
           />
-        </div>
-        <div className="mb-4">
+        </section>
+        <section className="mb-4">
           <label htmlFor="şifre" className="text-center text-sm text-gray-600">
             Şifre
           </label>
@@ -70,8 +70,8 @@ export default function GirişFormu() {
             className="w-full rounded-lg border px-4 py-2 focus:border-blue-400 focus:outline-none"
             placeholder="Şifreni buraya gir"
           />
-        </div>
-        <div className="mb-1 flex">
+        </section>
+        <section className="mb-1 flex">
           <input
             type="checkbox"
             id="beniHatırla"
@@ -86,8 +86,8 @@ export default function GirişFormu() {
           >
             Beni hatırla
           </label>
-        </div>
-        <div className="mb-4 flex">
+        </section>
+        <section className="mb-4 flex">
           <input
             type="checkbox"
             id="şifreGöster"
@@ -102,15 +102,15 @@ export default function GirişFormu() {
           >
             Şifreyi göster
           </label>
-        </div>
-        <div className="mb-6">
+        </section>
+        <section className="mb-6">
           <button
             type="submit"
             className="w-full rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
           >
             Giriş yap
           </button>
-        </div>
+        </section>
         <p className="text-center text-sm text-gray-600">
           Hesap oluşturmak için SDÜ Prototip Atölyesi'ne geliştirdiğin projenle
           kaydol{' '}
@@ -129,6 +129,6 @@ export default function GirişFormu() {
         tip="başarısız"
         mesajıKapat={() => setHataGeriBildiriminiGöster(false)}
       />
-    </div>
+    </section>
   )
 }

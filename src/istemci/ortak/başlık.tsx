@@ -17,7 +17,7 @@ export default function Başlık({
 }: BaşlıkProps) {
   return (
     <header className="bg-blue-500 py-4">
-      <div className="container mx-auto flex w-full items-center justify-between px-4">
+      <section className="container mx-auto flex w-full items-center justify-between px-4">
         {konum === '/' ? (
           <span className="contents">
             <img
@@ -48,24 +48,24 @@ export default function Başlık({
               ) ? (
                 konum === adres ? (
                   <span key={index} className="cursor-default text-gray-600">
-                    <div className="flex flex-col items-center justify-center">
+                    <section className="flex flex-col items-center justify-center">
                       {ikon}
                       <span>{sayfa}</span>
-                    </div>
+                    </section>
                   </span>
                 ) : (
                   <a key={index} href={adres} className="text-white">
-                    <div className="flex flex-col items-center justify-center">
+                    <section className="flex flex-col items-center justify-center">
                       {ikon}
                       <span>{sayfa}</span>
-                    </div>
+                    </section>
                   </a>
                 )
               ) : null
             }
           )}
         </nav>
-        <div className="flex gap-4">
+        <section className="flex gap-4">
           {kimlikDurumu !== 'yok' && (
             <button
               className="flex flex-col items-center justify-center text-white"
@@ -82,8 +82,8 @@ export default function Başlık({
             <Bars3Icon className="size-8" />
             Menü
           </button>
-        </div>
-      </div>
+        </section>
+      </section>
     </header>
   )
 }

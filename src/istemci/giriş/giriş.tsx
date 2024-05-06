@@ -43,14 +43,14 @@ export default function Giriş(props: GirişProps) {
           kimlikDurumu={kimlikDurumu}
           setMobilMenüAçık={setMobilMenüAçık}
         />
-        <div className="flex">
+        <section className="flex">
           <MobilMenü
             konum="/giris"
             kimlikDurumu={kimlikDurumu}
             mobilMenüAçık={mobilMenüAçık}
             setMobilMenüAçık={setMobilMenüAçık}
           />
-          <div
+          <section
             className={clsx(
               'fixed top-0 z-10 h-lvh w-screen backdrop-blur-md sm:hidden',
               mobilMenüAçık && 'block',
@@ -59,9 +59,9 @@ export default function Giriş(props: GirişProps) {
             onClick={() => setMobilMenüAçık(false)}
           />
           <İçerik />
-        </div>
+        </section>
         <Altlık />
-        <div />
+        <section />
       </body>
     </html>
   )

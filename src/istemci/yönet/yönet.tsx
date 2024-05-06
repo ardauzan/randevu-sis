@@ -1,13 +1,21 @@
 //info Yönetim paneli bu dosyada tanımlanır.
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useReducer } from 'react'
 import clsx from 'clsx'
 import Başlık from '@/istemci/ortak/başlık'
 import İçerik from '@/istemci/yönet/içerik'
 import Altlık from '@/istemci/ortak/altlık'
 import MobilMenü from '@/istemci/ortak/mobilMenü'
+import Durum from '@/istemci/yönet/durum'
+import redüktör from '@/istemci/yönet/redüktör'
 
-export default function Yönet() {
+export interface YönetProps {
+  readonly ilkDurum: Durum
+}
+
+export default function Yönet(props: YönetProps) {
+  const { ilkDurum } = props
   const [mobilMenüAçık, setMobilMenüAçık] = useState(false)
+  const [durum, aksiyonYayınla] = useReducer(redüktör, ilkDurum)
 
   useEffect(() => {
     const handleResize = () => {
@@ -18,9 +26,8 @@ export default function Yönet() {
     window.addEventListener('resize', handleResize, { passive: true })
     return () => window.removeEventListener('resize', handleResize)
   }, [])
-
   return (
-    <html lang="tr">
+    <html lang="tr" data-props={JSON.stringify(props)}>
       <head>
         <meta charSet="utf-8" />
         <title>Yönet</title>
@@ -34,18 +41,18 @@ export default function Yönet() {
       </head>
       <body>
         <Başlık
-          konum="/"
+          konum="/yonet"
           kimlikDurumu="yönetici"
           setMobilMenüAçık={setMobilMenüAçık}
         />
-        <div className="flex">
+        <section className="flex">
           <MobilMenü
             konum="/"
             kimlikDurumu="yönetici"
             mobilMenüAçık={mobilMenüAçık}
             setMobilMenüAçık={setMobilMenüAçık}
           />
-          <div
+          <section
             className={clsx(
               'fixed top-0 z-10 h-lvh w-screen backdrop-blur-md sm:hidden',
               mobilMenüAçık && 'block',
@@ -53,10 +60,12 @@ export default function Yönet() {
             )}
             onClick={() => setMobilMenüAçık(false)}
           />
-          <İçerik />
-        </div>
+          <Durum.Provider value={{ durum, aksiyonYayınla }}>
+            <İçerik />
+          </Durum.Provider>
+        </section>
         <Altlık />
-        <div />
+        <section />
       </body>
     </html>
   )

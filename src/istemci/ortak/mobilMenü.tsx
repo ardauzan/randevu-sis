@@ -33,7 +33,7 @@ export default function MobilMenü({
         <XMarkIcon className="size-8" />
       </button>
       <nav className="flex h-full flex-col items-end justify-center">
-        <div className="my-10 flex h-full w-max flex-col items-start justify-around p-4">
+        <section className="my-10 flex h-full w-max flex-col items-start justify-around p-4">
           {Object.entries(navigasyon).map(
             ([sayfa, [adres, ikon, kabulEdilenKimlikDurumları]], index) => {
               return geçerliKimlikDurumuKabulEdiliyor(
@@ -42,23 +42,23 @@ export default function MobilMenü({
               ) ? (
                 konum === adres ? (
                   <span key={index} className="cursor-default text-gray-600">
-                    <div className="flex items-center justify-center">
+                    <section className="flex items-center justify-center">
                       {ikon}
                       <span>{sayfa}</span>
-                    </div>
+                    </section>
                   </span>
                 ) : (
                   <a key={index} href={adres} className="text-white">
-                    <div className="flex items-center justify-center">
+                    <section className="flex items-center justify-center">
                       {ikon}
                       <span>{sayfa}</span>
-                    </div>
+                    </section>
                   </a>
                 )
               ) : null
             }
           )}
-        </div>
+        </section>
       </nav>
     </aside>
   )

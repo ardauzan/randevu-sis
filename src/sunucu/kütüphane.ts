@@ -1,5 +1,5 @@
 //info Burda uygulamayı çalıştıran sunucu tarafı mantığı tanımlıyoruz.
-import { eq } from 'drizzle-orm'
+import { eq, like, or, count } from 'drizzle-orm'
 import veritabanı from '@/veritabanı'
 import { kişiler } from '@/veritabanı/şema'
 
@@ -86,4 +86,39 @@ export async function emailVeŞifreİleKimlikDoğrula(
   return (await hashlenmişStringiAnahtarıylaÇözmeyeÇalış(şifre, şifreHash))
     ? id
     : negatifSonuç
+}
+
+//info Yönetici api si
+
+export async function kişilerSay(arama: string): Promise<number> {
+  const sonuç = await veritabanı
+    .select({ count: count() })
+    .from(kişiler)
+    .where(
+      or(like(kişiler.ad, `%${arama}%`), like(kişiler.email, `%${arama}%`))
+    )
+  return sonuç[0]!.count
+}
+
+export async function kişileriListele(
+  arama: string,
+  sayfa: number,
+  sayfaBoyutu: number
+): Promise<ListelenenKişi[]> {
+  return veritabanı.query.kişiler.findMany({
+    where: or(
+      like(kişiler.ad, `%${arama}%`),
+      like(kişiler.email, `%${arama}%`)
+    ),
+    offset: (sayfa - 1) * sayfaBoyutu,
+    limit: sayfaBoyutu,
+    columns: {
+      id: true,
+      yönetici: true,
+      öğrenciNo: true,
+      ad: true,
+      soyAd: true,
+      email: true
+    }
+  })
 }
