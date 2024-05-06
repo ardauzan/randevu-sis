@@ -1,4 +1,3 @@
-//info Bilgilendirme sayfasının gövdesi bu dosyada tanımlanır.
 import React from 'react'
 
 export default function İçerik() {

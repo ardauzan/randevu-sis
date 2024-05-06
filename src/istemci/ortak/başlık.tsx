@@ -1,4 +1,3 @@
-//info Bu dosyada uygulamanın başlık bileşeni bulunmaktadır.
 import React from 'react'
 import { Bars3Icon, LockOpenIcon } from '@heroicons/react/20/solid'
 import navigasyon from '@/istemci/ortak/navigasyon'
@@ -39,7 +38,7 @@ export default function Başlık({
             />
           </a>
         )}
-        <nav className="hidden gap-4 sm:flex">
+        <nav className="hidden gap-4 sm:flex sm:gap-6 md:gap-8 lg:gap-10">
           {Object.entries(navigasyon).map(
             ([sayfa, [adres, ikon, kabulEdilenKimlikDurumları]], index) => {
               return geçerliKimlikDurumuKabulEdiliyor(

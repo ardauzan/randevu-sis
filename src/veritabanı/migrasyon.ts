@@ -1,13 +1,10 @@
-//info Bu dosya oluşturulan veritabanı şemasını veritabanına uygular.
 import { migrate } from 'drizzle-orm/node-postgres/migrator'
 import { drizzle } from 'drizzle-orm/node-postgres'
 import { Pool } from 'pg'
 
-//info Veritabanı bağlantısı oluşturulur ve drizzle-orm kullanılarak bağlantı sağlanır.
 const havuz = new Pool()
 const veritabanı = drizzle(havuz)
 
-//info Migrasyonu yapıcak olan fonksiyon tanımlanır.
 const main = async () => {
   try {
     console.info('Migrasyonlar uygulanıyor.')
@@ -22,5 +19,4 @@ const main = async () => {
   }
 }
 
-//info Migrasyon veritabanına uygulanır.
 main()

@@ -1,4 +1,3 @@
-//info Bu dosyada, kullanıcı bir işlem gerçekleştirdiğinde ekrana bu işlemin başarılı veya başarısız olduğuna dair bir geri bildirim göstermek için kullanılan bileşen tanımlanır.
 import React from 'react'
 import clsx from 'clsx'
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/20/solid'

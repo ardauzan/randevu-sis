@@ -1,4 +1,3 @@
-//info Yönetim panelinin gövdesi bu dosyada tanımlanır.
 import React, { useContext } from 'react'
 import PanelKontrolleriMobil from '@/istemci/yönet/panelKontrolleriMobil'
 import PanelKontrolleri from '@/istemci/yönet/panelKontrolleri'

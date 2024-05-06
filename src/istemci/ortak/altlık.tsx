@@ -1,4 +1,3 @@
-//info Bu dosyada uygulamanın altlığını oluşturan bileşen bulunmaktadır.
 import React from 'react'
 
 export default function Altlık() {

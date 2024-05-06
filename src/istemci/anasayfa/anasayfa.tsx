@@ -1,4 +1,3 @@
-//info Anasayfa bu dosyada tanımlanır.
 import React, { useState, useEffect } from 'react'
 import clsx from 'clsx'
 import Başlık from '@/istemci/ortak/başlık'

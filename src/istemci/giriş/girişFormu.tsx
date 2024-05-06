@@ -1,4 +1,3 @@
-//info Giriş yapmak için kullanılan form bu dosyada tanımlanır.
 import React, { useState } from 'react'
 import GeriBildirim from '@/istemci/ortak/geriBildirim'
 

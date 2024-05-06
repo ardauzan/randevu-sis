@@ -1,4 +1,3 @@
-//info Bu dosya, veritabanı şemasını tanımlar.
 import { relations } from 'drizzle-orm'
 import {
   serial,
@@ -12,7 +11,6 @@ import {
   pgTable
 } from 'drizzle-orm/pg-core'
 
-//info Tablolar tanımlanır.
 export const kişiler = pgTable('kişiler', {
   id: serial('id').primaryKey(),
   yönetici: boolean('yönetici').notNull().default(false),
@@ -79,7 +77,6 @@ export const ziyaretler = pgTable('ziyaretler', {
   ziyaretçiSayısı: integer('ziyaretçi_sayısı').notNull()
 })
 
-//info Tablolar arasındaki ilişkiler tanımlanır.
 export const kişilerRelations = relations(kişiler, ({ many }) => ({
   projeler: many(kişilerProjeler)
 }))

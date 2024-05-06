@@ -1,7 +1,5 @@
-//info Bu dosya, projemizin giriş noktasıdır. Bu dosyayı çalıştırdığımızda projemiz çalışmaya başlar.
 import sunucuyuOluştur from '@/sunucu'
 
-//info Önce tailwindcss in çalışması için gerekli olan css dosyasını oluşturuyoruz.
 const tailwindcss = Bun.spawnSync([
   'bunx',
   'tailwindcss',
@@ -13,7 +11,6 @@ const tailwindcss = Bun.spawnSync([
 ])
 console.info('Tailwindcss dosyası oluşturuldu:', tailwindcss.success)
 
-//info Sonra da react arayüzlerimizin istemci paketlerini larını oluşturuyoruz.
 const anasayfa = await Bun.build({
   entrypoints: ['src/istemci/anasayfa/index.tsx'],
   outdir: 'statik',
@@ -57,5 +54,4 @@ const bulunamadı = await Bun.build({
 })
 console.info('404 sayfası derlendi:', bulunamadı.success)
 
-//info Son olarak da sunucumuzu oluşturuyoruz.
 sunucuyuOluştur()

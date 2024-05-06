@@ -1,4 +1,3 @@
-//info Bilgilendirme sayfası bu dosyada tanımlanır.
 import React from 'react'
 import Başlık from '@/istemci/ortak/başlık'
 import İçerik from '@/istemci/bilgilendirme/içerik'

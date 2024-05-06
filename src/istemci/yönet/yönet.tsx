@@ -1,4 +1,3 @@
-//info Yönetim paneli bu dosyada tanımlanır.
 import React, { useState, useEffect, useReducer } from 'react'
 import clsx from 'clsx'
 import Başlık from '@/istemci/ortak/başlık'

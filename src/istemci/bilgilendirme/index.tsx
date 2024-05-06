@@ -1,4 +1,3 @@
-//info Bilgilendirme sayfasının istemci tarafında hydrate edilmesi sağlanır.
 /// <reference lib="dom" />
 /// <reference lib="dom.iterable" />
 import React, { StrictMode } from 'react'

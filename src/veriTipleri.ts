@@ -1,6 +1,3 @@
-//info Burada tüm veri tiplerini tanımlıyoruz.
-
-//# Diğer
 type KimlikDurumu = 'yok' | 'kullanıcı' | 'yönetici'
 
 type KimlikVerisi = [id: number, durum: KimlikDurumu]
@@ -13,8 +10,6 @@ type Navigasyon = {
     yönlendir?: string
   ]
 }
-
-//# Yönetim paneli
 
 type Tablo = 'kişiler' | 'projeler'
 
@@ -80,6 +75,7 @@ type Durum =
       arama: string
       veri: ListelenenKişi[] | ListelenenProje[]
       yükleniyor: boolean
+      hata: string
     }
   | {
       tablo: Tablo
@@ -87,8 +83,9 @@ type Durum =
       sayfa: number
       sayfaBoyutu: number
       arama: string
-      veri: DetaylıKişi | DetaylıProje | null
+      veri: DetaylıKişi | DetaylıProje
       yükleniyor: boolean
+      hata: string
     }
   | {
       tablo: Tablo
@@ -98,6 +95,7 @@ type Durum =
       arama: string
       veri: OluşturulacakKişi | OluşturulacakProje
       yükleniyor: boolean
+      hata: string
     }
   | {
       tablo: Tablo
@@ -105,8 +103,9 @@ type Durum =
       sayfa: number
       sayfaBoyutu: number
       arama: string
-      veri: [id: number, OluşturulacakKişi] | [id: number, OluşturulacakProje]
+      veri: [id: number, OluşturulacakKişi] | [id: number, OluşturulacakKişi]
       yükleniyor: boolean
+      hata: string
     }
   | {
       tablo: Tablo
@@ -116,4 +115,5 @@ type Durum =
       arama: string
       veri: number
       yükleniyor: boolean
+      hata: string
     }

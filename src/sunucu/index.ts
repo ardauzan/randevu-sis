@@ -1,4 +1,3 @@
-//info Burası sunucu tarafının giriş noktasıdır.
 import { Elysia, t } from 'elysia'
 import { staticPlugin } from '@elysiajs/static'
 import { jwt } from '@elysiajs/jwt'
@@ -19,11 +18,6 @@ import {
 } from '@/sunucu/kütüphane'
 import navigasyon from '@/istemci/ortak/navigasyon'
 
-//info Sunucumuzu oluşturuyoruz.
-//info /statik dizinini statik dosyalar için kullanacağız.
-//info kimlik doğrulama için JWT kullanacağız.
-//info Bu dosyada sunucummuzun bütün uç noktaları tanımlıyoruz.
-//info Tanımlamadığımız bir uç noktaya GET ile erişilmeye çalışırsa 404 sayfasını gönderiyoruz.
 export default function sunucuyuOluştur() {
   const app = new Elysia()
     .use(staticPlugin({ assets: 'statik', prefix: '/statik' }))
@@ -77,14 +71,15 @@ export default function sunucuyuOluştur() {
       )
         return redirect(navigasyon['Yönet']![3]!)
       const kişiler = await kişileriListele('', 1, 10)
-      const ilkDurum = {
-        tablo: 'kişiler' as Tablo,
-        amaç: 'listele' as Amaç,
+      const ilkDurum: Durum = {
+        tablo: 'kişiler',
+        amaç: 'listele',
         sayfa: 1,
         sayfaBoyutu: 10,
         arama: '',
-        veri: kişiler,
-        yükleniyor: false
+        veri: kişiler as ListelenenKişi[] | ListelenenProje[],
+        yükleniyor: false,
+        hata: ''
       }
       return new Response(
         await renderToReadableStream(createElement(Yönet, { ilkDurum }), {
@@ -132,7 +127,6 @@ export default function sunucuyuOluştur() {
     .group('/api', (app) => {
       return app
         .group('/kimlik', (app) => {
-          //# Kimlik doğrulama ve yönetimi
           return app
             .post(
               '/giris',
@@ -141,7 +135,6 @@ export default function sunucuyuOluştur() {
                 jwt,
                 cookie: { kimlik }
               }) => {
-                //info Giriş yapmaya çalış, başarırsan kimlik adındaki çereze jwt yi koy ve başarılı olduğunu belirt, başaramazsan başaramadığını belirt.
                 const sonuç = await emailVeŞifreİleKimlikDoğrula(email, şifre)
                 if (sonuç === 'Kimlik doğrulanamadı.') return sonuç
                 kimlik.set({
@@ -166,7 +159,6 @@ export default function sunucuyuOluştur() {
               }
             )
             .post('/cikis', async ({ jwt, cookie: { kimlik } }) => {
-              //info Kimlik adında bir çerez varsa onu sil ve çıkış yapıldığını belirt.
               kimlik.set({
                 value: await jwt.sign({ id: 0 }),
                 httpOnly: true,
@@ -239,7 +231,6 @@ export default function sunucuyuOluştur() {
       })
     })
     .listen(3000)
-  //info Sunucumuzun çalıştığını konsola yazdırıyoruz.
   console.info(
     `Sunucu şurda çalışıyor: ${app.server?.hostname}:${app.server?.port}`
   )

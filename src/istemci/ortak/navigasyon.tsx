@@ -1,5 +1,3 @@
-//info Bu dosyada kullanıcılarının sayfalar arasında geçiş yapmasını sağlıyıcak olan en temel yapıyı tanımlıyoruz.
-//info Bu navigasyon objesini masaüstü ve mobil cihazlar için ayrı ayrı sunucaz, bunun için de ayrı ayrı bileşenler oluşturucaz.
 import React from 'react'
 import {
   HomeIcon,
