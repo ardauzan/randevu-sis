@@ -46,7 +46,7 @@ export default function Başlık({
                 kabulEdilenKimlikDurumları
               ) ? (
                 konum === adres ? (
-                  <span key={index} className="cursor-default text-gray-600">
+                  <span key={index} className="cursor-default text-gray-900">
                     <section className="flex flex-col items-center justify-center">
                       {ikon}
                       <span>{sayfa}</span>

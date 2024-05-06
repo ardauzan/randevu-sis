@@ -83,7 +83,7 @@ export default function sunucuyuOluştur() {
         sayfa: 1,
         sayfaBoyutu: 10,
         arama: '',
-        veri: kişiler as ListelenenKişi[] | ListelenenProje[],
+        veri: kişiler,
         yükleniyor: false,
         hata: ''
       }
@@ -229,9 +229,9 @@ export default function sunucuyuOluştur() {
       if (code === 'NOT_FOUND' && method === 'GET') {
         const cookie = headers.get('Cookie')?.split('=')[1]
         const kimlik = cookie ? await jwt.verify(cookie) : null
-        const kimlikVerisi = kimlik
+        const kimlikVerisi: KimlikVerisi = kimlik
           ? await kimlikVerisiniAl(kimlik)
-          : ([0, 'yok'] as KimlikVerisi)
+          : [0, 'yok']
         return new Response(
           await renderToReadableStream(
             createElement(Bulunamadı, {
