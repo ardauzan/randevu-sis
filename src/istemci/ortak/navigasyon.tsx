@@ -3,7 +3,7 @@ import {
   HomeIcon,
   LockClosedIcon,
   CalendarIcon,
-  WrenchScrewdriverIcon,
+  BoltIcon,
   InformationCircleIcon
 } from '@heroicons/react/20/solid'
 
@@ -25,12 +25,7 @@ const navigasyon: Navigasyon = {
     ['kullanıcı', 'yönetici'],
     '/giris'
   ],
-  Yönet: [
-    '/yonet',
-    <WrenchScrewdriverIcon className="size-8" />,
-    ['yönetici'],
-    '/'
-  ],
+  Yönet: ['/yonet', <BoltIcon className="size-8" />, ['yönetici'], '/'],
   Bilgilendirme: [
     '/bilgilendirme',
     <InformationCircleIcon className="size-8" />,

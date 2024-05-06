@@ -26,7 +26,7 @@ export default function VerileriListele() {
                           key={index}
                           className={clsx(
                             'w-4 px-3 py-3.5 text-left text-sm font-semibold text-gray-900',
-                            index > 2 && 'hidden md:table-cell'
+                            index > 3 && 'hidden lg:table-cell'
                           )}
                         >
                           {key}
@@ -64,7 +64,7 @@ export default function VerileriListele() {
                             key={index}
                             className={clsx(
                               'px-3 py-3.5 text-sm font-medium text-gray-900',
-                              index > 2 && 'hidden md:table-cell'
+                              index > 3 && 'hidden lg:table-cell'
                             )}
                           >
                             {typeof değer === 'boolean'
