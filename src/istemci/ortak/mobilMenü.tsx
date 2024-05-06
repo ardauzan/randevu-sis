@@ -20,7 +20,7 @@ export default function MobilMenü({
   return (
     <aside
       className={clsx(
-        'fixed -left-44 top-0 z-20 flex h-lvh w-44 flex-col overflow-x-hidden bg-blue-500 duration-500 ease-in-out sm:hidden',
+        'fixed -left-44 top-0 z-30 flex h-lvh w-44 flex-col overflow-x-hidden bg-blue-500 duration-500 ease-in-out sm:hidden',
         mobilMenüAçık
           ? 'translate-x-full opacity-80'
           : 'translate-x-0 opacity-0'

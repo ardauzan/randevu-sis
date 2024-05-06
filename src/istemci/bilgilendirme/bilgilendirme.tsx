@@ -51,7 +51,7 @@ export default function Bilgilendirme(props: BilgilendirmeProps) {
           />
           <section
             className={clsx(
-              'fixed top-0 z-10 h-lvh w-screen backdrop-blur-md sm:hidden',
+              'fixed top-0 z-20 h-lvh w-screen backdrop-blur-md sm:hidden',
               mobilMenüAçık && 'block',
               !mobilMenüAçık && 'hidden'
             )}

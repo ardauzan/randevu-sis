@@ -6,7 +6,7 @@ import Yükleniyor from '@/istemci/ortak/yükleniyor'
 export default function VerileriListele() {
   const { durum } = useContext(Durum)
   return (
-    <article className="flex size-full flex-col">
+    <article className="flex size-full flex-col pt-10">
       {(durum.veri as ListelenenKişi[] | ListelenenProje[]).length === 0 &&
       durum.yükleniyor ? (
         <Yükleniyor />

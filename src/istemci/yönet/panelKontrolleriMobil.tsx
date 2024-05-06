@@ -30,13 +30,13 @@ export default function PanelKontrolleriMobil() {
   return (
     <article
       className={clsx(
-        'block w-full overflow-visible rounded-lg bg-gray-300 sm:hidden'
+        'absolute z-10 block w-full overflow-visible rounded-lg bg-gray-300 sm:hidden'
       )}
     >
       <section
         className={clsx(
           'relative w-full overflow-hidden rounded-lg bg-gray-200 px-4 py-5 transition-all duration-300 ease-in-out',
-          kontrollerGörünüyor ? 'h-[500px]' : 'h-0'
+          kontrollerGörünüyor ? 'h-lvh' : 'h-0'
         )}
       >
         <h2 className="absolute inset-x-4 top-0 mt-1 text-center font-mono text-xl tracking-tight">
@@ -138,7 +138,7 @@ export default function PanelKontrolleriMobil() {
         className="absolute flex w-full items-center justify-center text-gray-600"
       >
         {kontrollerGörünüyor ? (
-          <ChevronUpIcon className="size-4" />
+          <ChevronUpIcon className="-mt-10 size-4" />
         ) : (
           <ChevronDownIcon className="size-4" />
         )}
