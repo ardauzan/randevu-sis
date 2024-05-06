@@ -46,7 +46,7 @@ export default function Yönet(props: YönetProps) {
         />
         <section className="flex">
           <MobilMenü
-            konum="/"
+            konum="/yonet"
             kimlikDurumu="yönetici"
             mobilMenüAçık={mobilMenüAçık}
             setMobilMenüAçık={setMobilMenüAçık}

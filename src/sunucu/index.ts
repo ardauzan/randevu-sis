@@ -48,11 +48,17 @@ export default function sunucuyuOluştur() {
         }
       )
     })
-    .get('/bilgilendirme', async () => {
+    .get('/bilgilendirme', async ({ cookie: { kimlik }, jwt }) => {
+      const kimlikVerisi = await kimlikVerisiniAl(
+        await jwt.verify(kimlik.value)
+      )
       return new Response(
-        await renderToReadableStream(createElement(Bilgilendirme), {
-          bootstrapScripts: ['/statik/bilgilendirme.js']
-        }),
+        await renderToReadableStream(
+          createElement(Bilgilendirme, { kimlikDurumu: kimlikVerisi[1] }),
+          {
+            bootstrapScripts: ['/statik/bilgilendirme.js']
+          }
+        ),
         {
           headers: { 'Content-Type': 'text/html' }
         }
@@ -90,11 +96,25 @@ export default function sunucuyuOluştur() {
         }
       )
     })
-    .get('/randevularim', async () => {
+    .get('/randevularim', async ({ cookie: { kimlik }, jwt, redirect }) => {
+      const kimlikVerisi = await kimlikVerisiniAl(
+        await jwt.verify(kimlik.value)
+      )
+      if (
+        !(await kimlikVerisiSayfayıGörebilirMi(
+          kimlikVerisi,
+          'Randevularım',
+          navigasyon
+        ))
+      )
+        return redirect(navigasyon['Randevularım']![3]!)
       return new Response(
-        await renderToReadableStream(createElement(Randevularım), {
-          bootstrapScripts: ['/statik/randevularim.js']
-        }),
+        await renderToReadableStream(
+          createElement(Randevularım, { kimlikDurumu: kimlikVerisi[1] }),
+          {
+            bootstrapScripts: ['/statik/randevularim.js']
+          }
+        ),
         {
           headers: { 'Content-Type': 'text/html' }
         }
