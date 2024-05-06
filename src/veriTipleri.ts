@@ -13,7 +13,6 @@ type Navigasyon = {
 
 type Tablo = 'kişiler' | 'projeler'
 
-type Amaç = 'listele' | 'oku' | 'ekle' | 'güncelle' | 'sil'
 type ListelenenKişi = {
   id: number
   yönetici: boolean
@@ -83,7 +82,7 @@ type Durum =
       sayfa: number
       sayfaBoyutu: number
       arama: string
-      veri: DetaylıKişi | DetaylıProje
+      veri: DetaylıKişi | DetaylıProje | null
       yükleniyor: boolean
       hata: string
     }
