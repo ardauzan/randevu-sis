@@ -11,7 +11,14 @@ type Navigasyon = {
   ]
 }
 
-type Tablo = 'kişiler' | 'projeler'
+type Tablo =
+  | 'kişiler'
+  | 'projeler'
+  | 'gereçler'
+  | 'araçlar'
+  | 'randevular'
+  | 'tatiller'
+  | 'ziyaretler'
 
 type ListelenenKişi = {
   id: number
@@ -65,54 +72,38 @@ type OluşturulacakProje = {
   projeler: number[]
 }
 
-type Durum =
-  | {
-      tablo: Tablo
-      amaç: 'listele'
-      sayfa: number
-      sayfaBoyutu: number
-      arama: string
-      veri: ListelenenKişi[] | ListelenenProje[]
-      yükleniyor: boolean
-      hata: string
-    }
-  | {
-      tablo: Tablo
-      amaç: 'oku'
-      sayfa: number
-      sayfaBoyutu: number
-      arama: string
-      veri: DetaylıKişi | DetaylıProje | null
-      yükleniyor: boolean
-      hata: string
-    }
-  | {
-      tablo: Tablo
-      amaç: 'ekle'
-      sayfa: number
-      sayfaBoyutu: number
-      arama: string
-      veri: OluşturulacakKişi | OluşturulacakProje
-      yükleniyor: boolean
-      hata: string
-    }
-  | {
-      tablo: Tablo
-      amaç: 'güncelle'
-      sayfa: number
-      sayfaBoyutu: number
-      arama: string
-      veri: [id: number, OluşturulacakKişi] | [id: number, OluşturulacakKişi]
-      yükleniyor: boolean
-      hata: string
-    }
-  | {
-      tablo: Tablo
-      amaç: 'sil'
-      sayfa: number
-      sayfaBoyutu: number
-      arama: string
-      veri: number
-      yükleniyor: boolean
-      hata: string
-    }
+type OrtakDurum = {
+  tablo: Tablo
+  sayfa: number
+  sayfaBoyutu: number
+  arama: string
+  yükleniyor: boolean
+  hata: string
+}
+
+type ListeleDurum = {
+  amaç: 'listele'
+  veri: ListelenenKişi[] | ListelenenProje[]
+} & OrtakDurum
+
+type OkuDurum = {
+  amaç: 'oku'
+  veri: DetaylıKişi | DetaylıProje | null
+} & OrtakDurum
+
+type EkleDurum = {
+  amaç: 'ekle'
+  veri: OluşturulacakKişi | OluşturulacakProje
+} & OrtakDurum
+
+type GüncelleDurum = {
+  amaç: 'güncelle'
+  veri: [id: number, OluşturulacakKişi] | [id: number, OluşturulacakKişi]
+} & OrtakDurum
+
+type SilDurum = {
+  amaç: 'sil'
+  veri: number
+} & OrtakDurum
+
+type Durum = ListeleDurum | OkuDurum | EkleDurum | GüncelleDurum | SilDurum
