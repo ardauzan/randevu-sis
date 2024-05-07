@@ -13,8 +13,8 @@ import {
   emailVeŞifreİleKimlikDoğrula,
   kimlikVerisiniAl,
   kimlikVerisiSayfayıGörebilirMi,
-  kişileriListele,
-  kişileriSay
+  kişileriYöneticiİçinListele,
+  kişileriYöneticiİçinSay
 } from '@/sunucu/kütüphane'
 import navigasyon from '@/istemci/ortak/navigasyon'
 
@@ -32,6 +32,33 @@ export default function sunucuyuOluştur() {
         kimlik: t.String()
       })
     })
+    .onError(async ({ code, request: { method, headers }, jwt }) => {
+      if (code === 'NOT_FOUND' && method === 'GET') {
+        const cookie = headers.get('Cookie')?.split('=')[1]
+        const kimlik = cookie ? await jwt.verify(cookie) : null
+        const kimlikVerisi: KimlikVerisi = kimlik
+          ? await kimlikVerisiniAl(kimlik)
+          : [0, 'yok']
+        return new Response(
+          await renderToReadableStream(
+            createElement(Bulunamadı, {
+              kimlikDurumu: kimlikVerisi[1] ?? 'yok'
+            }),
+            {
+              bootstrapScripts: ['/statik/404.js']
+            }
+          ),
+          {
+            status: 404,
+            headers: { 'Content-Type': 'text/html;charset=utf-8' }
+          }
+        )
+      }
+      return new Response('Sunucu tarafında bir hata oluştu.', {
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        status: 500
+      })
+    })
     .get('/', async ({ cookie: { kimlik }, jwt }) => {
       const kimlikVerisi = await kimlikVerisiniAl(
         await jwt.verify(kimlik.value)
@@ -44,7 +71,7 @@ export default function sunucuyuOluştur() {
           }
         ),
         {
-          headers: { 'Content-Type': 'text/html' }
+          headers: { 'Content-Type': 'text/html;charset=utf-8' }
         }
       )
     })
@@ -60,7 +87,7 @@ export default function sunucuyuOluştur() {
           }
         ),
         {
-          headers: { 'Content-Type': 'text/html' }
+          headers: { 'Content-Type': 'text/html;charset=utf-8' }
         }
       )
     })
@@ -76,7 +103,7 @@ export default function sunucuyuOluştur() {
         ))
       )
         return redirect(navigasyon['Yönet']![3]!)
-      const kişiler = await kişileriListele('', 1, 10)
+      const kişiler = await kişileriYöneticiİçinListele('', 1, 10)
       const ilkDurum: Durum = {
         tablo: 'kişiler',
         amaç: 'listele',
@@ -92,7 +119,7 @@ export default function sunucuyuOluştur() {
           bootstrapScripts: ['/statik/yonet.js']
         }),
         {
-          headers: { 'Content-Type': 'text/html' }
+          headers: { 'Content-Type': 'text/html;charset=utf-8' }
         }
       )
     })
@@ -116,7 +143,7 @@ export default function sunucuyuOluştur() {
           }
         ),
         {
-          headers: { 'Content-Type': 'text/html' }
+          headers: { 'Content-Type': 'text/html;charset=utf-8' }
         }
       )
     })
@@ -140,7 +167,7 @@ export default function sunucuyuOluştur() {
           }
         ),
         {
-          headers: { 'Content-Type': 'text/html' }
+          headers: { 'Content-Type': 'text/html;charset=utf-8' }
         }
       )
     })
@@ -156,7 +183,13 @@ export default function sunucuyuOluştur() {
                 cookie: { kimlik }
               }) => {
                 const sonuç = await emailVeŞifreİleKimlikDoğrula(email, şifre)
-                if (sonuç === 'Kimlik doğrulanamadı.') return sonuç
+                if (sonuç === 'Kimlik doğrulanamadı.')
+                  return new Response(sonuç, {
+                    headers: {
+                      'Content-Type': 'text/plain;charset=utf-8'
+                    },
+                    status: 401
+                  })
                 kimlik.set({
                   value: await jwt.sign({ id: sonuç }),
                   httpOnly: true,
@@ -168,7 +201,11 @@ export default function sunucuyuOluştur() {
                     : undefined,
                   priority: 'high'
                 })
-                return 'Giriş yapıldı.'
+                return new Response('Giriş yapıldı.', {
+                  headers: {
+                    'Content-Type': 'text/plain;charset=utf-8'
+                  }
+                })
               },
               {
                 body: t.Object({
@@ -187,7 +224,11 @@ export default function sunucuyuOluştur() {
                 secure: true,
                 priority: 'high'
               })
-              return 'Çıkış yapıldı.'
+              return new Response('Çıkış yapıldı.', {
+                headers: {
+                  'Content-Type': 'text/plain;charset=utf-8'
+                }
+              })
             })
         })
         .group('/yonet', (app) => {
@@ -197,25 +238,36 @@ export default function sunucuyuOluştur() {
               query: { arama, sayfa, sayfaBoyutu },
               jwt,
               cookie: { kimlik }
-            }) => {
+            }): Promise<Response> => {
               const kimlikVerisi = await kimlikVerisiniAl(
                 await jwt.verify(kimlik.value)
               )
-              if (kimlikVerisi[1] !== 'yönetici') return 'Yönetici değilsiniz.'
-              const _arama = arama || ''
-              const _sayfa = sayfa || 1
-              const _sayfaBoyutu = sayfaBoyutu || 10
-              const kişiler = await kişileriListele(
-                _arama,
-                _sayfa,
-                _sayfaBoyutu
+              if (kimlikVerisi[1] !== 'yönetici')
+                return new Response('Yönetici değilsiniz.', {
+                  headers: {
+                    'Content-Type': 'text/plain;charset=utf-8'
+                  },
+                  status: 403
+                })
+              const sonrakiArama = arama || ''
+              const sonrakiSayfa = sayfa || 1
+              const sonrakiSayfaBoyutu = sayfaBoyutu || 10
+              const kişiler = await kişileriYöneticiİçinListele(
+                sonrakiArama,
+                sonrakiSayfa,
+                sonrakiSayfaBoyutu
               )
-              return {
-                toplam: await kişileriSay(_arama),
-                sayfa: _sayfa,
-                sayfaBoyutu: _sayfaBoyutu,
+              const sonuç = {
+                toplam: await kişileriYöneticiİçinSay(sonrakiArama),
+                sayfa: sonrakiSayfa,
+                sayfaBoyutu: sonrakiSayfaBoyutu,
                 içerik: kişiler
               }
+              return new Response(JSON.stringify(sonuç), {
+                headers: {
+                  'Content-Type': 'application/json;charset=utf-8'
+                }
+              })
             },
             {
               query: t.Object({
@@ -226,31 +278,6 @@ export default function sunucuyuOluştur() {
             }
           )
         })
-    })
-    .onError(async ({ code, request: { method, headers }, jwt }) => {
-      if (code === 'NOT_FOUND' && method === 'GET') {
-        const cookie = headers.get('Cookie')?.split('=')[1]
-        const kimlik = cookie ? await jwt.verify(cookie) : null
-        const kimlikVerisi: KimlikVerisi = kimlik
-          ? await kimlikVerisiniAl(kimlik)
-          : [0, 'yok']
-        return new Response(
-          await renderToReadableStream(
-            createElement(Bulunamadı, {
-              kimlikDurumu: kimlikVerisi[1] ?? 'yok'
-            }),
-            {
-              bootstrapScripts: ['/statik/404.js']
-            }
-          ),
-          {
-            headers: { 'Content-Type': 'text/html' }
-          }
-        )
-      }
-      return new Response('Sunucu tarafında bir hata oluştu.', {
-        status: 500
-      })
     })
     .listen(3000)
   console.info(

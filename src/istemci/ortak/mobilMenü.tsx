@@ -41,18 +41,21 @@ export default function MobilMenü({
                 kabulEdilenKimlikDurumları
               ) ? (
                 konum === adres ? (
-                  <span key={index} className="cursor-default text-gray-900">
-                    <section className="flex items-center justify-center">
-                      {ikon}
-                      <span>{sayfa}</span>
-                    </section>
+                  <span
+                    key={index}
+                    className="flex cursor-default items-center justify-center text-gray-900"
+                  >
+                    {ikon}
+                    {sayfa}
                   </span>
                 ) : (
-                  <a key={index} href={adres} className="text-white">
-                    <section className="flex items-center justify-center">
-                      {ikon}
-                      <span>{sayfa}</span>
-                    </section>
+                  <a
+                    key={index}
+                    href={adres}
+                    className="flex items-center justify-center text-white"
+                  >
+                    {ikon}
+                    {sayfa}
                   </a>
                 )
               ) : null
@@ -62,7 +65,7 @@ export default function MobilMenü({
       </nav>
       {kimlikDurumu !== 'yok' && (
         <button
-          className="mb-20 flex flex-col items-center justify-center text-white"
+          className="mb-20 flex items-center justify-center text-white"
           onClick={çıkışYap}
         >
           <LockOpenIcon className="size-8" />

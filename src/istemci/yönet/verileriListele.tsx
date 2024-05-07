@@ -1,10 +1,38 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import clsx from 'clsx'
 import Durum from '@/istemci/yönet/durum'
 import Yükleniyor from '@/istemci/ortak/yükleniyor'
+import { yöneticiİçinListele } from '@/istemci/kütüphane'
+import { tazele } from '@/istemci/yönet/aksiyonlar'
 
 export default function VerileriListele() {
-  const { durum } = useContext(Durum)
+  const { durum, aksiyonYayınla } = useContext(Durum)
+  useEffect(() => {
+    let tazeleReferans: Timer
+    const vazgeç = new AbortController()
+    const { signal } = vazgeç
+    if (durum.yükleniyor)
+      yöneticiİçinListele(
+        durum.tablo,
+        durum.arama,
+        durum.sayfa,
+        durum.sayfaBoyutu,
+        signal
+      ).then(
+        (veri) =>
+          aksiyonYayınla({ tip: 'LİSTELENDİ', değer: [durum.sayfa, veri] }),
+        (hata) => aksiyonYayınla({ tip: 'OLMADI', değer: [hata] })
+      )
+    else
+      tazeleReferans = setTimeout(() => {
+        aksiyonYayınla(tazele())
+      })
+    return () => {
+      clearTimeout(tazeleReferans)
+      vazgeç.abort()
+    }
+  }, [durum])
+
   return (
     <article className="mt-10 flex size-full flex-col p-2">
       {(durum as ListeleDurum).veri.length === 0 && durum.yükleniyor ? (

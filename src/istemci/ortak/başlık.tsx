@@ -46,18 +46,21 @@ export default function Başlık({
                 kabulEdilenKimlikDurumları
               ) ? (
                 konum === adres ? (
-                  <span key={index} className="cursor-default text-gray-900">
-                    <section className="flex flex-col items-center justify-center">
-                      {ikon}
-                      <span>{sayfa}</span>
-                    </section>
+                  <span
+                    key={index}
+                    className="flex flex-col items-center justify-center text-gray-900"
+                  >
+                    {ikon}
+                    {sayfa}
                   </span>
                 ) : (
-                  <a key={index} href={adres} className="text-white">
-                    <section className="flex flex-col items-center justify-center">
-                      {ikon}
-                      <span>{sayfa}</span>
-                    </section>
+                  <a
+                    key={index}
+                    href={adres}
+                    className="flex flex-col items-center justify-center text-white"
+                  >
+                    {ikon}
+                    {sayfa}
                   </a>
                 )
               ) : null

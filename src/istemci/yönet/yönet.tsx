@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useReducer } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 import clsx from 'clsx'
 import Başlık from '@/istemci/ortak/başlık'
 import İçerik from '@/istemci/yönet/içerik'
 import Altlık from '@/istemci/ortak/altlık'
 import MobilMenü from '@/istemci/ortak/mobilMenü'
+import HataEkranı from '@/istemci/ortak/hataEkranı'
 import Durum from '@/istemci/yönet/durum'
 import redüktör from '@/istemci/yönet/redüktör'
 
@@ -40,32 +42,34 @@ export default function Yönet(props: YönetProps) {
         <link rel="stylesheet" href="/statik/stiller.css" />
       </head>
       <body className="bg-gray-100">
-        <Başlık
-          konum="/yonet"
-          kimlikDurumu="yönetici"
-          setMobilMenüAçık={setMobilMenüAçık}
-        />
-        <section className="flex">
-          <MobilMenü
+        <ErrorBoundary fallback={<HataEkranı />}>
+          <Başlık
             konum="/yonet"
             kimlikDurumu="yönetici"
-            mobilMenüAçık={mobilMenüAçık}
             setMobilMenüAçık={setMobilMenüAçık}
           />
-          <section
-            className={clsx(
-              'fixed top-0 z-20 h-lvh w-screen backdrop-blur-md sm:hidden',
-              mobilMenüAçık && 'block',
-              !mobilMenüAçık && 'hidden'
-            )}
-            onClick={() => setMobilMenüAçık(false)}
-          />
-          <Durum.Provider value={{ durum, aksiyonYayınla }}>
-            <İçerik />
-          </Durum.Provider>
-        </section>
-        <Altlık />
-        <section />
+          <section className="flex">
+            <MobilMenü
+              konum="/yonet"
+              kimlikDurumu="yönetici"
+              mobilMenüAçık={mobilMenüAçık}
+              setMobilMenüAçık={setMobilMenüAçık}
+            />
+            <section
+              className={clsx(
+                'fixed top-0 z-20 h-lvh w-screen backdrop-blur-md sm:hidden',
+                mobilMenüAçık && 'block',
+                !mobilMenüAçık && 'hidden'
+              )}
+              onClick={() => setMobilMenüAçık(false)}
+            />
+            <Durum.Provider value={{ durum, aksiyonYayınla }}>
+              <İçerik />
+            </Durum.Provider>
+          </section>
+          <Altlık />
+          <section />
+        </ErrorBoundary>
       </body>
     </html>
   )

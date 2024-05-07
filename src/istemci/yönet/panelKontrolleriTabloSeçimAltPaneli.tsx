@@ -10,7 +10,7 @@ import {
   UserGroupIcon
 } from '@heroicons/react/16/solid'
 import Durum from '@/istemci/yönet/durum'
-import { tabloDeğiştirBaşlat } from '@/istemci/yönet/aksiyonlar'
+import { tabloDeğiştir } from '@/istemci/yönet/aksiyonlar'
 
 export interface PanelKontrolleriTabloSeçimAltPaneliProps {
   readonly kontrollerGörünüyor?: boolean
@@ -32,7 +32,7 @@ export default function PanelKontrolleriTabloSeçimAltPaneli({
         <button
           disabled={durum.tablo === 'kişiler'}
           className="flex text-center font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline disabled:text-gray-900 disabled:no-underline disabled:hover:text-gray-900"
-          onClick={() => aksiyonYayınla(tabloDeğiştirBaşlat('kişiler'))}
+          onClick={() => aksiyonYayınla(tabloDeğiştir('kişiler'))}
         >
           <UserCircleIcon className="size-4" />
           Kişiler
@@ -42,7 +42,7 @@ export default function PanelKontrolleriTabloSeçimAltPaneli({
         <button
           disabled={durum.tablo === 'projeler'}
           className="flex text-center font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline disabled:text-gray-900 disabled:no-underline disabled:hover:text-gray-900"
-          onClick={() => aksiyonYayınla(tabloDeğiştirBaşlat('projeler'))}
+          onClick={() => aksiyonYayınla(tabloDeğiştir('projeler'))}
         >
           <ClipboardDocumentListIcon className="size-4" />
           Projeler
@@ -52,7 +52,7 @@ export default function PanelKontrolleriTabloSeçimAltPaneli({
         <button
           disabled={durum.tablo === 'gereçler'}
           className="flex text-center font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline disabled:text-gray-900 disabled:no-underline disabled:hover:text-gray-900"
-          onClick={() => aksiyonYayınla(tabloDeğiştirBaşlat('gereçler'))}
+          onClick={() => aksiyonYayınla(tabloDeğiştir('gereçler'))}
         >
           <WrenchIcon className="size-4" />
           Gereçler
@@ -62,7 +62,7 @@ export default function PanelKontrolleriTabloSeçimAltPaneli({
         <button
           disabled={durum.tablo === 'araçlar'}
           className="flex text-center font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline disabled:text-gray-900 disabled:no-underline disabled:hover:text-gray-900"
-          onClick={() => aksiyonYayınla(tabloDeğiştirBaşlat('araçlar'))}
+          onClick={() => aksiyonYayınla(tabloDeğiştir('araçlar'))}
         >
           <CpuChipIcon className="size-4" />
           Araçlar
@@ -72,7 +72,7 @@ export default function PanelKontrolleriTabloSeçimAltPaneli({
         <button
           disabled={durum.tablo === 'randevular'}
           className="flex text-center font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline disabled:text-gray-900 disabled:no-underline disabled:hover:text-gray-900"
-          onClick={() => aksiyonYayınla(tabloDeğiştirBaşlat('randevular'))}
+          onClick={() => aksiyonYayınla(tabloDeğiştir('randevular'))}
         >
           <CalendarIcon className="size-4" />
           Randevular
@@ -82,7 +82,7 @@ export default function PanelKontrolleriTabloSeçimAltPaneli({
         <button
           disabled={durum.tablo === 'tatiller'}
           className="flex text-center font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline disabled:text-gray-900 disabled:no-underline disabled:hover:text-gray-900"
-          onClick={() => aksiyonYayınla(tabloDeğiştirBaşlat('tatiller'))}
+          onClick={() => aksiyonYayınla(tabloDeğiştir('tatiller'))}
         >
           <FaceSmileIcon className="size-4" />
           Tatiller
@@ -92,7 +92,7 @@ export default function PanelKontrolleriTabloSeçimAltPaneli({
         <button
           disabled={durum.tablo === 'ziyaretler'}
           className="flex text-center font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline disabled:text-gray-900 disabled:no-underline disabled:hover:text-gray-900"
-          onClick={() => aksiyonYayınla(tabloDeğiştirBaşlat('ziyaretler'))}
+          onClick={() => aksiyonYayınla(tabloDeğiştir('ziyaretler'))}
         >
           <UserGroupIcon className="size-4" />
           Ziyaretler

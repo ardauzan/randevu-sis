@@ -32,7 +32,7 @@ export async function kimlikVerisiSayfayıGörebilirMi(
   sayfa: string,
   navigasyon: Navigasyon
 ): Promise<boolean> {
-  const [_, durum] = kimlikVerisi
+  const [_id, durum] = kimlikVerisi
   return navigasyon[sayfa]![2].includes(durum)
 }
 export async function emailVeŞifreİleKimlikDoğrula(
@@ -55,7 +55,7 @@ export async function emailVeŞifreİleKimlikDoğrula(
 }
 
 //# Veritabanı
-export async function kişileriSay(arama: string): Promise<number> {
+export async function kişileriYöneticiİçinSay(arama: string): Promise<number> {
   const sonuç = await veritabanı
     .select({ count: count() })
     .from(kişiler)
@@ -68,7 +68,7 @@ export async function kişileriSay(arama: string): Promise<number> {
     )
   return sonuç[0]!.count
 }
-export async function kişileriListele(
+export async function kişileriYöneticiİçinListele(
   arama: string,
   sayfa: number,
   sayfaBoyutu: number

@@ -16,6 +16,7 @@ type Tablo =
   | 'randevular'
   | 'tatiller'
   | 'ziyaretler'
+type ListelenenVeri = ListelenenKişi | ListelenenProje
 type ListelenenKişi = {
   öğrenciNo: number
   ad: string
