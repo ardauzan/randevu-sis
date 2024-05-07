@@ -64,24 +64,21 @@ export default function Başlık({
             }
           )}
         </nav>
-        <section className="flex gap-4">
-          {kimlikDurumu !== 'yok' && (
-            <button
-              className="flex flex-col items-center justify-center text-white"
-              onClick={çıkışYap}
-            >
-              <LockOpenIcon className="size-8" />
-              Çıkış yap
-            </button>
-          )}
+        {kimlikDurumu !== 'yok' && (
           <button
-            className="flex flex-col items-center justify-center text-white sm:hidden"
-            onClick={() => setMobilMenüAçık(true)}
+            className="hidden flex-col items-center justify-center text-white sm:flex"
+            onClick={çıkışYap}
           >
-            <Bars3Icon className="size-8" />
-            Menü
+            <LockOpenIcon className="size-8" />
+            Çıkış yap
           </button>
-        </section>
+        )}
+        <button
+          className="contents text-white sm:hidden"
+          onClick={() => setMobilMenüAçık(true)}
+        >
+          <Bars3Icon className="size-8" />
+        </button>
       </section>
     </header>
   )

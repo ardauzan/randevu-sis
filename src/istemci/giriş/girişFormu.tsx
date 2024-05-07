@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import GeriBildirim from '@/istemci/ortak/geriBildirim'
+import { girişYap } from '@/istemci/kütüphane'
 
 export default function GirişFormu() {
   const [email, setEmail] = useState('')
@@ -17,19 +18,8 @@ export default function GirişFormu() {
       <form
         onSubmit={async (e) => {
           e.preventDefault()
-          const sonuç = await fetch('/api/kimlik/giris', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            credentials: 'same-origin',
-            body: JSON.stringify({
-              email,
-              şifre,
-              beniHatırla
-            })
-          })
-          const veri = await sonuç.text()
+          const sonuç = await girişYap(email, şifre, beniHatırla)
+          const veri = sonuç
           if (veri === başarısızlıkMesajı) {
             setHataGeriBildiriminiGöster(true)
             setTimeout(() => {

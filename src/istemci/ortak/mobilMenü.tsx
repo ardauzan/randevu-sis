@@ -1,8 +1,8 @@
 import React from 'react'
 import clsx from 'clsx'
-import { XMarkIcon } from '@heroicons/react/20/solid'
+import { XMarkIcon, LockOpenIcon } from '@heroicons/react/20/solid'
 import navigasyon from '@/istemci/ortak/navigasyon'
-import { geçerliKimlikDurumuKabulEdiliyor } from '@/istemci/kütüphane'
+import { geçerliKimlikDurumuKabulEdiliyor, çıkışYap } from '@/istemci/kütüphane'
 
 export interface GenelNavigasyonYanMenüProps {
   readonly konum: string
@@ -60,6 +60,15 @@ export default function MobilMenü({
           )}
         </section>
       </nav>
+      {kimlikDurumu !== 'yok' && (
+        <button
+          className="mb-20 flex flex-col items-center justify-center text-white"
+          onClick={çıkışYap}
+        >
+          <LockOpenIcon className="size-8" />
+          Çıkış yap
+        </button>
+      )}
     </aside>
   )
 }
