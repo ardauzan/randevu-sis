@@ -14,7 +14,7 @@ import {
   kimlikVerisiniAl,
   kimlikVerisiSayfayıGörebilirMi,
   kişileriListele,
-  kişilerSay
+  kişileriSay
 } from '@/sunucu/kütüphane'
 import navigasyon from '@/istemci/ortak/navigasyon'
 
@@ -211,7 +211,9 @@ export default function sunucuyuOluştur() {
                 _sayfaBoyutu
               )
               return {
-                toplam: await kişilerSay(_arama),
+                toplam: await kişileriSay(_arama),
+                sayfa: _sayfa,
+                sayfaBoyutu: _sayfaBoyutu,
                 içerik: kişiler
               }
             },

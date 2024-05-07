@@ -36,7 +36,7 @@ export default function Bulunamadı(props: BulunamadıProps) {
         <link rel="icon" href="/statik/favicon.ico" />
         <link rel="stylesheet" href="/statik/stiller.css" />
       </head>
-      <body>
+      <body className="bg-gray-100">
         <Başlık
           konum="/404"
           kimlikDurumu={kimlikDurumu}

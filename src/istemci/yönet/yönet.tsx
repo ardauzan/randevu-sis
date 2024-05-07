@@ -25,6 +25,7 @@ export default function Yönet(props: YönetProps) {
     window.addEventListener('resize', handleResize, { passive: true })
     return () => window.removeEventListener('resize', handleResize)
   }, [])
+
   return (
     <html lang="tr" data-props={JSON.stringify(props)}>
       <head>
@@ -38,7 +39,7 @@ export default function Yönet(props: YönetProps) {
         <link rel="icon" href="/statik/favicon.ico" />
         <link rel="stylesheet" href="/statik/stiller.css" />
       </head>
-      <body>
+      <body className="bg-gray-100">
         <Başlık
           konum="/yonet"
           kimlikDurumu="yönetici"

@@ -36,7 +36,7 @@ export default function Randevularım(props: RandevularımProps) {
         <link rel="icon" href="/statik/favicon.ico" />
         <link rel="stylesheet" href="/statik/stiller.css" />
       </head>
-      <body>
+      <body className="bg-gray-100">
         <Başlık
           konum="/randevularim"
           kimlikDurumu={kimlikDurumu}
