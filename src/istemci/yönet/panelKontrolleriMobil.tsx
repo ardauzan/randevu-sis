@@ -30,7 +30,7 @@ export default function PanelKontrolleriMobil() {
   return (
     <article
       className={clsx(
-        'absolute z-10 block w-full overflow-visible rounded-lg bg-gray-300 sm:hidden'
+        'absolute z-10 -mt-4 block w-full overflow-visible rounded-lg bg-gray-300 sm:hidden'
       )}
     >
       <section

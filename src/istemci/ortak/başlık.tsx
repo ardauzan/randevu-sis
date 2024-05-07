@@ -15,7 +15,7 @@ export default function Başlık({
   setMobilMenüAçık
 }: BaşlıkProps) {
   return (
-    <header className="bg-blue-500 py-4">
+    <header className="bg-blue-500 px-2 py-4">
       <section className="container mx-auto flex w-full items-center justify-between px-4">
         {konum === '/' ? (
           <span className="contents">

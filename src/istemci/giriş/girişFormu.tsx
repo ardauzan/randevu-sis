@@ -10,7 +10,7 @@ export default function GirişFormu() {
     useState(false)
   const başarısızlıkMesajı = 'Kimlik doğrulanamadı.'
   return (
-    <section className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
+    <article className="mt-6 w-full max-w-md rounded-lg bg-white p-8 shadow-md">
       <h1 className="mb-6 text-center font-mono text-2xl font-semibold tracking-tight">
         SDÜ Randevu Sistemi'ne giriş yap
       </h1>
@@ -128,6 +128,6 @@ export default function GirişFormu() {
         tip="başarısız"
         mesajıKapat={() => setHataGeriBildiriminiGöster(false)}
       />
-    </section>
+    </article>
   )
 }
