@@ -18,6 +18,7 @@ type Tablo =
   | 'ziyaretler'
 type ListelenenVeri = ListelenenKişi | ListelenenProje
 type ListelenenKişi = {
+  id: number
   öğrenciNo: number
   ad: string
   soyAd: string
@@ -35,10 +36,12 @@ type DetaylıKişi = {
 }
 type OluşturulacakKişi = {
   yönetici: boolean
+  öğrenciNo: number
   ad: string
-  soyad: string
+  soyAd: string
   email: string
   şifre: string
+  projeler: number[]
 }
 type ListelenenProje = {
   id: number
@@ -60,7 +63,7 @@ type OluşturulacakProje = {
   başlangıçTarihi: string
   bitişTarihi: string
   açıklama: string
-  projeler: number[]
+  üyeler: number[]
 }
 
 //# Durum

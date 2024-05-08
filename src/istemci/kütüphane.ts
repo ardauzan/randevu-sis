@@ -24,7 +24,7 @@ export async function girişYap(
       beniHatırla
     })
   })
-  return sonuç.text() as Promise<'Giriş yapıldı.' | 'Kimlik doğrulanamadı.'>
+  return sonuç.json() as Promise<'Giriş yapıldı.' | 'Kimlik doğrulanamadı.'>
 }
 export async function çıkışYap(): Promise<void> {
   await fetch('/api/kimlik/cikis', {
@@ -56,7 +56,7 @@ export async function yöneticiİçinListele(
       credentials: 'same-origin'
     }
   )
-  if (!sonuç.ok) return sonuç.text()
+  if (!sonuç.ok) return sonuç.json()
   return sonuç.json() as Promise<{
     toplam: number
     sayfa: number

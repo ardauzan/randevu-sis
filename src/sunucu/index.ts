@@ -13,8 +13,12 @@ import {
   emailVeŞifreİleKimlikDoğrula,
   kimlikVerisiniAl,
   kimlikVerisiSayfayıGörebilirMi,
+  kişileriYöneticiİçinSay,
   kişileriYöneticiİçinListele,
-  kişileriYöneticiİçinSay
+  kişiyiYöneticiİçinDetaylıOku,
+  yöneticiİçinKişiEkle,
+  yöneticiİçinKişiGüncelle,
+  yöneticiİçinKişiSil
 } from '@/sunucu/kütüphane'
 import navigasyon from '@/istemci/ortak/navigasyon'
 
@@ -39,23 +43,22 @@ export default function sunucuyuOluştur() {
         const kimlikVerisi: KimlikVerisi = kimlik
           ? await kimlikVerisiniAl(kimlik)
           : [0, 'yok']
-        return new Response(
-          await renderToReadableStream(
-            createElement(Bulunamadı, {
-              kimlikDurumu: kimlikVerisi[1] ?? 'yok'
-            }),
-            {
-              bootstrapScripts: ['/statik/404.js']
-            }
-          ),
+        const cevap = await renderToReadableStream(
+          createElement(Bulunamadı, {
+            kimlikDurumu: kimlikVerisi[1] ?? 'yok'
+          }),
           {
-            status: 404,
-            headers: { 'Content-Type': 'text/html;charset=utf-8' }
+            bootstrapScripts: ['/statik/404.js']
           }
         )
+        return new Response(cevap, {
+          status: 404,
+          headers: { 'Content-Type': 'text/html;charset=utf-8' }
+        })
       }
-      return new Response('Sunucu tarafında bir hata oluştu.', {
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      const cevap = await JSON.stringify('Sunucu tarafında bir hata oluştu.')
+      return new Response(cevap, {
+        headers: { 'Content-Type': 'application/json;charset=utf-8' },
         status: 500
       })
     })
@@ -63,33 +66,29 @@ export default function sunucuyuOluştur() {
       const kimlikVerisi = await kimlikVerisiniAl(
         await jwt.verify(kimlik.value)
       )
-      return new Response(
-        await renderToReadableStream(
-          createElement(Anasayfa, { kimlikDurumu: kimlikVerisi[1] }),
-          {
-            bootstrapScripts: ['/statik/anasayfa.js']
-          }
-        ),
+      const cevap = await renderToReadableStream(
+        createElement(Anasayfa, { kimlikDurumu: kimlikVerisi[1] }),
         {
-          headers: { 'Content-Type': 'text/html;charset=utf-8' }
+          bootstrapScripts: ['/statik/anasayfa.js']
         }
       )
+      return new Response(cevap, {
+        headers: { 'Content-Type': 'text/html;charset=utf-8' }
+      })
     })
     .get('/bilgilendirme', async ({ cookie: { kimlik }, jwt }) => {
       const kimlikVerisi = await kimlikVerisiniAl(
         await jwt.verify(kimlik.value)
       )
-      return new Response(
-        await renderToReadableStream(
-          createElement(Bilgilendirme, { kimlikDurumu: kimlikVerisi[1] }),
-          {
-            bootstrapScripts: ['/statik/bilgilendirme.js']
-          }
-        ),
+      const cevap = await renderToReadableStream(
+        createElement(Bilgilendirme, { kimlikDurumu: kimlikVerisi[1] }),
         {
-          headers: { 'Content-Type': 'text/html;charset=utf-8' }
+          bootstrapScripts: ['/statik/bilgilendirme.js']
         }
       )
+      return new Response(cevap, {
+        headers: { 'Content-Type': 'text/html;charset=utf-8' }
+      })
     })
     .get('/yonet', async ({ cookie: { kimlik }, jwt, redirect }) => {
       const kimlikVerisi = await kimlikVerisiniAl(
@@ -114,14 +113,15 @@ export default function sunucuyuOluştur() {
         yükleniyor: false,
         hata: ''
       }
-      return new Response(
-        await renderToReadableStream(createElement(Yönet, { ilkDurum }), {
-          bootstrapScripts: ['/statik/yonet.js']
-        }),
+      const cevap = await renderToReadableStream(
+        createElement(Yönet, { ilkDurum }),
         {
-          headers: { 'Content-Type': 'text/html;charset=utf-8' }
+          bootstrapScripts: ['/statik/yonet.js']
         }
       )
+      return new Response(cevap, {
+        headers: { 'Content-Type': 'text/html;charset=utf-8' }
+      })
     })
     .get('/randevularim', async ({ cookie: { kimlik }, jwt, redirect }) => {
       const kimlikVerisi = await kimlikVerisiniAl(
@@ -135,17 +135,15 @@ export default function sunucuyuOluştur() {
         ))
       )
         return redirect(navigasyon['Randevularım']![3]!)
-      return new Response(
-        await renderToReadableStream(
-          createElement(Randevularım, { kimlikDurumu: kimlikVerisi[1] }),
-          {
-            bootstrapScripts: ['/statik/randevularim.js']
-          }
-        ),
+      const cevap = await renderToReadableStream(
+        createElement(Randevularım, { kimlikDurumu: kimlikVerisi[1] }),
         {
-          headers: { 'Content-Type': 'text/html;charset=utf-8' }
+          bootstrapScripts: ['/statik/randevularim.js']
         }
       )
+      return new Response(cevap, {
+        headers: { 'Content-Type': 'text/html;charset=utf-8' }
+      })
     })
     .get('/giris', async ({ cookie: { kimlik }, jwt, redirect }) => {
       const kimlikVerisi = await kimlikVerisiniAl(
@@ -159,17 +157,15 @@ export default function sunucuyuOluştur() {
         ))
       )
         return redirect(navigasyon['Giriş']![3]!)
-      return new Response(
-        await renderToReadableStream(
-          createElement(Giriş, { kimlikDurumu: kimlikVerisi[1] }),
-          {
-            bootstrapScripts: ['/statik/giris.js']
-          }
-        ),
+      const cevap = await renderToReadableStream(
+        createElement(Giriş, { kimlikDurumu: kimlikVerisi[1] }),
         {
-          headers: { 'Content-Type': 'text/html;charset=utf-8' }
+          bootstrapScripts: ['/statik/giris.js']
         }
       )
+      return new Response(cevap, {
+        headers: { 'Content-Type': 'text/html;charset=utf-8' }
+      })
     })
     .group('/api', (app) => {
       return app
@@ -183,13 +179,15 @@ export default function sunucuyuOluştur() {
                 cookie: { kimlik }
               }) => {
                 const sonuç = await emailVeŞifreİleKimlikDoğrula(email, şifre)
-                if (sonuç === 'Kimlik doğrulanamadı.')
-                  return new Response(sonuç, {
+                if (sonuç === 'Kimlik doğrulanamadı.') {
+                  const cevap = await JSON.stringify(sonuç)
+                  return new Response(cevap, {
                     headers: {
-                      'Content-Type': 'text/plain;charset=utf-8'
+                      'Content-Type': 'application/json;charset=utf-8'
                     },
                     status: 401
                   })
+                }
                 kimlik.set({
                   value: await jwt.sign({ id: sonuç }),
                   httpOnly: true,
@@ -201,9 +199,10 @@ export default function sunucuyuOluştur() {
                     : undefined,
                   priority: 'high'
                 })
-                return new Response('Giriş yapıldı.', {
+                const cevap = await JSON.stringify('Giriş yapıldı.')
+                return new Response(cevap, {
                   headers: {
-                    'Content-Type': 'text/plain;charset=utf-8'
+                    'Content-Type': 'application/json;charset=utf-8'
                   }
                 })
               },
@@ -224,59 +223,182 @@ export default function sunucuyuOluştur() {
                 secure: true,
                 priority: 'high'
               })
-              return new Response('Çıkış yapıldı.', {
+              const cevap = await JSON.stringify('Çıkış yapıldı.')
+              return new Response(cevap, {
                 headers: {
-                  'Content-Type': 'text/plain;charset=utf-8'
+                  'Content-Type': 'application/json;charset=utf-8'
                 }
               })
             })
         })
         .group('/yonet', (app) => {
-          return app.get(
-            '/kisiler',
-            async ({
-              query: { arama, sayfa, sayfaBoyutu },
-              jwt,
-              cookie: { kimlik }
-            }): Promise<Response> => {
-              const kimlikVerisi = await kimlikVerisiniAl(
-                await jwt.verify(kimlik.value)
-              )
-              if (kimlikVerisi[1] !== 'yönetici')
-                return new Response('Yönetici değilsiniz.', {
-                  headers: {
-                    'Content-Type': 'text/plain;charset=utf-8'
-                  },
-                  status: 403
-                })
-              const sonrakiArama = arama || ''
-              const sonrakiSayfa = sayfa || 1
-              const sonrakiSayfaBoyutu = sayfaBoyutu || 10
-              const kişiler = await kişileriYöneticiİçinListele(
-                sonrakiArama,
-                sonrakiSayfa,
-                sonrakiSayfaBoyutu
-              )
-              const sonuç = {
-                toplam: await kişileriYöneticiİçinSay(sonrakiArama),
-                sayfa: sonrakiSayfa,
-                sayfaBoyutu: sonrakiSayfaBoyutu,
-                içerik: kişiler
-              }
-              return new Response(JSON.stringify(sonuç), {
-                headers: {
-                  'Content-Type': 'application/json;charset=utf-8'
+          return app
+            .get(
+              '/kisiler',
+              async ({
+                query: { arama, sayfa, sayfaBoyutu },
+                jwt,
+                cookie: { kimlik }
+              }) => {
+                const kimlikVerisi = await kimlikVerisiniAl(
+                  await jwt.verify(kimlik.value)
+                )
+                if (kimlikVerisi[1] !== 'yönetici') {
+                  const cevap = await JSON.stringify('Yönetici değilsiniz.')
+                  return new Response(cevap, {
+                    headers: {
+                      'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    status: 403
+                  })
                 }
-              })
-            },
-            {
-              query: t.Object({
-                arama: t.Optional(t.String()),
-                sayfa: t.Optional(t.Numeric()),
-                sayfaBoyutu: t.Optional(t.Numeric())
-              })
-            }
-          )
+                const sonrakiArama = arama || ''
+                const sonrakiSayfa = sayfa || 1
+                const sonrakiSayfaBoyutu = sayfaBoyutu || 10
+                const kişiler = await kişileriYöneticiİçinListele(
+                  sonrakiArama,
+                  sonrakiSayfa,
+                  sonrakiSayfaBoyutu
+                )
+                const cevap = await JSON.stringify({
+                  toplam: await kişileriYöneticiİçinSay(sonrakiArama),
+                  sayfa: sonrakiSayfa,
+                  sayfaBoyutu: sonrakiSayfaBoyutu,
+                  içerik: kişiler
+                })
+                return new Response(cevap, {
+                  headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                  }
+                })
+              },
+              {
+                query: t.Object({
+                  arama: t.Optional(t.String()),
+                  sayfa: t.Optional(t.Numeric()),
+                  sayfaBoyutu: t.Optional(t.Numeric())
+                })
+              }
+            )
+            .get(
+              '/kisiler/:id',
+              async ({ params: { id }, jwt, cookie: { kimlik } }) => {
+                const kimlikVerisi = await kimlikVerisiniAl(
+                  await jwt.verify(kimlik.value)
+                )
+                if (kimlikVerisi[1] !== 'yönetici') {
+                  const cevap = await JSON.stringify('Yönetici değilsiniz.')
+                  return new Response(cevap, {
+                    headers: {
+                      'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    status: 403
+                  })
+                }
+                const detaylıKişiYadaNull =
+                  await kişiyiYöneticiİçinDetaylıOku(id)
+                const cevap = await JSON.stringify(
+                  detaylıKişiYadaNull ? detaylıKişiYadaNull : 'Kişi bulunamadı.'
+                )
+                return new Response(cevap, {
+                  headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                  }
+                })
+              },
+              {
+                params: t.Object({
+                  id: t.Numeric()
+                })
+              }
+            )
+            .post(
+              '/kisiler',
+              async ({
+                body: { yönetici, öğrenciNo, ad, soyAd, email, şifre, projeler }
+              }) => {
+                const sonuç = await yöneticiİçinKişiEkle({
+                  yönetici,
+                  öğrenciNo,
+                  ad,
+                  soyAd,
+                  email,
+                  şifre,
+                  projeler
+                })
+                const cevap = await JSON.stringify(sonuç)
+                return new Response(cevap, {
+                  headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                  }
+                })
+              },
+              {
+                body: t.Object({
+                  yönetici: t.Boolean(),
+                  öğrenciNo: t.Numeric(),
+                  ad: t.String(),
+                  soyAd: t.String(),
+                  email: t.String(),
+                  şifre: t.String(),
+                  projeler: t.Array(t.Numeric())
+                })
+              }
+            )
+            .patch(
+              '/kisiler/:id',
+              async ({
+                params: { id },
+                body: { yönetici, öğrenciNo, ad, soyAd, email, şifre, projeler }
+              }) => {
+                const sonuç = await yöneticiİçinKişiGüncelle(id, {
+                  yönetici,
+                  öğrenciNo,
+                  ad,
+                  soyAd,
+                  email,
+                  şifre,
+                  projeler
+                })
+                const cevap = await JSON.stringify(sonuç)
+                return new Response(cevap, {
+                  headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                  }
+                })
+              },
+              {
+                params: t.Object({
+                  id: t.Numeric()
+                }),
+                body: t.Object({
+                  yönetici: t.Boolean(),
+                  öğrenciNo: t.Numeric(),
+                  ad: t.String(),
+                  soyAd: t.String(),
+                  email: t.String(),
+                  şifre: t.String(),
+                  projeler: t.Array(t.Numeric())
+                })
+              }
+            )
+            .delete(
+              '/kisiler/:id',
+              async ({ params: { id } }) => {
+                const sonuç = await yöneticiİçinKişiSil(id)
+                const cevap = await JSON.stringify(sonuç)
+                return new Response(cevap, {
+                  headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                  }
+                })
+              },
+              {
+                params: t.Object({
+                  id: t.Numeric()
+                })
+              }
+            )
         })
     })
     .listen(3000)

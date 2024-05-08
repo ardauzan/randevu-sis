@@ -41,6 +41,21 @@ const main = async () => {
           '$argon2id$v=19$m=65536,t=2,p=1$V8GZjeEzEVK5GXwdKif5adspNmSjxPdqzGxg8GG6D7Q$MfhKjRc0iP+E7K02fWAdhE+Yf2Izx5rEf8/ICBpSNtU' //# Şifre: test1234
       }
     ])
+    await veritabanı.insert(projeler).values([
+      {
+        id: 1,
+        ad: 'Proje 1',
+        başlangıçTarihi: '2021-01-01',
+        bitişTarihi: '2021-12-31',
+        açıklama: 'Proje 1 açıklama'
+      }
+    ])
+    await veritabanı.insert(kişilerProjeler).values([
+      {
+        üye: 1,
+        proje: 1
+      }
+    ])
     console.info('Veritabanı sıfırlandı ve örnek veriler eklendi.')
     process.exit(0)
   } catch (error) {

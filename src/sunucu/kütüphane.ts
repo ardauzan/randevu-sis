@@ -1,6 +1,6 @@
 import { eq, like, or, count } from 'drizzle-orm'
 import veritabanı from '@/veritabanı'
-import { kişiler } from '@/veritabanı/şema'
+import { kişiler, projeler, kişilerProjeler } from '@/veritabanı/şema'
 
 //# Kimlik
 export function değerKimlikÇerezininMisalimi(
@@ -82,12 +82,123 @@ export async function kişileriYöneticiİçinListele(
     offset: (sayfa - 1) * sayfaBoyutu,
     limit: sayfaBoyutu,
     columns: {
+      id: true,
       öğrenciNo: true,
       ad: true,
       soyAd: true,
       email: true
     }
   })
+}
+
+export async function kişiyiYöneticiİçinDetaylıOku(
+  id: number
+): Promise<DetaylıKişi | null> {
+  const res = await veritabanı.query.kişiler.findFirst({
+    where: eq(kişiler.id, id),
+    columns: {
+      id: true,
+      yönetici: true,
+      öğrenciNo: true,
+      ad: true,
+      soyAd: true,
+      email: true,
+      şifreHash: true
+    },
+    with: {
+      projeler: {
+        columns: {
+          proje: true
+        },
+        with: {
+          proje: {
+            columns: {
+              id: true,
+              ad: true,
+              başlangıçTarihi: true,
+              bitişTarihi: true,
+              açıklama: true
+            }
+          }
+        }
+      }
+    }
+  })
+  if (!res) return null
+  return {
+    id: res.id,
+    yönetici: res.yönetici,
+    öğrenciNo: res.öğrenciNo,
+    ad: res.ad,
+    soyad: res.soyAd,
+    email: res.email,
+    şifreHash: res.şifreHash,
+    projeler: res.projeler.map((p) => p.proje)
+  }
+}
+
+export async function yöneticiİçinKişiEkle(
+  oluşturulacakKişi: OluşturulacakKişi
+): Promise<'Kişi eklendi.'> {
+  const { şifre, projeler, ...kişi } = oluşturulacakKişi
+  const şifresiHashlenmişOluşturulacakKişi = {
+    ...kişi,
+    şifreHash: await stringiHashle(şifre)
+  }
+  await veritabanı.transaction(async (tx) => {
+    const sonuç = await tx
+      .insert(kişiler)
+      .values([şifresiHashlenmişOluşturulacakKişi])
+      .returning({ id: kişiler.id })
+    if (projeler.length)
+      await tx.insert(kişilerProjeler).values(
+        projeler.map((proje) => ({
+          üye: sonuç[0]!.id,
+          proje
+        }))
+      )
+  })
+  return 'Kişi eklendi.'
+}
+
+export async function yöneticiİçinKişiGüncelle(
+  id: number,
+  güncellenecekKişi: OluşturulacakKişi
+): Promise<'Kişi güncellendi.'> {
+  const { şifre, projeler, ...kişi } = güncellenecekKişi
+  const şifresiHashlenmişGüncellenecekKişi = {
+    ...kişi,
+    ...(şifre && { şifreHash: await stringiHashle(şifre) })
+  }
+  await veritabanı.transaction(async (tx) => {
+    await tx
+      .update(kişiler)
+      .set(şifresiHashlenmişGüncellenecekKişi)
+      .where(eq(kişiler.id, id))
+    await tx.delete(kişilerProjeler).where(eq(kişilerProjeler.üye, id))
+    if (projeler.length)
+      await tx.insert(kişilerProjeler).values(
+        projeler.map((proje) => ({
+          üye: id,
+          proje
+        }))
+      )
+  })
+  return 'Kişi güncellendi.'
+}
+
+export async function yöneticiİçinKişiSil(
+  id: number
+): Promise<'Kişi silindi.'> {
+  await veritabanı.transaction(async (tx) => {
+    await tx.delete(kişilerProjeler).where(eq(kişilerProjeler.üye, id))
+    const sonuç = await tx
+      .delete(kişiler)
+      .where(eq(kişiler.id, id))
+      .returning({ id: kişiler.id })
+    if (!sonuç.length) await tx.rollback()
+  })
+  return 'Kişi silindi.'
 }
 
 //# Diğer
