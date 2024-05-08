@@ -39,15 +39,12 @@ export async function yöneticiİçinListele(
   sayfa: number,
   sayfaBoyutu: number,
   _iptal: AbortSignal
-): Promise<
-  | {
-      toplam: number
-      sayfa: number
-      sayfaBoyutu: number
-      içerik: ListelenenVeri
-    }
-  | string
-> {
+): Promise<{
+  toplam: number
+  sayfa: number
+  sayfaBoyutu: number
+  içerik: ListelenenVeri
+}> {
   const sonuç: Response = await fetch(
     `/api/yonet/${ingilizceAlfabeyeÇevir(tablo)}?arama=${arama}&sayfa=${sayfa}&sayfaBoyutu=${sayfaBoyutu}`,
     {
@@ -56,7 +53,7 @@ export async function yöneticiİçinListele(
       credentials: 'same-origin'
     }
   )
-  if (!sonuç.ok) return sonuç.json()
+  if (!sonuç.ok) throw new Error(await sonuç.json())
   return sonuç.json() as Promise<{
     toplam: number
     sayfa: number

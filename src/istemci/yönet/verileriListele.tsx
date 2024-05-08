@@ -20,7 +20,10 @@ export default function VerileriListele() {
         signal
       ).then(
         (veri) =>
-          aksiyonYayınla({ tip: 'LİSTELENDİ', değer: [durum.sayfa, veri] }),
+          aksiyonYayınla({
+            tip: 'LİSTELENDİ',
+            değer: [durum.sayfa, veri.içerik]
+          }),
         (hata) => aksiyonYayınla({ tip: 'OLMADI', değer: [hata] })
       )
     else

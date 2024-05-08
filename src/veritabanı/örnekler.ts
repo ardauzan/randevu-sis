@@ -21,9 +21,9 @@ const {
 const main = async () => {
   try {
     console.info('Veritabanı sıfırlanıyor ve örnek veri ekleniyor.')
+    await veritabanı.delete(kişilerProjeler)
     await veritabanı.delete(kişiler)
     await veritabanı.delete(projeler)
-    await veritabanı.delete(kişilerProjeler)
     await veritabanı.delete(gereçler)
     await veritabanı.delete(araçlar)
     await veritabanı.delete(randevular)
