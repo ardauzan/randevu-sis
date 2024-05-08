@@ -29,7 +29,8 @@ export default function VerileriListele() {
     else
       tazeleReferans = setTimeout(() => {
         aksiyonYayınla(tazele())
-      })
+      }, 10000)
+
     return () => {
       clearTimeout(tazeleReferans)
       vazgeç.abort()

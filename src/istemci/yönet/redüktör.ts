@@ -16,7 +16,7 @@ export default function Redüktör(durum: Durum, aksiyon: Aksiyon): Durum {
       if (durum.amaç === 'listele' || durum.amaç === 'oku')
         return {
           ...durum,
-          yükleniyor: false
+          yükleniyor: true
         }
       else return durum
     case 'LİSTELENDİ':
