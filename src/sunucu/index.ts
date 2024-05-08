@@ -1,6 +1,7 @@
 import { Elysia, t } from 'elysia'
 import { staticPlugin } from '@elysiajs/static'
 import { jwt } from '@elysiajs/jwt'
+import { swagger } from '@elysiajs/swagger'
 import { renderToReadableStream } from 'react-dom/server'
 import { createElement } from 'react'
 import Anasayfa from '@/istemci/anasayfa/anasayfa'
@@ -27,9 +28,17 @@ import {
   yöneticiİçinProjeSil
 } from '@/sunucu/kütüphane'
 import navigasyon from '@/istemci/ortak/navigasyon'
+import serverTiming from '@elysiajs/server-timing'
 
 export default function sunucuyuOluştur() {
   const app = new Elysia()
+    .use(
+      serverTiming({
+        allow: true,
+        trace: { total: true }
+      })
+    )
+    .use(swagger({ provider: 'swagger-ui' }))
     .use(staticPlugin({ assets: 'statik', prefix: '/statik' }))
     .use(
       jwt({
