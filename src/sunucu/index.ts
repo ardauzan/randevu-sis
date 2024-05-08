@@ -295,10 +295,9 @@ export default function sunucuyuOluştur() {
                     status: 403
                   })
                 }
-                const detaylıKişiYadaNull =
-                  await kişiyiYöneticiİçinDetaylıOku(id)
+                const sonuç = await kişiyiYöneticiİçinDetaylıOku(id)
                 const cevap = await JSON.stringify(
-                  detaylıKişiYadaNull ? detaylıKişiYadaNull : 'Kişi bulunamadı.'
+                  sonuç ? sonuç : 'Kişi bulunamadı.'
                 )
                 return new Response(cevap, {
                   headers: {
@@ -315,8 +314,30 @@ export default function sunucuyuOluştur() {
             .post(
               '/kisiler',
               async ({
-                body: { yönetici, öğrenciNo, ad, soyAd, email, şifre, projeler }
+                body: {
+                  yönetici,
+                  öğrenciNo,
+                  ad,
+                  soyAd,
+                  email,
+                  şifre,
+                  projeler
+                },
+                jwt,
+                cookie: { kimlik }
               }) => {
+                const kimlikVerisi = await kimlikVerisiniAl(
+                  await jwt.verify(kimlik.value)
+                )
+                if (kimlikVerisi[1] !== 'yönetici') {
+                  const cevap = await JSON.stringify('Yönetici değilsiniz.')
+                  return new Response(cevap, {
+                    headers: {
+                      'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    status: 403
+                  })
+                }
                 const sonuç = await yöneticiİçinKişiEkle({
                   yönetici,
                   öğrenciNo,
@@ -349,8 +370,30 @@ export default function sunucuyuOluştur() {
               '/kisiler/:id',
               async ({
                 params: { id },
-                body: { yönetici, öğrenciNo, ad, soyAd, email, şifre, projeler }
+                body: {
+                  yönetici,
+                  öğrenciNo,
+                  ad,
+                  soyAd,
+                  email,
+                  şifre,
+                  projeler
+                },
+                jwt,
+                cookie: { kimlik }
               }) => {
+                const kimlikVerisi = await kimlikVerisiniAl(
+                  await jwt.verify(kimlik.value)
+                )
+                if (kimlikVerisi[1] !== 'yönetici') {
+                  const cevap = await JSON.stringify('Yönetici değilsiniz.')
+                  return new Response(cevap, {
+                    headers: {
+                      'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    status: 403
+                  })
+                }
                 const sonuç = await yöneticiİçinKişiGüncelle(id, {
                   yönetici,
                   öğrenciNo,
@@ -384,7 +427,19 @@ export default function sunucuyuOluştur() {
             )
             .delete(
               '/kisiler/:id',
-              async ({ params: { id } }) => {
+              async ({ params: { id }, jwt, cookie: { kimlik } }) => {
+                const kimlikVerisi = await kimlikVerisiniAl(
+                  await jwt.verify(kimlik.value)
+                )
+                if (kimlikVerisi[1] !== 'yönetici') {
+                  const cevap = await JSON.stringify('Yönetici değilsiniz.')
+                  return new Response(cevap, {
+                    headers: {
+                      'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    status: 403
+                  })
+                }
                 const sonuç = await yöneticiİçinKişiSil(id)
                 const cevap = await JSON.stringify(sonuç)
                 return new Response(cevap, {

@@ -24,7 +24,7 @@ export default function VerileriListele() {
             tip: 'LİSTELENDİ',
             değer: [durum.sayfa, veri.içerik]
           }),
-        (hata) => aksiyonYayınla({ tip: 'OLMADI', değer: [hata] })
+        (hata) => aksiyonYayınla({ tip: 'OLMADI', değer: [hata.message] })
       )
     else
       tazeleReferans = setTimeout(() => {
