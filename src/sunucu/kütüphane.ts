@@ -1,5 +1,5 @@
 import { eq, like, or, count } from 'drizzle-orm'
-import veritabanı from '@/veritabanı'
+import { veritabanı } from '@/index'
 import { kişiler, projeler, kişilerProjeler } from '@/veritabanı/şema'
 
 //# Kimlik
@@ -330,4 +330,15 @@ export function hashlenmişStringiAnahtarıylaÇözmeyeÇalış(
   hash: string
 ): Promise<boolean> {
   return Bun.password.verify(str, hash)
+}
+export function trueVeyaFalseuBaşarılıyaDönüştür(
+  değer: boolean
+): 'Başarılı' | 'Başarısız' {
+  return değer ? 'Başarılı' : 'Başarısız'
+}
+
+export function uygulamaBirSüreÇalıştıktanSonraKapatıldı() {
+  console.info(
+    `Uygulama ${Bun.nanoseconds()} nanosaniye çalıştıktan sonra kapatıldı.`
+  )
 }
