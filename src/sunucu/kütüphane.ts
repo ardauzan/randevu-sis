@@ -132,7 +132,6 @@ export async function kişiyiYöneticiİçinDetaylıOku(
     ad: res.ad,
     soyad: res.soyAd,
     email: res.email,
-    şifreHash: res.şifreHash,
     projeler: res.projeler.map((p) => p.proje)
   }
 }

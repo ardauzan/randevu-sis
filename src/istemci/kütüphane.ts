@@ -43,7 +43,7 @@ export async function yöneticiİçinListele(
   toplam: number
   sayfa: number
   sayfaBoyutu: number
-  içerik: ListelenenVeri
+  içerik: ListelenenVeri[]
 }> {
   const sonuç: Response = await fetch(
     `/api/yonet/${ingilizceAlfabeyeÇevir(tablo)}?arama=${arama}&sayfa=${sayfa}&sayfaBoyutu=${sayfaBoyutu}`,
@@ -58,8 +58,24 @@ export async function yöneticiİçinListele(
     toplam: number
     sayfa: number
     sayfaBoyutu: number
-    içerik: ListelenenVeri
+    içerik: ListelenenVeri[]
   }>
+}
+export async function yöneticiİçinDetaylıOku(
+  tablo: Tablo,
+  id: number,
+  _iptal: AbortSignal
+): Promise<DetaylıVeri> {
+  const sonuç: Response = await fetch(
+    `/api/yonet/${ingilizceAlfabeyeÇevir(tablo)}/${id}`,
+    {
+      method: 'GET',
+      headers: { Accept: 'application/json' },
+      credentials: 'same-origin'
+    }
+  )
+  if (!sonuç.ok) throw new Error(await sonuç.json())
+  return sonuç.json() as Promise<DetaylıVeri>
 }
 
 //# Diğer

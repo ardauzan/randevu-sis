@@ -17,6 +17,7 @@ type Tablo =
   | 'tatiller'
   | 'ziyaretler'
 type ListelenenVeri = ListelenenKişi | ListelenenProje
+type DetaylıVeri = DetaylıKişi | DetaylıProje
 type ListelenenKişi = {
   id: number
   öğrenciNo: number
@@ -31,7 +32,6 @@ type DetaylıKişi = {
   ad: string
   soyad: string
   email: string
-  şifreHash: string
   projeler: ListelenenProje[]
 }
 type OluşturulacakKişi = {

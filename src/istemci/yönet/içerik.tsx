@@ -12,7 +12,16 @@ export default function İçerik() {
       <PanelKontrolleriMobil />
       <section className="flex h-full w-full">
         <PanelKontrolleri />
-        {durum.amaç === 'listele' ? <VerileriListele /> : <Veriyiİncele />}
+        {(() => {
+          switch (durum.amaç) {
+            case 'listele':
+              return <VerileriListele />
+            case 'oku':
+              return <Veriyiİncele />
+            default:
+              return <div>İçerik yok</div>
+          }
+        })()}
       </section>
     </main>
   )

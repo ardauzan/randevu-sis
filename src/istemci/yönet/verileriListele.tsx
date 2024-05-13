@@ -3,7 +3,12 @@ import clsx from 'clsx'
 import Durum from '@/istemci/yönet/durum'
 import Yükleniyor from '@/istemci/ortak/yükleniyor'
 import { yöneticiİçinListele } from '@/istemci/kütüphane'
-import { tazele } from '@/istemci/yönet/aksiyonlar'
+import {
+  tazele,
+  detaylıOku,
+  listelendi,
+  olmadı
+} from '@/istemci/yönet/aksiyonlar'
 
 export default function VerileriListele() {
   const { durum, aksiyonYayınla } = useContext(Durum)
@@ -19,12 +24,8 @@ export default function VerileriListele() {
         durum.sayfaBoyutu,
         signal
       ).then(
-        (veri) =>
-          aksiyonYayınla({
-            tip: 'LİSTELENDİ',
-            değer: [durum.sayfa, veri.içerik]
-          }),
-        (hata) => aksiyonYayınla({ tip: 'OLMADI', değer: [hata.message] })
+        (veri) => aksiyonYayınla(listelendi(durum.sayfa, veri.içerik)),
+        (hata) => aksiyonYayınla(olmadı(hata.message))
       )
     else
       tazeleReferans = setTimeout(() => {
@@ -89,6 +90,7 @@ export default function VerileriListele() {
                     <tr
                       key={index}
                       className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}
+                      onClick={() => aksiyonYayınla(detaylıOku(veri.id))}
                     >
                       {Object.values(veri).map((değer, index) => (
                         <td
