@@ -10,13 +10,15 @@ export default function Redüktör(durum: Durum, aksiyon: Aksiyon): Durum {
         sayfa: 1,
         arama: '',
         veri: [],
-        yükleniyor: true
+        yükleniyor: true,
+        hata: ''
       }
     case 'TAZELE':
       if (durum.amaç === 'listele' || durum.amaç === 'oku')
         return {
           ...durum,
-          yükleniyor: true
+          yükleniyor: true,
+          hata: ''
         }
       else return durum
     case 'DETAYLI_OKU':
@@ -24,7 +26,8 @@ export default function Redüktör(durum: Durum, aksiyon: Aksiyon): Durum {
         ...durum,
         amaç: 'oku',
         veri: aksiyon.değer[0],
-        yükleniyor: true
+        yükleniyor: true,
+        hata: ''
       }
     case 'LİSTELENDİ':
       return {

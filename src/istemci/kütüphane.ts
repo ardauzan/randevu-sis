@@ -29,7 +29,7 @@ export async function girişYap(
 export async function çıkışYap(): Promise<void> {
   await fetch('/api/kimlik/cikis', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' }
+    credentials: 'same-origin'
   })
   window.location.reload()
 }

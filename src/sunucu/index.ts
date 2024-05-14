@@ -35,7 +35,7 @@ const arkayüz = new Elysia({
   name: 'arkayüz',
   cookie: {
     sign: true,
-    secrets: process.env['COOKIE_SECRET']!
+    secrets: [process.env['COOKIE_SECRET']!]
   }
 })
   .use(serverTiming())
@@ -261,18 +261,22 @@ const arkayüz = new Elysia({
                 })
               }
               const sonrakiArama = arama || ''
-              const sonrakiSayfa = sayfa || 1
+              let sonrakiSayfa = sayfa || 1
               const sonrakiSayfaBoyutu = sayfaBoyutu || 10
-              const kişiler = await kişileriYöneticiİçinListele(
+              const toplam = await kişileriYöneticiİçinSay(sonrakiArama)
+              const maxSayfa =
+                toplam > 0 ? Math.ceil(toplam / sonrakiSayfaBoyutu) : 1
+              if (sonrakiSayfa > maxSayfa) sonrakiSayfa = maxSayfa
+              const içerik = await kişileriYöneticiİçinListele(
                 sonrakiArama,
                 sonrakiSayfa,
                 sonrakiSayfaBoyutu
               )
               const cevap = await JSON.stringify({
-                toplam: await kişileriYöneticiİçinSay(sonrakiArama),
+                toplam,
                 sayfa: sonrakiSayfa,
                 sayfaBoyutu: sonrakiSayfaBoyutu,
-                içerik: kişiler
+                içerik
               })
               return new Response(cevap, {
                 headers: {
@@ -283,8 +287,16 @@ const arkayüz = new Elysia({
             {
               query: t.Object({
                 arama: t.Optional(t.String()),
-                sayfa: t.Optional(t.Numeric()),
-                sayfaBoyutu: t.Optional(t.Numeric())
+                sayfa: t.Optional(
+                  t.Numeric({
+                    minimum: 1
+                  })
+                ),
+                sayfaBoyutu: t.Optional(
+                  t.Numeric({
+                    minimum: 1
+                  })
+                )
               })
             }
           )

@@ -19,7 +19,7 @@ export default function GeriBildirim({
   return (
     <article
       className={clsx(
-        'fixed bottom-0 right-0 m-4 flex items-center rounded-md p-4 shadow-lg transition-all duration-300 ease-in-out',
+        'fixed bottom-0 right-0 z-40 m-4 flex items-center rounded-md p-4 shadow-lg transition-all duration-300 ease-in-out',
         {
           'bg-green-100 text-green-800': tip === 'başarılı',
           'bg-red-100 text-red-800': tip === 'başarısız',
