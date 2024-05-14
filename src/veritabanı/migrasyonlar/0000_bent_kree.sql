@@ -64,19 +64,19 @@ CREATE TABLE IF NOT EXISTS "ziyaretler" (
 );
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "kişiler_projeler" ADD CONSTRAINT "kişiler_projeler_kişi_kişiler_id_fk" FOREIGN KEY ("kişi") REFERENCES "kişiler"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "kişiler_projeler" ADD CONSTRAINT "kişiler_projeler_kişi_kişiler_id_fk" FOREIGN KEY ("kişi") REFERENCES "public"."kişiler"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "kişiler_projeler" ADD CONSTRAINT "kişiler_projeler_proje_projeler_id_fk" FOREIGN KEY ("proje") REFERENCES "projeler"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "kişiler_projeler" ADD CONSTRAINT "kişiler_projeler_proje_projeler_id_fk" FOREIGN KEY ("proje") REFERENCES "public"."projeler"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "randevular" ADD CONSTRAINT "randevular_proje_id_projeler_id_fk" FOREIGN KEY ("proje_id") REFERENCES "projeler"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "randevular" ADD CONSTRAINT "randevular_proje_id_projeler_id_fk" FOREIGN KEY ("proje_id") REFERENCES "public"."projeler"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

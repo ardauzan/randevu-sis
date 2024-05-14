@@ -35,8 +35,7 @@ const arkayüz = new Elysia({
   name: 'arkayüz',
   cookie: {
     sign: true,
-    secrets: [process.env['COOKIE_SECRET']!],
-    path: '/'
+    secrets: process.env['COOKIE_SECRET']!
   }
 })
   .use(serverTiming())

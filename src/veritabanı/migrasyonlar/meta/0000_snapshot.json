@@ -1,10 +1,10 @@
 {
-  "id": "6b06c17e-1cdc-4db3-b1b5-d801eb0c7eb1",
+  "id": "754d5350-d7f5-49bc-89d9-315eeb92d716",
   "prevId": "00000000-0000-0000-0000-000000000000",
-  "version": "5",
-  "dialect": "pg",
+  "version": "6",
+  "dialect": "postgresql",
   "tables": {
-    "araçlar": {
+    "public.araçlar": {
       "name": "araçlar",
       "schema": "",
       "columns": {
@@ -38,7 +38,7 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "gereçler": {
+    "public.gereçler": {
       "name": "gereçler",
       "schema": "",
       "columns": {
@@ -66,7 +66,7 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "kişiler": {
+    "public.kişiler": {
       "name": "kişiler",
       "schema": "",
       "columns": {
@@ -134,7 +134,7 @@
         }
       }
     },
-    "kişiler_projeler": {
+    "public.kişiler_projeler": {
       "name": "kişiler_projeler",
       "schema": "",
       "columns": {
@@ -191,7 +191,7 @@
       },
       "uniqueConstraints": {}
     },
-    "projeler": {
+    "public.projeler": {
       "name": "projeler",
       "schema": "",
       "columns": {
@@ -239,7 +239,7 @@
         }
       }
     },
-    "randevular": {
+    "public.randevular": {
       "name": "randevular",
       "schema": "",
       "columns": {
@@ -299,7 +299,7 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "tatiller": {
+    "public.tatiller": {
       "name": "tatiller",
       "schema": "",
       "columns": {
@@ -333,7 +333,7 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "ziyaretler": {
+    "public.ziyaretler": {
       "name": "ziyaretler",
       "schema": "",
       "columns": {
