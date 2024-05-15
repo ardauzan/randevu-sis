@@ -34,8 +34,8 @@ export default function VeriListesi({
       <table className="w-full">
         <thead className="bg-yellow-300">
           <tr>
-            {veriler.length > 0
-              ? Object.keys(veriler[0]!).map((key, index) => (
+            {veriler.length > 0 && veriler[0]
+              ? Object.keys(veriler[0]).map((key, index) => (
                   <th
                     scope="col"
                     key={index}
@@ -108,57 +108,62 @@ export default function VeriListesi({
           )}
         </tbody>
       </table>
-      <nav className="mt-4 flex justify-center">
-        <ul className="flex">
-          <li className="mx-1 flex items-center justify-center rounded-lg px-3 py-1">
-            <button
-              className="cursor-pointer text-center font-serif text-sm font-medium text-blue-500 underline hover:text-gray-900 hover:no-underline focus:text-gray-900 focus:no-underline disabled:cursor-not-allowed disabled:text-gray-900 disabled:no-underline disabled:opacity-50"
-              onClick={() => aksiyonYayınla(sayfaDeğiştir(mevcutSayfa - 1))}
-              disabled={mevcutSayfa === 1}
-            >
-              <ArrowLeftCircleIcon className="size-4" />
-            </button>
-          </li>
-          {sayfalamaMenzili?.map((sayfa, index) => (
-            <li
-              key={index}
-              className={clsx(
-                'mx-1 flex items-center justify-center rounded-lg px-3 py-1',
-                mevcutSayfa === sayfa &&
-                  'outline-dotted outline-2 outline-blue-500'
-              )}
-            >
-              {(() =>
-                typeof sayfa === 'number' ? (
-                  <button
-                    className="cursor-pointer text-center font-serif text-sm font-medium text-blue-500 underline hover:text-gray-900 hover:no-underline focus:text-gray-900 focus:no-underline disabled:cursor-not-allowed disabled:text-gray-900 disabled:no-underline"
-                    onClick={() =>
-                      aksiyonYayınla(sayfaDeğiştir(sayfa as number))
-                    }
-                    disabled={mevcutSayfa === sayfa}
-                  >
-                    {sayfa}
-                  </button>
-                ) : (
-                  <span className="cursor-default text-center font-serif text-sm font-semibold text-gray-900">
-                    {sayfa}
-                  </span>
-                ))()}
-            </li>
-          ))}
-          <li className="mx-1 flex items-center justify-center rounded-lg px-3 py-1">
-            <button
-              className="cursor-pointer text-center text-blue-500 hover:text-gray-900 focus:text-gray-900 disabled:cursor-not-allowed disabled:text-gray-900 disabled:opacity-50"
-              onClick={() => aksiyonYayınla(sayfaDeğiştir(mevcutSayfa + 1))}
-              disabled={
-                mevcutSayfa === sayfalamaMenzili![sayfalamaMenzili!.length - 1]
-              }
-            >
-              <ArrowRightCircleIcon className="size-4" />
-            </button>
-          </li>
-        </ul>
-      </nav>
+      {(() =>
+        sayfalamaMenzili &&
+        sayfalamaMenzili.length > 1 && (
+          <nav className="mt-4 flex justify-center">
+            <ul className="flex">
+              <li className="mx-1 flex items-center justify-center rounded-lg px-3 py-1">
+                <button
+                  className="cursor-pointer text-center font-serif text-sm font-medium text-blue-500 underline hover:text-gray-900 hover:no-underline focus:text-gray-900 focus:no-underline disabled:cursor-not-allowed disabled:text-gray-900 disabled:no-underline disabled:opacity-50"
+                  onClick={() => aksiyonYayınla(sayfaDeğiştir(mevcutSayfa - 1))}
+                  disabled={mevcutSayfa === 1}
+                >
+                  <ArrowLeftCircleIcon className="size-4" />
+                </button>
+              </li>
+              {sayfalamaMenzili?.map((sayfa, index) => (
+                <li
+                  key={index}
+                  className={clsx(
+                    'mx-1 flex items-center justify-center rounded-lg px-3 py-1',
+                    mevcutSayfa === sayfa &&
+                      'outline-dotted outline-2 outline-blue-500'
+                  )}
+                >
+                  {(() =>
+                    typeof sayfa === 'number' ? (
+                      <button
+                        className="cursor-pointer text-center font-serif text-sm font-medium text-blue-500 underline hover:text-gray-900 hover:no-underline focus:text-gray-900 focus:no-underline disabled:cursor-not-allowed disabled:text-gray-900 disabled:no-underline"
+                        onClick={() =>
+                          aksiyonYayınla(sayfaDeğiştir(sayfa as number))
+                        }
+                        disabled={mevcutSayfa === sayfa}
+                      >
+                        {sayfa}
+                      </button>
+                    ) : (
+                      <span className="cursor-default text-center font-serif text-sm font-semibold text-gray-900">
+                        {sayfa}
+                      </span>
+                    ))()}
+                </li>
+              ))}
+              <li className="mx-1 flex items-center justify-center rounded-lg px-3 py-1">
+                <button
+                  className="cursor-pointer text-center text-blue-500 hover:text-gray-900 focus:text-gray-900 disabled:cursor-not-allowed disabled:text-gray-900 disabled:opacity-50"
+                  onClick={() => aksiyonYayınla(sayfaDeğiştir(mevcutSayfa + 1))}
+                  disabled={
+                    mevcutSayfa ===
+                    sayfalamaMenzili[sayfalamaMenzili.length - 1]
+                  }
+                >
+                  <ArrowRightCircleIcon className="size-4" />
+                </button>
+              </li>
+            </ul>
+          </nav>
+        ))()}
     </article>
   )
 }

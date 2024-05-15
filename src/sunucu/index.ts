@@ -117,7 +117,7 @@ const arkayüz = new Elysia({
     if (
       !(await kimlikVerisiSayfayıGörebilirMi(kimlikVerisi, 'Yönet', navigasyon))
     )
-      return redirect(navigasyon['Yönet']![3]!)
+      return redirect(navigasyon['Yönet']![3]!, 302)
     const toplam = await kişileriYöneticiİçinSay('')
     const kişiler = await kişileriYöneticiİçinListele('', 1, 10)
     const ilkDurum: Durum = {
@@ -150,7 +150,7 @@ const arkayüz = new Elysia({
         navigasyon
       ))
     )
-      return redirect(navigasyon['Randevularım']![3]!)
+      return redirect(navigasyon['Randevularım']![3]!, 302)
     const cevap = await renderToReadableStream(
       createElement(Randevularım, { kimlikDurumu: kimlikVerisi[1] }),
       {
@@ -166,7 +166,7 @@ const arkayüz = new Elysia({
     if (
       !(await kimlikVerisiSayfayıGörebilirMi(kimlikVerisi, 'Giriş', navigasyon))
     )
-      return redirect(navigasyon['Giriş']![3]!)
+      return redirect(navigasyon['Giriş']![3]!, 302)
     const cevap = await renderToReadableStream(
       createElement(Giriş, { kimlikDurumu: kimlikVerisi[1] }),
       {

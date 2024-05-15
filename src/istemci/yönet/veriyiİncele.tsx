@@ -40,19 +40,20 @@ export default function Veriyiİncele() {
           {(() => {
             switch (durum.tablo) {
               case 'kişiler':
-                const kişi = durum.veri as DetaylıKişi
+                const { id, yönetici, öğrenciNo, ad, soyAd, email, projeler } =
+                  durum.veri as DetaylıKişi
                 return (
                   <>
-                    <h1>{kişi.id}</h1>
-                    <p>{kişi.yönetici}</p>
+                    <h1 className="font-mono text-3xl font-bold">Kişi: {id}</h1>
+                    <p>Yönetici: {yönetici ? 'Evet' : 'Hayır'}</p>
                     <h2 className="font-serif text-2xl font-bold">
-                      {kişi.öğrenciNo} {kişi.ad} {kişi.soyad}
+                      {öğrenciNo} no lu, {ad} {soyAd}.
                     </h2>
 
-                    <p className="font-serif text-lg">{kişi.email}</p>
+                    <p className="font-serif text-lg">{email}</p>
                     <h3 className="font-serif text-xl font-bold">Projeler</h3>
                     <ul>
-                      {kişi.projeler.map((proje, index) => (
+                      {projeler.map((proje, index) => (
                         <li key={index} className="font-serif text-lg">
                           {proje.id} {proje.ad} {proje.başlangıçTarihi}{' '}
                           {proje.bitişTarihi} {proje.açıklama}

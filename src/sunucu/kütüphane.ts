@@ -130,7 +130,7 @@ export async function kişiyiYöneticiİçinDetaylıOku(
     yönetici: res.yönetici,
     öğrenciNo: res.öğrenciNo,
     ad: res.ad,
-    soyad: res.soyAd,
+    soyAd: res.soyAd,
     email: res.email,
     projeler: res.projeler.map((p) => p.proje)
   }

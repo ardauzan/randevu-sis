@@ -30,7 +30,7 @@ type DetaylıKişi = {
   yönetici: boolean
   öğrenciNo: number
   ad: string
-  soyad: string
+  soyAd: string
   email: string
   projeler: ListelenenProje[]
 }
