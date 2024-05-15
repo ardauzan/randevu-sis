@@ -9,6 +9,7 @@ export default function Redüktör(durum: Durum, aksiyon: Aksiyon): Durum {
         amaç: 'listele',
         sayfa: 1,
         arama: '',
+        toplam: 0,
         veri: [],
         yükleniyor: true,
         hata: ''
@@ -21,11 +22,27 @@ export default function Redüktör(durum: Durum, aksiyon: Aksiyon): Durum {
           hata: ''
         }
       else return durum
+    case 'LİSTELE':
+      return {
+        ...durum,
+        amaç: 'listele',
+        veri: [],
+        toplam: 0,
+        yükleniyor: true,
+        hata: ''
+      }
+    case 'SAYFA_DEĞİŞTİR':
+      return {
+        ...durum,
+        sayfa: aksiyon.değer[0],
+        yükleniyor: true
+      }
     case 'DETAYLI_OKU':
       return {
         ...durum,
+        tablo: aksiyon.değer[0],
         amaç: 'oku',
-        veri: aksiyon.değer[0],
+        veri: aksiyon.değer[1],
         yükleniyor: true,
         hata: ''
       }
@@ -34,6 +51,7 @@ export default function Redüktör(durum: Durum, aksiyon: Aksiyon): Durum {
         ...durum,
         sayfa: aksiyon.değer[0],
         veri: aksiyon.değer[1],
+        toplam: aksiyon.değer[2],
         yükleniyor: false
       }
     case 'DETAYLI_OKUNDU':

@@ -34,6 +34,7 @@ export default function PanelKontrolleriMobil() {
         </h2>
         <PanelKontrolleriTabloSeçimAltPaneli
           kontrollerGörünüyor={kontrollerGörünüyor}
+          kontrolleriGizle={() => setKontrollerGörünüyor(false)}
         />
         <PanelKontrolleriSorguAltPaneli
           kontrollerGörünüyor={kontrollerGörünüyor}

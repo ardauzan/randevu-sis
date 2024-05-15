@@ -72,6 +72,7 @@ type OrtakDurum = {
   sayfa: number
   sayfaBoyutu: number
   arama: string
+  toplam: number
   yükleniyor: boolean
   hata: string
 }
@@ -81,7 +82,7 @@ type ListeleDurum = {
 } & OrtakDurum
 type OkuDurum = {
   amaç: 'oku'
-  veri: DetaylıKişi | DetaylıProje | null
+  veri: DetaylıKişi | DetaylıProje | number
 } & OrtakDurum
 type EkleDurum = {
   amaç: 'ekle'

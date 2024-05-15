@@ -10,13 +10,23 @@ export function tabloDeğiştir(tablo: Tablo): Aksiyon {
 export function tazele(): Aksiyon {
   return { tip: 'TAZELE', değer: [] }
 }
-export function detaylıOku(id: number): Aksiyon {
-  return { tip: 'DETAYLI_OKU', değer: [id] }
+export function listele(): Aksiyon {
+  return { tip: 'LİSTELE', değer: [] }
+}
+export function sayfaDeğiştir(sayfa: number): Aksiyon {
+  return { tip: 'SAYFA_DEĞİŞTİR', değer: [sayfa] }
+}
+export function detaylıOku(tablo: Tablo, id: number): Aksiyon {
+  return { tip: 'DETAYLI_OKU', değer: [tablo, id] }
 }
 
 //# Durum değişimi bitir
-export function listelendi(sayfa: number, veri: ListelenenVeri[]): Aksiyon {
-  return { tip: 'LİSTELENDİ', değer: [sayfa, veri] }
+export function listelendi(
+  sayfa: number,
+  veri: ListelenenVeri[],
+  toplam: number
+): Aksiyon {
+  return { tip: 'LİSTELENDİ', değer: [sayfa, veri, toplam] }
 }
 export function detaylıOkundu(veri: DetaylıVeri): Aksiyon {
   return { tip: 'DETAYLI_OKUNDU', değer: [veri] }

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 import clsx from 'clsx'
 import Başlık from '@/istemci/ortak/başlık'
 import İçerik from '@/istemci/randevularım/içerik'
 import Altlık from '@/istemci/ortak/altlık'
 import MobilMenü from '@/istemci/ortak/mobilMenü'
+import HataEkranı from '@/istemci/ortak/hataEkranı'
 
 export interface RandevularımProps {
   readonly kimlikDurumu: KimlikDurumu
@@ -37,30 +39,32 @@ export default function Randevularım(props: RandevularımProps) {
         <link rel="stylesheet" href="/statik/stiller.css" />
       </head>
       <body className="bg-gray-100">
-        <Başlık
-          konum="/randevularim"
-          kimlikDurumu={kimlikDurumu}
-          setMobilMenüAçık={setMobilMenüAçık}
-        />
-        <section className="flex">
-          <MobilMenü
+        <ErrorBoundary fallback={<HataEkranı />}>
+          <Başlık
             konum="/randevularim"
             kimlikDurumu={kimlikDurumu}
-            mobilMenüAçık={mobilMenüAçık}
             setMobilMenüAçık={setMobilMenüAçık}
           />
-          <section
-            className={clsx(
-              'fixed top-0 z-20 h-lvh w-screen backdrop-blur-md sm:hidden',
-              mobilMenüAçık && 'block',
-              !mobilMenüAçık && 'hidden'
-            )}
-            onClick={() => setMobilMenüAçık(false)}
-          />
-          <İçerik />
-        </section>
-        <Altlık />
-        <section />
+          <section className="flex">
+            <MobilMenü
+              konum="/randevularim"
+              kimlikDurumu={kimlikDurumu}
+              mobilMenüAçık={mobilMenüAçık}
+              setMobilMenüAçık={setMobilMenüAçık}
+            />
+            <section
+              className={clsx(
+                'fixed top-0 z-20 h-lvh w-screen backdrop-blur-md sm:hidden',
+                mobilMenüAçık && 'block',
+                !mobilMenüAçık && 'hidden'
+              )}
+              onClick={() => setMobilMenüAçık(false)}
+            />
+            <İçerik />
+          </section>
+          <Altlık />
+          <section />
+        </ErrorBoundary>
       </body>
     </html>
   )

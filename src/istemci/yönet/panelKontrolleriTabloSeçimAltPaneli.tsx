@@ -14,10 +14,12 @@ import { tabloDeğiştir } from '@/istemci/yönet/aksiyonlar'
 
 export interface PanelKontrolleriTabloSeçimAltPaneliProps {
   readonly kontrollerGörünüyor?: boolean
+  readonly kontrolleriGizle?: () => void
 }
 
 export default function PanelKontrolleriTabloSeçimAltPaneli({
-  kontrollerGörünüyor = true
+  kontrollerGörünüyor = true,
+  kontrolleriGizle = () => {}
 }: PanelKontrolleriTabloSeçimAltPaneliProps) {
   const { durum, aksiyonYayınla } = useContext(Durum)
 
@@ -32,7 +34,10 @@ export default function PanelKontrolleriTabloSeçimAltPaneli({
         <button
           disabled={durum.tablo === 'kişiler'}
           className="flex text-center font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline disabled:text-gray-900 disabled:no-underline disabled:hover:text-gray-900"
-          onClick={() => aksiyonYayınla(tabloDeğiştir('kişiler'))}
+          onClick={() => {
+            aksiyonYayınla(tabloDeğiştir('kişiler'))
+            kontrolleriGizle()
+          }}
         >
           <UserCircleIcon className="size-4" />
           Kişiler
@@ -42,7 +47,10 @@ export default function PanelKontrolleriTabloSeçimAltPaneli({
         <button
           disabled={durum.tablo === 'projeler'}
           className="flex text-center font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline disabled:text-gray-900 disabled:no-underline disabled:hover:text-gray-900"
-          onClick={() => aksiyonYayınla(tabloDeğiştir('projeler'))}
+          onClick={() => {
+            aksiyonYayınla(tabloDeğiştir('projeler'))
+            kontrolleriGizle()
+          }}
         >
           <ClipboardDocumentListIcon className="size-4" />
           Projeler
@@ -52,7 +60,10 @@ export default function PanelKontrolleriTabloSeçimAltPaneli({
         <button
           disabled={durum.tablo === 'gereçler'}
           className="flex text-center font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline disabled:text-gray-900 disabled:no-underline disabled:hover:text-gray-900"
-          onClick={() => aksiyonYayınla(tabloDeğiştir('gereçler'))}
+          onClick={() => {
+            aksiyonYayınla(tabloDeğiştir('gereçler'))
+            kontrolleriGizle()
+          }}
         >
           <WrenchIcon className="size-4" />
           Gereçler
@@ -62,7 +73,10 @@ export default function PanelKontrolleriTabloSeçimAltPaneli({
         <button
           disabled={durum.tablo === 'araçlar'}
           className="flex text-center font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline disabled:text-gray-900 disabled:no-underline disabled:hover:text-gray-900"
-          onClick={() => aksiyonYayınla(tabloDeğiştir('araçlar'))}
+          onClick={() => {
+            aksiyonYayınla(tabloDeğiştir('araçlar'))
+            kontrolleriGizle()
+          }}
         >
           <CpuChipIcon className="size-4" />
           Araçlar
@@ -72,7 +86,10 @@ export default function PanelKontrolleriTabloSeçimAltPaneli({
         <button
           disabled={durum.tablo === 'randevular'}
           className="flex text-center font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline disabled:text-gray-900 disabled:no-underline disabled:hover:text-gray-900"
-          onClick={() => aksiyonYayınla(tabloDeğiştir('randevular'))}
+          onClick={() => {
+            aksiyonYayınla(tabloDeğiştir('randevular'))
+            kontrolleriGizle()
+          }}
         >
           <CalendarIcon className="size-4" />
           Randevular
@@ -82,7 +99,10 @@ export default function PanelKontrolleriTabloSeçimAltPaneli({
         <button
           disabled={durum.tablo === 'tatiller'}
           className="flex text-center font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline disabled:text-gray-900 disabled:no-underline disabled:hover:text-gray-900"
-          onClick={() => aksiyonYayınla(tabloDeğiştir('tatiller'))}
+          onClick={() => {
+            aksiyonYayınla(tabloDeğiştir('tatiller'))
+            kontrolleriGizle()
+          }}
         >
           <FaceSmileIcon className="size-4" />
           Tatiller
@@ -92,7 +112,10 @@ export default function PanelKontrolleriTabloSeçimAltPaneli({
         <button
           disabled={durum.tablo === 'ziyaretler'}
           className="flex text-center font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline disabled:text-gray-900 disabled:no-underline disabled:hover:text-gray-900"
-          onClick={() => aksiyonYayınla(tabloDeğiştir('ziyaretler'))}
+          onClick={() => {
+            aksiyonYayınla(tabloDeğiştir('ziyaretler'))
+            kontrolleriGizle()
+          }}
         >
           <UserGroupIcon className="size-4" />
           Ziyaretler

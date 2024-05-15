@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function İçerik() {
   return (
-    <main className="flex h-screen w-screen flex-col items-center p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 2xl:p-14">
+    <main className="flex h-screen w-screen flex-col items-center p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10 2xl:p-12">
       randevularım içerik
     </main>
   )

@@ -118,6 +118,7 @@ const arkayüz = new Elysia({
       !(await kimlikVerisiSayfayıGörebilirMi(kimlikVerisi, 'Yönet', navigasyon))
     )
       return redirect(navigasyon['Yönet']![3]!)
+    const toplam = await kişileriYöneticiİçinSay('')
     const kişiler = await kişileriYöneticiİçinListele('', 1, 10)
     const ilkDurum: Durum = {
       tablo: 'kişiler',
@@ -125,6 +126,7 @@ const arkayüz = new Elysia({
       sayfa: 1,
       sayfaBoyutu: 10,
       arama: '',
+      toplam,
       veri: kişiler,
       yükleniyor: false,
       hata: ''
@@ -322,7 +324,8 @@ const arkayüz = new Elysia({
               return new Response(cevap, {
                 headers: {
                   'Content-Type': 'application/json;charset=utf-8'
-                }
+                },
+                status: sonuç ? 200 : 404
               })
             },
             {
@@ -527,7 +530,8 @@ const arkayüz = new Elysia({
               return new Response(cevap, {
                 headers: {
                   'Content-Type': 'application/json;charset=utf-8'
-                }
+                },
+                status: sonuç ? 200 : 404
               })
             },
             {
