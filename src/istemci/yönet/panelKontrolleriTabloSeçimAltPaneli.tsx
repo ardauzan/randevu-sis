@@ -21,7 +21,10 @@ export default function PanelKontrolleriTabloSeçimAltPaneli({
   kontrollerGörünüyor = true,
   kontrolleriGizle = () => {}
 }: PanelKontrolleriTabloSeçimAltPaneliProps) {
-  const { durum, aksiyonYayınla } = useContext(Durum)
+  const {
+    durum: { tablo },
+    aksiyonYayınla
+  } = useContext(Durum)
 
   return (
     <ul
@@ -32,7 +35,7 @@ export default function PanelKontrolleriTabloSeçimAltPaneli({
     >
       <li className="flex justify-center">
         <button
-          disabled={durum.tablo === 'kişiler'}
+          disabled={tablo === 'kişiler'}
           className="flex text-center font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline disabled:text-gray-900 disabled:no-underline disabled:hover:text-gray-900"
           onClick={() => {
             aksiyonYayınla(tabloDeğiştir('kişiler'))
@@ -45,7 +48,7 @@ export default function PanelKontrolleriTabloSeçimAltPaneli({
       </li>
       <li className="flex justify-center">
         <button
-          disabled={durum.tablo === 'projeler'}
+          disabled={tablo === 'projeler'}
           className="flex text-center font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline disabled:text-gray-900 disabled:no-underline disabled:hover:text-gray-900"
           onClick={() => {
             aksiyonYayınla(tabloDeğiştir('projeler'))
@@ -58,7 +61,7 @@ export default function PanelKontrolleriTabloSeçimAltPaneli({
       </li>
       <li className="flex justify-center">
         <button
-          disabled={durum.tablo === 'gereçler'}
+          disabled={tablo === 'gereçler'}
           className="flex text-center font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline disabled:text-gray-900 disabled:no-underline disabled:hover:text-gray-900"
           onClick={() => {
             aksiyonYayınla(tabloDeğiştir('gereçler'))
@@ -71,7 +74,7 @@ export default function PanelKontrolleriTabloSeçimAltPaneli({
       </li>
       <li className="flex justify-center">
         <button
-          disabled={durum.tablo === 'araçlar'}
+          disabled={tablo === 'araçlar'}
           className="flex text-center font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline disabled:text-gray-900 disabled:no-underline disabled:hover:text-gray-900"
           onClick={() => {
             aksiyonYayınla(tabloDeğiştir('araçlar'))
@@ -84,7 +87,7 @@ export default function PanelKontrolleriTabloSeçimAltPaneli({
       </li>
       <li className="flex justify-center">
         <button
-          disabled={durum.tablo === 'randevular'}
+          disabled={tablo === 'randevular'}
           className="flex text-center font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline disabled:text-gray-900 disabled:no-underline disabled:hover:text-gray-900"
           onClick={() => {
             aksiyonYayınla(tabloDeğiştir('randevular'))
@@ -97,7 +100,7 @@ export default function PanelKontrolleriTabloSeçimAltPaneli({
       </li>
       <li className="flex justify-center">
         <button
-          disabled={durum.tablo === 'tatiller'}
+          disabled={tablo === 'tatiller'}
           className="flex text-center font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline disabled:text-gray-900 disabled:no-underline disabled:hover:text-gray-900"
           onClick={() => {
             aksiyonYayınla(tabloDeğiştir('tatiller'))
@@ -110,7 +113,7 @@ export default function PanelKontrolleriTabloSeçimAltPaneli({
       </li>
       <li className="flex justify-center">
         <button
-          disabled={durum.tablo === 'ziyaretler'}
+          disabled={tablo === 'ziyaretler'}
           className="flex text-center font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline disabled:text-gray-900 disabled:no-underline disabled:hover:text-gray-900"
           onClick={() => {
             aksiyonYayınla(tabloDeğiştir('ziyaretler'))

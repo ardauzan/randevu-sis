@@ -17,7 +17,11 @@ type Tablo =
   | 'tatiller'
   | 'ziyaretler'
 type ListelenenVeri = ListelenenKişi | ListelenenProje
+type ListelenenVeriler = ListelenenVeri[]
 type DetaylıVeri = DetaylıKişi | DetaylıProje
+type OluşturulacakVeri = OluşturulacakKişi | OluşturulacakProje
+type GüncellenecekVeri = [id: number, OluşturulacakVeri]
+type SilinecekVeri = number
 type ListelenenKişi = {
   id: number
   öğrenciNo: number
@@ -78,25 +82,97 @@ type OrtakDurum = {
 }
 type ListeleDurum = {
   amaç: 'listele'
-  veri: ListelenenKişi[] | ListelenenProje[]
+  veri: ListelenenVeriler
 } & OrtakDurum
 type OkuDurum = {
   amaç: 'oku'
-  veri: DetaylıKişi | DetaylıProje | number
+  veri: DetaylıVeri | number
 } & OrtakDurum
 type EkleDurum = {
   amaç: 'ekle'
-  veri: OluşturulacakKişi | OluşturulacakProje
+  veri: OluşturulacakVeri
 } & OrtakDurum
 type GüncelleDurum = {
   amaç: 'güncelle'
-  veri: [id: number, OluşturulacakKişi] | [id: number, OluşturulacakKişi]
+  veri: GüncellenecekVeri
 } & OrtakDurum
 type SilDurum = {
   amaç: 'sil'
-  veri: number
+  veri: SilinecekVeri
 } & OrtakDurum
 type Durum = ListeleDurum | OkuDurum | EkleDurum | GüncelleDurum | SilDurum
+//# Aksiyon
+type LİSTELEAKSİYON = {
+  tip: 'LİSTELE'
+  değer: []
+}
+type OKUAKSİYON = {
+  tip: 'OKU'
+  değer: [tablo: Tablo, veri: number | DetaylıVeri]
+}
+type EKLEAKSİYON = {
+  tip: 'EKLE'
+  değer: [veri: OluşturulacakVeri]
+}
+type GÜNCELLEAKSİYON = {
+  tip: 'GÜNCELLE'
+  değer: [veri: GüncellenecekVeri]
+}
+type SİLAKSİYON = {
+  tip: 'SİL'
+  değer: [id: number]
+}
+type TAZELEAKSİYON = {
+  tip: 'TAZELE'
+  değer: []
+}
+type TETİKLEAKSİYON = {
+  tip: 'TETİKLE'
+  değer: []
+}
+type TABLODEĞİŞTİRAKSİYON = {
+  tip: 'TABLO_DEĞİŞTİR'
+  değer: [tablo: Tablo]
+}
+type SAYFADEĞİŞTİRAKSİYON = {
+  tip: 'SAYFA_DEĞİŞTİR'
+  değer: [sayfa: number]
+}
+type SAYFABOYUTUDEĞİŞTİRAKSİYON = {
+  tip: 'SAYFA_BOYUTU_DEĞİŞTİR'
+  değer: [sayfaBoyutu: number]
+}
+type ARAMADEĞİŞTİRAKSİYON = {
+  tip: 'ARAMA_DEĞİŞTİR'
+  değer: [arama: string]
+}
+type LİSTELENDİAKSİYON = {
+  tip: 'LİSTELENDİ'
+  değer: [sayfa: number, veri: ListelenenVeriler, toplam: number]
+}
+type OKUNDUAKSİYON = {
+  tip: 'OKUNDU'
+  değer: [veri: DetaylıVeri]
+}
+type OLMADIAKSİYON = {
+  tip: 'OLMADI'
+  değer: [mesaj: string]
+}
+type Aksiyon =
+  | LİSTELEAKSİYON
+  | OKUAKSİYON
+  | EKLEAKSİYON
+  | GÜNCELLEAKSİYON
+  | SİLAKSİYON
+  | TAZELEAKSİYON
+  | TETİKLEAKSİYON
+  | TABLODEĞİŞTİRAKSİYON
+  | SAYFADEĞİŞTİRAKSİYON
+  | SAYFABOYUTUDEĞİŞTİRAKSİYON
+  | ARAMADEĞİŞTİRAKSİYON
+  | LİSTELENDİAKSİYON
+  | OKUNDUAKSİYON
+  | OLMADIAKSİYON
 
 //# Diğer
 type Navigasyon = {

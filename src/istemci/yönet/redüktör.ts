@@ -1,17 +1,48 @@
-import type { Aksiyon } from '@/istemci/yönet/aksiyonlar'
-
 export default function Redüktör(durum: Durum, aksiyon: Aksiyon): Durum {
-  switch (aksiyon.tip) {
-    case 'TABLO_DEĞİŞTİR':
+  const { tip, değer } = aksiyon
+  switch (tip) {
+    // info Eylem başlat
+    // # Genel
+    case 'LİSTELE':
       return {
         ...durum,
-        tablo: aksiyon.değer[0],
         amaç: 'listele',
-        sayfa: 1,
-        arama: '',
         toplam: 0,
         veri: [],
         yükleniyor: true,
+        hata: ''
+      }
+    case 'OKU':
+      return {
+        ...durum,
+        tablo: değer[0],
+        amaç: 'oku',
+        veri: değer[1],
+        yükleniyor: true,
+        hata: ''
+      }
+    case 'EKLE':
+      return {
+        ...durum,
+        amaç: 'ekle',
+        veri: değer[0],
+        yükleniyor: false,
+        hata: ''
+      }
+    case 'GÜNCELLE':
+      return {
+        ...durum,
+        amaç: 'güncelle',
+        veri: değer[0],
+        yükleniyor: false,
+        hata: ''
+      }
+    case 'SİL':
+      return {
+        ...durum,
+        amaç: 'sil',
+        veri: değer[0],
+        yükleniyor: false,
         hata: ''
       }
     case 'TAZELE':
@@ -22,49 +53,87 @@ export default function Redüktör(durum: Durum, aksiyon: Aksiyon): Durum {
           hata: ''
         }
       else return durum
-    case 'LİSTELE':
+    case 'TETİKLE':
+      if (
+        durum.amaç === 'ekle' ||
+        durum.amaç === 'güncelle' ||
+        durum.amaç === 'sil'
+      )
+        return {
+          ...durum,
+          yükleniyor: true,
+          hata: ''
+        }
+      else return durum
+    // # Tablo
+    case 'TABLO_DEĞİŞTİR':
+      return {
+        ...durum,
+        tablo: değer[0],
+        amaç: 'listele',
+        sayfa: 1,
+        arama: '',
+        toplam: 0,
+        veri: [],
+        yükleniyor: true,
+        hata: ''
+      }
+    // # Sayfa
+    case 'SAYFA_DEĞİŞTİR':
+      if (durum.amaç === 'listele')
+        return {
+          ...durum,
+          sayfa: değer[0],
+          yükleniyor: true,
+          hata: ''
+        }
+      else return durum
+    // # Sayfa Boyutu
+    case 'SAYFA_BOYUTU_DEĞİŞTİR':
       return {
         ...durum,
         amaç: 'listele',
-        veri: [],
+        sayfa: 1,
+        sayfaBoyutu: değer[0],
         toplam: 0,
+        veri: [],
         yükleniyor: true,
         hata: ''
       }
-    case 'SAYFA_DEĞİŞTİR':
+    // # Arama
+    case 'ARAMA_DEĞİŞTİR':
       return {
         ...durum,
-        sayfa: aksiyon.değer[0],
-        yükleniyor: true
-      }
-    case 'DETAYLI_OKU':
-      return {
-        ...durum,
-        tablo: aksiyon.değer[0],
-        amaç: 'oku',
-        veri: aksiyon.değer[1],
+        amaç: 'listele',
+        arama: değer[0],
+        sayfa: 1,
+        toplam: 0,
+        veri: [],
         yükleniyor: true,
         hata: ''
       }
+    //info Eylem bitir
     case 'LİSTELENDİ':
       return {
         ...durum,
-        sayfa: aksiyon.değer[0],
-        veri: aksiyon.değer[1],
-        toplam: aksiyon.değer[2],
+        amaç: 'listele',
+        sayfa: değer[0],
+        veri: değer[1],
+        toplam: değer[2],
         yükleniyor: false
       }
-    case 'DETAYLI_OKUNDU':
+    case 'OKUNDU':
       return {
         ...durum,
-        veri: aksiyon.değer[0],
+        amaç: 'oku',
+        veri: değer[0],
         yükleniyor: false
       }
     case 'OLMADI':
       return {
         ...durum,
         yükleniyor: false,
-        hata: aksiyon.değer[0]
+        hata: değer[0]
       }
     default:
       return durum

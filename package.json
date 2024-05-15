@@ -22,6 +22,7 @@
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.30.10",
     "elysia": "^1.0.20",
+    "lodash": "^4.17.21",
     "pg": "^8.11.5",
     "pino-pretty": "^11.0.0",
     "react": "^19.0.0-beta-9d76c954cf-20240510",
@@ -30,6 +31,7 @@
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.7",
+    "@types/lodash": "^4.17.1",
     "@types/pg": "^8.11.6",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",

@@ -43,7 +43,7 @@ export async function yöneticiİçinListele(
   toplam: number
   sayfa: number
   sayfaBoyutu: number
-  içerik: ListelenenVeri[]
+  içerik: ListelenenVeriler
 }> {
   const sonuç: Response = await fetch(
     `/api/yonet/${ingilizceAlfabeyeÇevir(tablo)}?arama=${arama}&sayfa=${sayfa}&sayfaBoyutu=${sayfaBoyutu}`,
@@ -58,7 +58,7 @@ export async function yöneticiİçinListele(
     toplam: number
     sayfa: number
     sayfaBoyutu: number
-    içerik: ListelenenVeri[]
+    içerik: ListelenenVeriler
   }>
 }
 export async function yöneticiİçinDetaylıOku(

@@ -5,13 +5,13 @@ import {
   ArrowLeftCircleIcon
 } from '@heroicons/react/16/solid'
 import useSayfalama from '@/istemci/ortak/useSayfalandırma'
-import durum from '@/istemci/yönet/durum'
-import { detaylıOku, sayfaDeğiştir } from '@/istemci/yönet/aksiyonlar'
+import Durum from '@/istemci/yönet/durum'
+import { oku, sayfaDeğiştir } from '@/istemci/yönet/aksiyonlar'
 
 export interface VeriListesiProps {
-  readonly veriler: ListelenenVeri[]
+  readonly veriler: ListelenenVeriler
   readonly tablo: Tablo
-  readonly mevcutSayfa: number
+  readonly mevcutSayfa?: number
   readonly sayfaBoyutu: number
   readonly toplam: number
 }
@@ -19,18 +19,18 @@ export interface VeriListesiProps {
 export default function VeriListesi({
   veriler,
   tablo,
-  mevcutSayfa,
+  mevcutSayfa = 1,
   sayfaBoyutu,
   toplam
 }: VeriListesiProps) {
-  const { aksiyonYayınla } = useContext(durum)
+  const { aksiyonYayınla } = useContext(Durum)
   const sayfalamaMenzili = useSayfalama({
     toplam,
     sayfaBoyutu,
     mevcutSayfa
   })
   return (
-    <article className="mt-10 flex size-full max-w-full flex-col p-2">
+    <article className="flex size-full max-w-full flex-col p-2">
       <table className="w-full">
         <thead className="bg-yellow-300">
           <tr>
@@ -77,7 +77,7 @@ export default function VeriListesi({
                   'cursor-pointer hover:bg-gray-400',
                   index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
                 )}
-                onClick={() => aksiyonYayınla(detaylıOku(tablo, veri.id))}
+                onClick={() => aksiyonYayınla(oku(tablo, veri.id))}
               >
                 {Object.values(veri).map((değer, index) => (
                   <td

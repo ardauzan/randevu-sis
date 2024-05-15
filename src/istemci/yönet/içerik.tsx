@@ -7,22 +7,24 @@ import GeriBildirim from '@/istemci/ortak/geriBildirim'
 import Durum from '@/istemci/yönet/durum'
 
 export default function İçerik() {
-  const { durum } = useContext(Durum)
+  const {
+    durum: { amaç, hata }
+  } = useContext(Durum)
   const [hataGeriBildiriminiGöster, setHataGeriBildiriminiGöster] =
     useState(false)
 
   useEffect(() => {
-    if (durum.hata !== '') setHataGeriBildiriminiGöster(true)
+    if (hata !== '') setHataGeriBildiriminiGöster(true)
     else setHataGeriBildiriminiGöster(false)
-  }, [durum.hata])
+  }, [hata])
 
   return (
-    <main className="flex h-screen w-screen flex-col items-center p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10 2xl:p-12">
+    <main className="flex min-h-screen w-screen flex-col items-center p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10 2xl:p-12">
       <PanelKontrolleriMobil />
       <section className="flex h-full w-full">
         <PanelKontrolleri />
         {(() => {
-          switch (durum.amaç) {
+          switch (amaç) {
             case 'listele':
               return <VerileriListele />
             case 'oku':
@@ -33,7 +35,7 @@ export default function İçerik() {
         })()}
       </section>
       <GeriBildirim
-        mesaj={durum.hata}
+        mesaj={hata}
         tip="başarısız"
         göster={hataGeriBildiriminiGöster}
         mesajıKapat={() => setHataGeriBildiriminiGöster(false)}

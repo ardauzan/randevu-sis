@@ -7,20 +7,23 @@ import { tazele, listelendi, olmadı } from '@/istemci/yönet/aksiyonlar'
 
 export default function VerileriListele() {
   const { durum, aksiyonYayınla } = useContext(Durum)
+  const spesifikDurum = durum as ListeleDurum
   useEffect(() => {
     let tazeleReferans: Timer
     const vazgeç = new AbortController()
     const { signal } = vazgeç
-    if (durum.yükleniyor)
+    if (spesifikDurum.yükleniyor)
       yöneticiİçinListele(
-        durum.tablo,
-        durum.arama,
-        durum.sayfa,
-        durum.sayfaBoyutu,
+        spesifikDurum.tablo,
+        spesifikDurum.arama,
+        spesifikDurum.sayfa,
+        spesifikDurum.sayfaBoyutu,
         signal
       ).then(
         (veri) =>
-          aksiyonYayınla(listelendi(durum.sayfa, veri.içerik, veri.toplam)),
+          aksiyonYayınla(
+            listelendi(spesifikDurum.sayfa, veri.içerik, veri.toplam)
+          ),
         (hata) => aksiyonYayınla(olmadı(hata.message))
       )
     else
@@ -32,21 +35,21 @@ export default function VerileriListele() {
       clearTimeout(tazeleReferans)
       vazgeç.abort()
     }
-  }, [durum])
+  }, [spesifikDurum])
 
   return (
     <article className="mt-10 flex size-full flex-col p-2">
-      {(durum as ListeleDurum).veri.length === 0 && durum.yükleniyor ? (
+      {spesifikDurum.veri.length === 0 && spesifikDurum.yükleniyor ? (
         <Yükleniyor />
       ) : (
         <section className="mt-8 flex flex-col overflow-hidden">
           <section className="max-w-full sm:px-2 md:px-4 lg:px-6">
             <VeriListesi
-              veriler={(durum as ListeleDurum).veri}
-              tablo={durum.tablo}
-              mevcutSayfa={durum.sayfa}
-              sayfaBoyutu={durum.sayfaBoyutu}
-              toplam={(durum as ListeleDurum).toplam}
+              veriler={spesifikDurum.veri}
+              tablo={spesifikDurum.tablo}
+              mevcutSayfa={spesifikDurum.sayfa}
+              sayfaBoyutu={spesifikDurum.sayfaBoyutu}
+              toplam={spesifikDurum.toplam}
             />
           </section>
         </section>

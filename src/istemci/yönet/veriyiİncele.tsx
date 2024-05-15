@@ -1,24 +1,26 @@
 import React, { useContext, useEffect } from 'react'
 import Yükleniyor from '@/istemci/ortak/yükleniyor'
+import VeriListesi from '@/istemci/ortak/veriListesi'
 import Durum from '@/istemci/yönet/durum'
 import { yöneticiİçinDetaylıOku } from '@/istemci/kütüphane'
-import { tazele, detaylıOkundu, olmadı } from '@/istemci/yönet/aksiyonlar'
+import { tazele, olmadı, okundu } from '@/istemci/yönet/aksiyonlar'
 
 export default function Veriyiİncele() {
   const { durum, aksiyonYayınla } = useContext(Durum)
+  const spesifikDurum = durum as OkuDurum
   useEffect(() => {
     let tazeleReferans: Timer
     const vazgeç = new AbortController()
     const { signal } = vazgeç
-    if (durum.yükleniyor)
+    if (spesifikDurum.yükleniyor)
       yöneticiİçinDetaylıOku(
-        durum.tablo,
-        typeof durum.veri === 'number'
-          ? durum.veri
-          : (durum.veri as DetaylıVeri).id,
+        spesifikDurum.tablo,
+        typeof spesifikDurum.veri === 'number'
+          ? spesifikDurum.veri
+          : spesifikDurum.veri.id,
         signal
       ).then(
-        (veri) => aksiyonYayınla(detaylıOkundu(veri)),
+        (veri) => aksiyonYayınla(okundu(veri)),
         (hata) => aksiyonYayınla(olmadı(hata.message))
       )
     else
@@ -30,64 +32,63 @@ export default function Veriyiİncele() {
       clearTimeout(tazeleReferans)
       vazgeç.abort()
     }
-  }, [durum])
+  }, [spesifikDurum])
   return (
     <article className="mt-10 flex size-full flex-col p-2">
-      {typeof durum.veri === 'number' && durum.yükleniyor ? (
+      {typeof spesifikDurum.veri === 'number' && spesifikDurum.yükleniyor ? (
         <Yükleniyor />
       ) : (
-        <section>
+        <section className="mt-6 gap-4 space-y-2 rounded-lg border border-black bg-white p-4 sm:w-full">
           {(() => {
-            switch (durum.tablo) {
+            switch (spesifikDurum.tablo) {
               case 'kişiler':
-                const { id, yönetici, öğrenciNo, ad, soyAd, email, projeler } =
-                  durum.veri as DetaylıKişi
+                const kişi = spesifikDurum.veri as DetaylıKişi
+                const projelerBoyut = kişi.projeler.length
                 return (
                   <>
-                    <h1 className="font-mono text-3xl font-bold">Kişi: {id}</h1>
-                    <p>Yönetici: {yönetici ? 'Evet' : 'Hayır'}</p>
+                    <h1 className="font-mono text-3xl font-bold">
+                      Kişi: {kişi.id}
+                    </h1>
+                    <p>Yönetici: {kişi.yönetici ? 'Evet' : 'Hayır'}</p>
                     <h2 className="font-serif text-2xl font-bold">
-                      {öğrenciNo} no lu, {ad} {soyAd}.
+                      {kişi.öğrenciNo} no lu, {kişi.ad} {kişi.soyAd}.
                     </h2>
-
-                    <p className="font-serif text-lg">{email}</p>
-                    <h3 className="font-serif text-xl font-bold">Projeler</h3>
-                    <ul>
-                      {projeler.map((proje, index) => (
-                        <li key={index} className="font-serif text-lg">
-                          {proje.id} {proje.ad} {proje.başlangıçTarihi}{' '}
-                          {proje.bitişTarihi} {proje.açıklama}
-                        </li>
-                      ))}
-                    </ul>
+                    <p className="font-serif text-lg">E-Posta: {kişi.email}</p>
+                    <h3 className="font-serif text-xl font-bold">Projeler:</h3>
+                    <VeriListesi
+                      veriler={kişi.projeler}
+                      tablo="projeler"
+                      sayfaBoyutu={projelerBoyut}
+                      toplam={projelerBoyut}
+                    />
                   </>
                 )
               case 'projeler':
-                const proje = durum.veri as DetaylıProje
+                const proje = spesifikDurum.veri as DetaylıProje
+                const üyelerBoyut = proje.üyeler.length
                 return (
                   <>
-                    <h1>{proje.id}</h1>
+                    <h1 className="font-mono text-3xl font-bold">
+                      Proje: {proje.id}
+                    </h1>
                     <h2 className="font-serif text-2xl font-bold">
-                      {proje.ad}
+                      {proje.ad} adındaki, {proje.başlangıçTarihi} tarihinde
+                      başlayıp {proje.bitişTarihi} tarihinde biten proje.
                     </h2>
                     <p className="font-serif text-lg">
-                      {proje.başlangıçTarihi}
+                      Açıklama: {proje.açıklama}
                     </p>
-                    <p className="font-serif text-lg">{proje.bitişTarihi}</p>
-                    <p className="font-serif text-lg">{proje.açıklama}</p>
-                    <h3 className="font-serif text-xl font-bold">Üyeler</h3>
-                    <ul>
-                      {proje.üyeler.map((kişi, index) => (
-                        <li key={index} className="font-serif text-lg">
-                          {kişi.id} {kişi.öğrenciNo} {kişi.ad} {kişi.soyAd}{' '}
-                          {kişi.email}
-                        </li>
-                      ))}
-                    </ul>
+                    <h3 className="font-serif text-xl font-bold">Üyeler:</h3>
+                    <VeriListesi
+                      veriler={proje.üyeler}
+                      tablo="kişiler"
+                      sayfaBoyutu={üyelerBoyut}
+                      toplam={üyelerBoyut}
+                    />
                   </>
                 )
               default:
-                throw new Error('Bilinmeyen tablo: ' + durum.tablo)
+                throw new Error('Bilinmeyen tablo: ' + spesifikDurum.tablo)
             }
           })()}
         </section>
