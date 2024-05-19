@@ -1,9 +1,10 @@
 import React, { useContext, useEffect } from 'react'
+import { ArrowLongLeftIcon } from '@heroicons/react/20/solid'
 import Yükleniyor from '@/istemci/ortak/yükleniyor'
 import VeriListesi from '@/istemci/ortak/veriListesi'
 import Durum from '@/istemci/yönet/durum'
 import { yöneticiİçinDetaylıOku } from '@/istemci/kütüphane'
-import { tazele, olmadı, okundu } from '@/istemci/yönet/aksiyonlar'
+import { listele, tazele, olmadı, okundu } from '@/istemci/yönet/aksiyonlar'
 
 export default function Veriyiİncele() {
   const { durum, aksiyonYayınla } = useContext(Durum)
@@ -35,10 +36,19 @@ export default function Veriyiİncele() {
   }, [spesifikDurum])
   return (
     <article className="mt-10 flex size-full flex-col p-2">
+      <button
+        className="contents"
+        onClick={() => {
+          console.log('here')
+          aksiyonYayınla(listele())
+        }}
+      >
+        <ArrowLongLeftIcon className="size-8" />
+      </button>
       {typeof spesifikDurum.veri === 'number' && spesifikDurum.yükleniyor ? (
         <Yükleniyor />
       ) : (
-        <section className="mt-6 gap-4 space-y-2 rounded-lg border border-black bg-white p-4 sm:w-full">
+        <section className="mt-6 flex size-full flex-col gap-4 space-y-2 rounded-lg border border-black bg-white p-4 sm:w-full">
           {(() => {
             switch (spesifikDurum.tablo) {
               case 'kişiler':

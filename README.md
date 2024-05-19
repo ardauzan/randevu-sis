@@ -4,7 +4,7 @@
 
 ## Gerekli yazılımlar
 
-1. PostgreSQL veritabanı (v16.2) [www.postgresql.org](https://www.postgresql.org)
+1. PostgreSQL veritabanı (v16.3) [www.postgresql.org](https://www.postgresql.org)
 2. Bun çalışma zamanı (v1.1.8) [bun.sh](https://bun.sh)
 
 ## Kurulum

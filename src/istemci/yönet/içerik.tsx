@@ -19,9 +19,9 @@ export default function İçerik() {
   }, [hata])
 
   return (
-    <main className="flex min-h-screen w-screen flex-col items-center p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10 2xl:p-12">
+    <main className="flex h-max min-h-screen w-screen flex-col items-center p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10 2xl:p-12">
       <PanelKontrolleriMobil />
-      <section className="flex h-full w-full">
+      <section className="flex w-full">
         <PanelKontrolleri />
         {(() => {
           switch (amaç) {
