@@ -39,7 +39,6 @@ export default function Veriyiİncele() {
       <button
         className="contents"
         onClick={() => {
-          console.log('here')
           aksiyonYayınla(listele())
         }}
       >

@@ -78,6 +78,24 @@ export async function yöneticiİçinDetaylıOku(
   return sonuç.json() as Promise<DetaylıVeri>
 }
 
+export const yöneticiİçinEkle = async (
+  tablo: Tablo,
+  veri: OluşturulacakVeri
+): Promise<void> => {
+  const sonuç: Response = await fetch(
+    `/api/yonet/${ingilizceAlfabeyeÇevir(tablo)}`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'same-origin',
+      body: JSON.stringify(veri)
+    }
+  )
+  if (!sonuç.ok) throw new Error(await sonuç.json())
+}
+
 //# Diğer
 export function ingilizceAlfabeyeÇevir(türkçe: string): string {
   return türkçe
@@ -93,4 +111,12 @@ export function ingilizceAlfabeyeÇevir(türkçe: string): string {
     .replace('Ö', 'O')
     .replace('Ş', 'S')
     .replace('Ü', 'U')
+}
+export function kişiOluştururkenkiProjeleriSeç(projeler: string): number[] {
+  if (projeler)
+    return projeler
+      .split(',')
+      .filter((id) => id !== '')
+      .map(Number)
+  return []
 }

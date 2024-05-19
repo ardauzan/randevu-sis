@@ -15,11 +15,11 @@ export default function PanelKontrolleriSorguAltPaneli({
   kontrolleriGizle = () => {}
 }: PanelKontrolleriSorguAltPaneliProps) {
   const {
-    durum: { tablo },
+    durum,
+    durum: { tablo, sayfaBoyutu },
     aksiyonYayınla
   } = useContext(Durum)
-  const [arama, setArama] = useState('')
-  const [sayfaBoyutu, setSayfaBoyutu] = useState(10)
+  const [arama, setArama] = useState(durum.arama)
   const başHarfiBüyükTablo = tablo.charAt(0).toUpperCase() + tablo.slice(1)
   useEffect(() => {
     const aramaDeğiştirDebounced = debounce(() => {
@@ -29,10 +29,6 @@ export default function PanelKontrolleriSorguAltPaneli({
     aramaDeğiştirDebounced()
     return aramaDeğiştirDebounced.cancel
   }, [arama])
-  useEffect(() => {
-    aksiyonYayınla(sayfaBoyutuDeğiştir(sayfaBoyutu))
-    kontrolleriGizle()
-  }, [sayfaBoyutu])
   return (
     <article
       className={clsx(
@@ -124,7 +120,10 @@ export default function PanelKontrolleriSorguAltPaneli({
               name="sayfaBoyutu"
               className="block rounded-md border border-blue-600 text-center text-sm font-semibold text-black shadow-sm hover:border-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
               value={sayfaBoyutu}
-              onChange={(e) => setSayfaBoyutu(parseInt(e.target.value))}
+              onChange={(e) => {
+                aksiyonYayınla(sayfaBoyutuDeğiştir(parseInt(e.target.value)))
+                kontrolleriGizle()
+              }}
             >
               <option value={10}> 10 </option>
               <option value={100}> 100 </option>

@@ -42,7 +42,7 @@ export default function VerileriListele() {
       {spesifikDurum.veri.length === 0 && spesifikDurum.yükleniyor ? (
         <Yükleniyor />
       ) : (
-        <section className="mt-8 flex flex-col overflow-hidden">
+        <section className="mt-6 flex size-full flex-col gap-4 space-y-2 rounded-lg border border-black bg-white p-4 sm:w-full">
           <section className="max-w-full sm:px-2 md:px-4 lg:px-6">
             <VeriListesi
               veriler={spesifikDurum.veri}
