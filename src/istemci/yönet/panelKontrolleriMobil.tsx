@@ -38,6 +38,7 @@ export default function PanelKontrolleriMobil() {
         />
         <PanelKontrolleriSorguAltPaneli
           kontrollerGörünüyor={kontrollerGörünüyor}
+          kontrolleriGizle={() => setKontrollerGörünüyor(false)}
         />
       </section>
       <button

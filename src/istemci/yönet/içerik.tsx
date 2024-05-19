@@ -3,6 +3,7 @@ import PanelKontrolleriMobil from '@/istemci/yönet/panelKontrolleriMobil'
 import PanelKontrolleri from '@/istemci/yönet/panelKontrolleri'
 import VerileriListele from '@/istemci/yönet/verileriListele'
 import Veriyiİncele from '@/istemci/yönet/veriyiİncele'
+import VeriEkle from '@/istemci/yönet/veriEkle'
 import GeriBildirim from '@/istemci/ortak/geriBildirim'
 import Durum from '@/istemci/yönet/durum'
 
@@ -29,6 +30,8 @@ export default function İçerik() {
               return <VerileriListele />
             case 'oku':
               return <Veriyiİncele />
+            case 'ekle':
+              return <VeriEkle />
             default:
               return <div>İçerik yok</div>
           }

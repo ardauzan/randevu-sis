@@ -7,10 +7,12 @@ import { ekle, sayfaBoyutuDeğiştir, aramaDeğiştir } from './aksiyonlar'
 
 export interface PanelKontrolleriSorguAltPaneliProps {
   readonly kontrollerGörünüyor?: boolean
+  readonly kontrolleriGizle?: () => void
 }
 
 export default function PanelKontrolleriSorguAltPaneli({
-  kontrollerGörünüyor = true
+  kontrollerGörünüyor = true,
+  kontrolleriGizle = () => {}
 }: PanelKontrolleriSorguAltPaneliProps) {
   const {
     durum: { tablo },
@@ -20,15 +22,16 @@ export default function PanelKontrolleriSorguAltPaneli({
   const [sayfaBoyutu, setSayfaBoyutu] = useState(10)
   const başHarfiBüyükTablo = tablo.charAt(0).toUpperCase() + tablo.slice(1)
   useEffect(() => {
-    const aramaDeğiştirDebounced = debounce(
-      () => aksiyonYayınla(aramaDeğiştir(arama)),
-      300
-    )
+    const aramaDeğiştirDebounced = debounce(() => {
+      aksiyonYayınla(aramaDeğiştir(arama))
+      kontrolleriGizle()
+    }, 300)
     aramaDeğiştirDebounced()
     return aramaDeğiştirDebounced.cancel
   }, [arama])
   useEffect(() => {
     aksiyonYayınla(sayfaBoyutuDeğiştir(sayfaBoyutu))
+    kontrolleriGizle()
   }, [sayfaBoyutu])
   return (
     <article
@@ -82,7 +85,7 @@ export default function PanelKontrolleriSorguAltPaneli({
           <section className="flex justify-around">
             <button
               className="flex items-center justify-center rounded-md bg-blue-600 px-3 py-2 text-center text-xs font-thin text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-              onClick={() =>
+              onClick={() => {
                 aksiyonYayınla(
                   ekle(
                     (() => {
@@ -111,7 +114,8 @@ export default function PanelKontrolleriSorguAltPaneli({
                     })()
                   )
                 )
-              }
+                kontrolleriGizle()
+              }}
             >
               <PlusIcon className="size-4" />
               {başHarfiBüyükTablo} tablosuna yeni kayıt ekle
