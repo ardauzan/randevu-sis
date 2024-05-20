@@ -3,7 +3,6 @@ import { staticPlugin } from '@elysiajs/static'
 import { jwt } from '@elysiajs/jwt'
 import { swagger } from '@elysiajs/swagger'
 import { logger } from '@bogeychan/elysia-logger'
-import { serverTiming } from '@elysiajs/server-timing'
 import { renderToReadableStream } from 'react-dom/server'
 import { createElement } from 'react'
 import Anasayfa from '@/istemci/anasayfa/anasayfa'
@@ -38,7 +37,6 @@ const arkayüz = new Elysia({
     secrets: [process.env['COOKIE_SECRET']!]
   }
 })
-  .use(serverTiming())
   .use(
     logger({
       transport: {

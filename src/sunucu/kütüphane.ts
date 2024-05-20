@@ -272,14 +272,15 @@ export async function projeyiYöneticiİçinDetaylıOku(
 export async function yöneticiİçinProjeEkle(
   oluşturulacakProje: OluşturulacakProje
 ): Promise<'Proje eklendi.'> {
+  const { üyeler, ...proje } = oluşturulacakProje
   await veritabanı.transaction(async (tx) => {
     const sonuç = await tx
       .insert(projeler)
-      .values([oluşturulacakProje])
+      .values([proje])
       .returning({ id: projeler.id })
-    if (oluşturulacakProje.üyeler.length)
+    if (üyeler.length)
       await tx.insert(kişilerProjeler).values(
-        oluşturulacakProje.üyeler.map((üye) => ({
+        üyeler.map((üye) => ({
           üye,
           proje: sonuç[0]!.id
         }))

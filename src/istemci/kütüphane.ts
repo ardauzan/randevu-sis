@@ -120,3 +120,11 @@ export function kişiOluştururkenkiProjeleriSeç(projeler: string): number[] {
       .map(Number)
   return []
 }
+export function projeOluştururkenkiÜyeleriSeç(üyeler: string): number[] {
+  if (üyeler)
+    return üyeler
+      .split(',')
+      .filter((id) => id !== '')
+      .map(Number)
+  return []
+}

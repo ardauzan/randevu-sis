@@ -5,13 +5,15 @@ import Durum from '@/istemci/yönet/durum'
 import { listele, ekle, tetikle, olmadı } from '@/istemci/yönet/aksiyonlar'
 import {
   kişiOluştururkenkiProjeleriSeç,
-  yöneticiİçinEkle
+  yöneticiİçinEkle,
+  projeOluştururkenkiÜyeleriSeç
 } from '@/istemci/kütüphane'
 
 export default function VeriEkle() {
   const { durum, aksiyonYayınla } = useContext(Durum)
   const spesifikDurum = durum as EkleDurum
   const [kişiProjeleri, setKişiProjeleri] = useState('') //# Kişi oluştururkenki projeleri seçmek için
+  const [projeÜyeleri, setProjeÜyeleri] = useState('') //# Proje oluştururkenki üyeleri seçmek için
   useEffect(() => {
     if (spesifikDurum.yükleniyor) {
       yöneticiİçinEkle(spesifikDurum.tablo, spesifikDurum.veri)
@@ -20,15 +22,33 @@ export default function VeriEkle() {
     }
   }, [spesifikDurum.yükleniyor])
   useEffect(() => {
-    if (/^\d+(,\d+)*,?$/g.test(kişiProjeleri))
+    if (
+      spesifikDurum.tablo === 'kişiler' &&
+      /^\d+(,\d+)*,?$/g.test(kişiProjeleri)
+    )
       aksiyonYayınla(
         ekle({
           ...spesifikDurum.veri,
           projeler: kişiOluştururkenkiProjeleriSeç(kişiProjeleri)
         })
       )
-    else aksiyonYayınla(ekle({ ...spesifikDurum.veri, projeler: [] }))
+    else if (spesifikDurum.tablo === 'kişiler')
+      aksiyonYayınla(ekle({ ...spesifikDurum.veri, projeler: [] }))
   }, [kişiProjeleri])
+  useEffect(() => {
+    if (
+      spesifikDurum.tablo === 'projeler' &&
+      /^\d+(,\d+)*,?$/g.test(projeÜyeleri)
+    )
+      aksiyonYayınla(
+        ekle({
+          ...spesifikDurum.veri,
+          üyeler: projeOluştururkenkiÜyeleriSeç(projeÜyeleri)
+        })
+      )
+    else if (spesifikDurum.tablo === 'projeler')
+      aksiyonYayınla(ekle({ ...spesifikDurum.veri, üyeler: [] }))
+  }, [projeÜyeleri])
   return (
     <article className="mt-10 flex size-full flex-col p-2">
       <button
@@ -46,7 +66,8 @@ export default function VeriEkle() {
           {(() => {
             switch (spesifikDurum.tablo) {
               case 'kişiler':
-                const veri = spesifikDurum.veri as OluşturulacakKişi
+                const oluşturulacakKişi =
+                  spesifikDurum.veri as OluşturulacakKişi
                 return (
                   <>
                     <h1 className="font-mono text-3xl font-bold">Kişi ekle</h1>
@@ -61,10 +82,13 @@ export default function VeriEkle() {
                       <input
                         type="checkbox"
                         name="yönetici"
-                        checked={veri.yönetici}
+                        checked={oluşturulacakKişi.yönetici}
                         onChange={(e) => {
                           aksiyonYayınla(
-                            ekle({ ...veri, yönetici: e.target.checked })
+                            ekle({
+                              ...oluşturulacakKişi,
+                              yönetici: e.target.checked
+                            })
                           )
                         }}
                         className="border border-black"
@@ -74,11 +98,15 @@ export default function VeriEkle() {
                         type="number"
                         name="öğrenciNo"
                         required
-                        value={veri.öğrenciNo === 0 ? '' : veri.öğrenciNo}
+                        value={
+                          oluşturulacakKişi.öğrenciNo === 0
+                            ? ''
+                            : oluşturulacakKişi.öğrenciNo
+                        }
                         onChange={(e) => {
                           aksiyonYayınla(
                             ekle({
-                              ...veri,
+                              ...oluşturulacakKişi,
                               öğrenciNo: e.target.value
                                 ? parseInt(e.target.value)
                                 : 0
@@ -93,9 +121,11 @@ export default function VeriEkle() {
                         type="text"
                         name="ad"
                         required
-                        value={veri.ad}
+                        value={oluşturulacakKişi.ad}
                         onChange={(e) => {
-                          aksiyonYayınla(ekle({ ...veri, ad: e.target.value }))
+                          aksiyonYayınla(
+                            ekle({ ...oluşturulacakKişi, ad: e.target.value })
+                          )
                         }}
                         className="border border-black"
                       />
@@ -104,10 +134,13 @@ export default function VeriEkle() {
                         type="text"
                         name="soyAd"
                         required
-                        value={veri.soyAd}
+                        value={oluşturulacakKişi.soyAd}
                         onChange={(e) => {
                           aksiyonYayınla(
-                            ekle({ ...veri, soyAd: e.target.value })
+                            ekle({
+                              ...oluşturulacakKişi,
+                              soyAd: e.target.value
+                            })
                           )
                         }}
                         className="border border-black"
@@ -117,10 +150,13 @@ export default function VeriEkle() {
                         type="email"
                         name="email"
                         required
-                        value={veri.email}
+                        value={oluşturulacakKişi.email}
                         onChange={(e) => {
                           aksiyonYayınla(
-                            ekle({ ...veri, email: e.target.value })
+                            ekle({
+                              ...oluşturulacakKişi,
+                              email: e.target.value
+                            })
                           )
                         }}
                         className="border border-black"
@@ -130,10 +166,13 @@ export default function VeriEkle() {
                         type="password"
                         name="şifre"
                         required
-                        value={veri.şifre}
+                        value={oluşturulacakKişi.şifre}
                         onChange={(e) => {
                           aksiyonYayınla(
-                            ekle({ ...veri, şifre: e.target.value })
+                            ekle({
+                              ...oluşturulacakKişi,
+                              şifre: e.target.value
+                            })
                           )
                         }}
                         className="border border-black"
@@ -144,6 +183,97 @@ export default function VeriEkle() {
                         name="projeler"
                         value={kişiProjeleri}
                         onChange={(e) => setKişiProjeleri(e.target.value)}
+                        className="border border-black"
+                      />
+                      <button
+                        type="submit"
+                        className="rounded-lg bg-blue-500 p-2 text-white"
+                      >
+                        Ekle
+                      </button>
+                    </form>
+                  </>
+                )
+              case 'projeler':
+                const oluşturulacakProje =
+                  spesifikDurum.veri as OluşturulacakProje
+                return (
+                  <>
+                    <h1 className="font-mono text-3xl font-bold">Proje ekle</h1>
+                    <form
+                      className="flex flex-col"
+                      onSubmit={(e) => {
+                        e.preventDefault()
+                        aksiyonYayınla(tetikle())
+                      }}
+                    >
+                      <label htmlFor="ad">Ad</label>
+                      <input
+                        type="text"
+                        name="ad"
+                        required
+                        value={oluşturulacakProje.ad}
+                        onChange={(e) => {
+                          aksiyonYayınla(
+                            ekle({ ...oluşturulacakProje, ad: e.target.value })
+                          )
+                        }}
+                        className="border border-black"
+                      />
+                      <label htmlFor="başlangıçTarihi">Başlangıç Tarihi</label>
+                      <input
+                        type="date"
+                        name="başlangıçTarihi"
+                        required
+                        value={oluşturulacakProje.başlangıçTarihi}
+                        onChange={(e) => {
+                          aksiyonYayınla(
+                            ekle({
+                              ...oluşturulacakProje,
+                              başlangıçTarihi: e.target.value
+                            })
+                          )
+                        }}
+                        className="border border-black"
+                      />
+                      <label htmlFor="bitişTarihi">Bitiş Tarihi</label>
+                      <input
+                        type="date"
+                        name="bitişTarihi"
+                        required
+                        value={oluşturulacakProje.bitişTarihi}
+                        onChange={(e) => {
+                          aksiyonYayınla(
+                            ekle({
+                              ...oluşturulacakProje,
+                              bitişTarihi: e.target.value
+                            })
+                          )
+                        }}
+                        className="border border-black"
+                      />
+                      <label htmlFor="açıklama">Açıklama</label>
+                      <input
+                        type="text"
+                        name="açıklama"
+                        required
+                        value={oluşturulacakProje.açıklama}
+                        onChange={(e) => {
+                          aksiyonYayınla(
+                            ekle({
+                              ...oluşturulacakProje,
+                              açıklama: e.target.value
+                            })
+                          )
+                        }}
+                        className="border border-black"
+                      />
+                      <label htmlFor="üyeler">Üyeler</label>
+                      <input
+                        type="text"
+                        name="üyeler"
+                        value={projeÜyeleri}
+                        onChange={(e) => setProjeÜyeleri(e.target.value)}
                         className="border border-black"
                       />
                       <button
