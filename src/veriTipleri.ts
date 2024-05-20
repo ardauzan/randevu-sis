@@ -16,10 +16,31 @@ type Tablo =
   | 'randevular'
   | 'tatiller'
   | 'ziyaretler'
-type ListelenenVeri = ListelenenKişi | ListelenenProje
+type ListelenenVeri =
+  | ListelenenKişi
+  | ListelenenProje
+  | ListelenenGereç
+  | ListelenenAraç
+  | ListelenenRandevu
+  | ListelenenTatil
+  | ListelenenZiyaret
 type ListelenenVeriler = ListelenenVeri[]
-type DetaylıVeri = DetaylıKişi | DetaylıProje
-type OluşturulacakVeri = OluşturulacakKişi | OluşturulacakProje
+type DetaylıVeri =
+  | DetaylıKişi
+  | DetaylıProje
+  | ListelenenGereç
+  | ListelenenAraç
+  | DetaylıRandevu
+  | ListelenenTatil
+  | ListelenenZiyaret
+type OluşturulacakVeri =
+  | OluşturulacakKişi
+  | OluşturulacakProje
+  | OluşturulacakGereç
+  | OluşturulacakAraç
+  | OluşturulacakRandevu
+  | OluşturulacakTatil
+  | OluşturulacakZiyaret
 type GüncellenecekVeri = [id: number, veri: OluşturulacakVeri]
 type SilinecekVeri = number
 type ListelenenKişi = {
@@ -71,6 +92,84 @@ type OluşturulacakProje = {
   üyeler: number[]
 }
 type GüncellenecekProje = [id: number, veri: OluşturulacakProje]
+type ListelenenGereç = {
+  id: number
+  ad: string
+  adet: number
+}
+type OluşturulacakGereç = {
+  ad: string
+  adet: number
+}
+type GüncellenecekGereç = [id: number, veri: OluşturulacakGereç]
+type ListelenenAraç = {
+  id: number
+  ad: string
+  açıklama: string
+  arızalı: boolean
+}
+type OluşturulacakAraç = {
+  ad: string
+  açıklama: string
+  arızalı: boolean
+}
+type GüncellenecekAraç = [id: number, veri: OluşturulacakAraç]
+type ListelenenRandevu = {
+  id: number
+  açıklama: string
+  proje: number
+  gün: string
+  başlangıçZamanı: string
+  bitişZamanı: string
+}
+type DetaylıRandevu = {
+  id: number
+  açıklama: string
+  proje: ListelenenProje
+  gün: string
+  başlangıçZamanı: string
+  bitişZamanı: string
+  gereçler: [adet: number, gereç: ListelenenGereç][]
+  araçlar: ListelenenAraç[]
+}
+type OluşturulacakRandevu = {
+  açıklama: string
+  proje: number
+  gün: string
+  başlangıçZamanı: string
+  bitişZamanı: string
+  gereçler: [adet: number, gereç: number][]
+  araçlar: number[]
+}
+type GüncellenecekRandevu = [id: number, veri: OluşturulacakRandevu]
+type ListelenenTatil = {
+  id: number
+  başlangıçTarihi: string
+  bitişTarihi: string
+  açıklama: string
+}
+type OluşturulacakTatil = {
+  başlangıçTarihi: string
+  bitişTarihi: string
+  açıklama: string
+}
+type GüncellenecekTatil = [id: number, veri: OluşturulacakTatil]
+type ListelenenZiyaret = {
+  id: number
+  gün: string
+  başlangıçZamanı: string
+  bitişZamanı: string
+  ziyaretEden: string
+  ziyaretçiSayısı: number
+}
+type OluşturulacakZiyaret = {
+  gün: string
+  başlangıçZamanı: string
+  bitişZamanı: string
+  ziyaretEden: string
+  ziyaretçiSayısı: number
+}
+type GüncellenecekZiyaret = [id: number, veri: OluşturulacakZiyaret]
 
 //# Durum
 type OrtakDurum = {

@@ -62,6 +62,35 @@ export const randevular = pgTable('randevular', {
   başlangıçZamanı: time('başlangıç_saat').notNull(),
   bitişZamanı: time('bitiş_saat').notNull()
 })
+export const gereçlerRandevular = pgTable(
+  'gereçler_randevular',
+  {
+    randevu: integer('randevu')
+      .references(() => randevular.id)
+      .notNull(),
+    gereç: integer('gereç')
+      .references(() => gereçler.id)
+      .notNull(),
+    adet: integer('adet').notNull()
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.randevu, t.gereç] })
+  })
+)
+export const araçlarRandevular = pgTable(
+  'araçlar_randevular',
+  {
+    araç: integer('araç')
+      .references(() => araçlar.id)
+      .notNull(),
+    randevu: integer('randevu')
+      .references(() => randevular.id)
+      .notNull()
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.araç, t.randevu] })
+  })
+)
 export const tatiller = pgTable('tatiller', {
   id: serial('id').primaryKey(),
   başlangıçTarihi: date('başlangıç_tarihi').notNull(),
@@ -96,3 +125,11 @@ export const kişilerProjelerRelations = relations(
     })
   })
 )
+export const randevularRelations = relations(randevular, ({ one, many }) => ({
+  proje: one(projeler, {
+    fields: [randevular.proje],
+    references: [projeler.id]
+  }),
+  gereçler: many(gereçlerRandevular),
+  araçlar: many(araçlarRandevular)
+}))

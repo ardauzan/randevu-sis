@@ -1,6 +1,17 @@
 import { eq, like, or, count } from 'drizzle-orm'
 import { veritabanı } from '@/index'
-import { kişiler, projeler, kişilerProjeler } from '@/veritabanı/şema'
+import {
+  kişiler,
+  projeler,
+  kişilerProjeler,
+  gereçler,
+  araçlar,
+  randevular,
+  gereçlerRandevular,
+  araçlarRandevular,
+  tatiller,
+  ziyaretler
+} from '@/veritabanı/şema'
 
 //# Kimlik
 export function değerKimlikÇerezininMisalimi(
@@ -319,6 +330,420 @@ export async function yöneticiİçinProjeSil(
     if (!sonuç.length) await tx.rollback()
   })
   return 'Proje silindi.'
+}
+export async function gereçleriYöneticiİçinSay(arama: string): Promise<number> {
+  return veritabanı
+    .select({ count: count() })
+    .from(gereçler)
+    .where(like(gereçler.ad, `%${arama}%`))
+    .then((res) => res[0]!.count)
+}
+export async function gereçleriYöneticiİçinListele(
+  arama: string,
+  sayfa: number,
+  sayfaBoyutu: number
+): Promise<ListelenenGereç[]> {
+  return veritabanı.query.gereçler.findMany({
+    where: like(gereçler.ad, `%${arama}%`),
+    offset: (sayfa - 1) * sayfaBoyutu,
+    limit: sayfaBoyutu,
+    columns: {
+      id: true,
+      ad: true,
+      adet: true
+    }
+  })
+}
+export async function gereciYöneticiİçinDetaylıOku(
+  id: number
+): Promise<ListelenenGereç | null> {
+  const sonuç = await veritabanı.query.gereçler.findFirst({
+    where: eq(gereçler.id, id),
+    columns: {
+      id: true,
+      ad: true,
+      adet: true
+    }
+  })
+  if (!sonuç) return null
+  return sonuç
+}
+export async function yöneticiİçinGereçEkle(
+  oluşturulacakGereç: OluşturulacakGereç
+): Promise<'Gereç eklendi.'> {
+  await veritabanı.insert(gereçler).values([oluşturulacakGereç])
+  return 'Gereç eklendi.'
+}
+export async function yöneticiİçinGereçGüncelle(
+  id: number,
+  güncellenecekGereç: OluşturulacakGereç
+): Promise<'Gereç güncellendi.'> {
+  await veritabanı
+    .update(gereçler)
+    .set(güncellenecekGereç)
+    .where(eq(gereçler.id, id))
+  return 'Gereç güncellendi.'
+}
+export async function yöneticiİçinGereçSil(
+  id: number
+): Promise<'Gereç silindi.'> {
+  await veritabanı.delete(gereçler).where(eq(gereçler.id, id))
+  return 'Gereç silindi.'
+}
+export async function araçlarıYöneticiİçinSay(arama: string): Promise<number> {
+  return veritabanı
+    .select({ count: count() })
+    .from(araçlar)
+    .where(like(araçlar.ad, `%${arama}%`))
+    .then((res) => res[0]!.count)
+}
+export async function araçlarıYöneticiİçinListele(
+  arama: string,
+  sayfa: number,
+  sayfaBoyutu: number
+): Promise<ListelenenAraç[]> {
+  return veritabanı.query.araçlar.findMany({
+    where: like(araçlar.ad, `%${arama}%`),
+    offset: (sayfa - 1) * sayfaBoyutu,
+    limit: sayfaBoyutu,
+    columns: {
+      id: true,
+      ad: true,
+      açıklama: true,
+      arızalı: true
+    }
+  })
+}
+export async function aracıYöneticiİçinDetaylıOku(
+  id: number
+): Promise<ListelenenAraç | null> {
+  const sonuç = await veritabanı.query.araçlar.findFirst({
+    where: eq(araçlar.id, id),
+    columns: {
+      id: true,
+      ad: true,
+      açıklama: true,
+      arızalı: true
+    }
+  })
+  if (!sonuç) return null
+  return sonuç
+}
+export async function yöneticiİçinAraçEkle(
+  oluşturulacakAraç: OluşturulacakAraç
+): Promise<'Araç eklendi.'> {
+  await veritabanı.insert(araçlar).values([oluşturulacakAraç])
+  return 'Araç eklendi.'
+}
+export async function yöneticiİçinAraçGüncelle(
+  id: number,
+  güncellenecekAraç: OluşturulacakAraç
+): Promise<'Araç güncellendi.'> {
+  await veritabanı
+    .update(araçlar)
+    .set(güncellenecekAraç)
+    .where(eq(araçlar.id, id))
+  return 'Araç güncellendi.'
+}
+export async function yöneticiİçinAraçSil(
+  id: number
+): Promise<'Araç silindi.'> {
+  await veritabanı.delete(araçlar).where(eq(araçlar.id, id))
+  return 'Araç silindi.'
+}
+export async function randevularıYöneticiİçinSay(
+  arama: string
+): Promise<number> {
+  return veritabanı
+    .select({ count: count() })
+    .from(randevular)
+    .where(like(randevular.açıklama, `%${arama}%`))
+    .then((res) => res[0]!.count)
+}
+export async function randevularıYöneticiİçinListele(
+  arama: string,
+  sayfa: number,
+  sayfaBoyutu: number
+): Promise<ListelenenRandevu[]> {
+  return veritabanı.query.randevular.findMany({
+    where: like(randevular.açıklama, `%${arama}%`),
+    offset: (sayfa - 1) * sayfaBoyutu,
+    limit: sayfaBoyutu,
+    columns: {
+      id: true,
+      açıklama: true,
+      proje: true,
+      gün: true,
+      başlangıçZamanı: true,
+      bitişZamanı: true
+    }
+  })
+}
+export async function randevuyuYöneticiİçinDetaylıOku(
+  id: number
+): Promise<DetaylıRandevu | null> {
+  const sonuç = await veritabanı.query.randevular.findFirst({
+    where: eq(randevular.id, id),
+    columns: {
+      id: true,
+      açıklama: true,
+      gün: true,
+      başlangıçZamanı: true,
+      bitişZamanı: true
+    },
+    with: {
+      proje: {
+        columns: {
+          id: true,
+          ad: true,
+          başlangıçTarihi: true,
+          bitişTarihi: true,
+          açıklama: true
+        }
+      },
+      gereçler: {
+        columns: {
+          gereç: true,
+          adet: true
+        },
+        with: {
+          gereç: {
+            columns: {
+              id: true,
+              ad: true,
+              adet: true
+            }
+          }
+        }
+      },
+      araçlar: {
+        columns: {
+          araç: true
+        },
+        with: {
+          araç: {
+            columns: {
+              id: true,
+              ad: true,
+              açıklama: true,
+              arızalı: true
+            }
+          }
+        }
+      }
+    }
+  })
+  if (!sonuç) return null
+  return {
+    id: sonuç.id,
+    açıklama: sonuç.açıklama,
+    proje: sonuç.proje,
+    gün: sonuç.gün,
+    başlangıçZamanı: sonuç.başlangıçZamanı,
+    bitişZamanı: sonuç.bitişZamanı,
+    gereçler: sonuç.gereçler.map((g) => [g.adet, g.gereç]),
+    araçlar: sonuç.araçlar.map((a) => a.araç)
+  }
+}
+export async function yöneticiİçinRandevuEkle(
+  oluşturulacakRandevu: OluşturulacakRandevu
+): Promise<'Randevu eklendi.'> {
+  const { gereçler, araçlar, ...randevu } = oluşturulacakRandevu
+  await veritabanı.transaction(async (tx) => {
+    const sonuç = await tx
+      .insert(randevular)
+      .values([randevu])
+      .returning({ id: randevular.id })
+    if (gereçler.length)
+      await tx.insert(gereçlerRandevular).values(
+        gereçler.map(([adet, gereç]) => ({
+          randevu: sonuç[0]!.id,
+          gereç,
+          adet
+        }))
+      )
+    if (araçlar.length)
+      await tx.insert(araçlarRandevular).values(
+        araçlar.map((araç) => ({
+          randevu: sonuç[0]!.id,
+          araç
+        }))
+      )
+  })
+  return 'Randevu eklendi.'
+}
+export async function yöneticiİçinRandevuGüncelle(
+  id: number,
+  güncellenecekRandevu: OluşturulacakRandevu
+): Promise<'Randevu güncellendi.'> {
+  const { gereçler, araçlar, ...randevu } = güncellenecekRandevu
+  await veritabanı.transaction(async (tx) => {
+    await tx.update(randevular).set(randevu).where(eq(randevular.id, id))
+    await tx
+      .delete(gereçlerRandevular)
+      .where(eq(gereçlerRandevular.randevu, id))
+    await tx.delete(araçlarRandevular).where(eq(araçlarRandevular.randevu, id))
+    if (gereçler.length)
+      await tx.insert(gereçlerRandevular).values(
+        gereçler.map(([adet, gereç]) => ({
+          randevu: id,
+          gereç,
+          adet
+        }))
+      )
+    if (araçlar.length)
+      await tx.insert(araçlarRandevular).values(
+        araçlar.map((araç) => ({
+          randevu: id,
+          araç
+        }))
+      )
+  })
+  return 'Randevu güncellendi.'
+}
+export async function yöneticiİçinRandevuSil(
+  id: number
+): Promise<'Randevu silindi.'> {
+  await veritabanı.transaction(async (tx) => {
+    await tx
+      .delete(gereçlerRandevular)
+      .where(eq(gereçlerRandevular.randevu, id))
+    await tx.delete(araçlarRandevular).where(eq(araçlarRandevular.randevu, id))
+    const sonuç = await tx
+      .delete(randevular)
+      .where(eq(randevular.id, id))
+      .returning({ id: randevular.id })
+    if (!sonuç.length) await tx.rollback()
+  })
+  return 'Randevu silindi.'
+}
+export async function tatilleriYöneticiİçinSay(arama: string): Promise<number> {
+  return veritabanı
+    .select({ count: count() })
+    .from(tatiller)
+    .where(like(tatiller.açıklama, `%${arama}%`))
+    .then((res) => res[0]!.count)
+}
+export async function tatilleriYöneticiİçinListele(
+  arama: string,
+  sayfa: number,
+  sayfaBoyutu: number
+): Promise<ListelenenTatil[]> {
+  return veritabanı.query.tatiller.findMany({
+    where: like(tatiller.açıklama, `%${arama}%`),
+    offset: (sayfa - 1) * sayfaBoyutu,
+    limit: sayfaBoyutu,
+    columns: {
+      id: true,
+      başlangıçTarihi: true,
+      bitişTarihi: true,
+      açıklama: true
+    }
+  })
+}
+export async function tatiliYöneticiİçinDetaylıOku(
+  id: number
+): Promise<ListelenenTatil | null> {
+  const sonuç = await veritabanı.query.tatiller.findFirst({
+    where: eq(tatiller.id, id),
+    columns: {
+      id: true,
+      başlangıçTarihi: true,
+      bitişTarihi: true,
+      açıklama: true
+    }
+  })
+  if (!sonuç) return null
+  return sonuç
+}
+export async function yöneticiİçinTatilEkle(
+  oluşturulacakTatil: OluşturulacakTatil
+): Promise<'Tatil eklendi.'> {
+  await veritabanı.insert(tatiller).values([oluşturulacakTatil])
+  return 'Tatil eklendi.'
+}
+export async function yöneticiİçinTatilGüncelle(
+  id: number,
+  güncellenecekTatil: OluşturulacakTatil
+): Promise<'Tatil güncellendi.'> {
+  await veritabanı
+    .update(tatiller)
+    .set(güncellenecekTatil)
+    .where(eq(tatiller.id, id))
+  return 'Tatil güncellendi.'
+}
+export async function yöneticiİçinTatilSil(
+  id: number
+): Promise<'Tatil silindi.'> {
+  await veritabanı.delete(tatiller).where(eq(tatiller.id, id))
+  return 'Tatil silindi.'
+}
+export async function ziyaretleriYöneticiİçinSay(
+  arama: string
+): Promise<number> {
+  return veritabanı
+    .select({ count: count() })
+    .from(ziyaretler)
+    .where(like(ziyaretler.ziyaretEden, `%${arama}%`))
+    .then((res) => res[0]!.count)
+}
+export async function ziyaretleriYöneticiİçinListele(
+  arama: string,
+  sayfa: number,
+  sayfaBoyutu: number
+): Promise<ListelenenZiyaret[]> {
+  return veritabanı.query.ziyaretler.findMany({
+    where: like(ziyaretler.ziyaretEden, `%${arama}%`),
+    offset: (sayfa - 1) * sayfaBoyutu,
+    limit: sayfaBoyutu,
+    columns: {
+      id: true,
+      gün: true,
+      başlangıçZamanı: true,
+      bitişZamanı: true,
+      ziyaretEden: true,
+      ziyaretçiSayısı: true
+    }
+  })
+}
+export async function ziyaretiYöneticiİçinDetaylıOku(
+  id: number
+): Promise<ListelenenZiyaret | null> {
+  const sonuç = await veritabanı.query.ziyaretler.findFirst({
+    where: eq(ziyaretler.id, id),
+    columns: {
+      id: true,
+      gün: true,
+      başlangıçZamanı: true,
+      bitişZamanı: true,
+      ziyaretEden: true,
+      ziyaretçiSayısı: true
+    }
+  })
+  if (!sonuç) return null
+  return sonuç
+}
+export async function yöneticiİçinZiyaretEkle(
+  oluşturulacakZiyaret: OluşturulacakZiyaret
+): Promise<'Ziyaret eklendi.'> {
+  await veritabanı.insert(ziyaretler).values([oluşturulacakZiyaret])
+  return 'Ziyaret eklendi.'
+}
+export async function yöneticiİçinZiyaretGüncelle(
+  id: number,
+  güncellenecekZiyaret: OluşturulacakZiyaret
+): Promise<'Ziyaret güncellendi.'> {
+  await veritabanı
+    .update(ziyaretler)
+    .set(güncellenecekZiyaret)
+    .where(eq(ziyaretler.id, id))
+  return 'Ziyaret güncellendi.'
+}
+export async function yöneticiİçinZiyaretSil(
+  id: number
+): Promise<'Ziyaret silindi.'> {
+  await veritabanı.delete(ziyaretler).where(eq(ziyaretler.id, id))
+  return 'Ziyaret silindi.'
 }
 
 //# Diğer
