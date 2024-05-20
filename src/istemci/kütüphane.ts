@@ -95,6 +95,34 @@ export const yöneticiİçinEkle = async (
   )
   if (!sonuç.ok) throw new Error(await sonuç.json())
 }
+export const yöneticiİçinGüncelle = async (
+  tablo: Tablo,
+  veri: GüncellenecekVeri
+): Promise<void> => {
+  const [id, güncellenecekVeri] = veri
+  const sonuç: Response = await fetch(
+    `/api/yonet/${ingilizceAlfabeyeÇevir(tablo)}/${id}`,
+    {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'same-origin',
+      body: JSON.stringify(güncellenecekVeri)
+    }
+  )
+  if (!sonuç.ok) throw new Error(await sonuç.json())
+}
+export async function yöneticiİçinSil(tablo: Tablo, id: number): Promise<void> {
+  const sonuç: Response = await fetch(
+    `/api/yonet/${ingilizceAlfabeyeÇevir(tablo)}/${id}`,
+    {
+      method: 'DELETE',
+      credentials: 'same-origin'
+    }
+  )
+  if (!sonuç.ok) throw new Error(await sonuç.json())
+}
 
 //# Diğer
 export function ingilizceAlfabeyeÇevir(türkçe: string): string {

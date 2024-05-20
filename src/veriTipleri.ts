@@ -20,7 +20,7 @@ type ListelenenVeri = ListelenenKişi | ListelenenProje
 type ListelenenVeriler = ListelenenVeri[]
 type DetaylıVeri = DetaylıKişi | DetaylıProje
 type OluşturulacakVeri = OluşturulacakKişi | OluşturulacakProje
-type GüncellenecekVeri = [id: number, OluşturulacakVeri]
+type GüncellenecekVeri = [id: number, veri: OluşturulacakVeri]
 type SilinecekVeri = number
 type ListelenenKişi = {
   id: number
@@ -47,6 +47,7 @@ type OluşturulacakKişi = {
   şifre: string
   projeler: number[]
 }
+type GüncellenecekKişi = [id: number, veri: OluşturulacakKişi]
 type ListelenenProje = {
   id: number
   ad: string
@@ -69,6 +70,7 @@ type OluşturulacakProje = {
   açıklama: string
   üyeler: number[]
 }
+type GüncellenecekProje = [id: number, veri: OluşturulacakProje]
 
 //# Durum
 type OrtakDurum = {

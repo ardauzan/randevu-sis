@@ -59,7 +59,7 @@ export default function PanelKontrolleriSorguAltPaneli({
                 case 'ziyaretler':
                   return 'Bu tablo sistemde kayıtlı olan ziyaretleri içerir.'
                 default:
-                  return 'Bu tablo hakkında bilgi almak için lütfen yöneticiye başvurun.'
+                  throw new Error('Bilinmeyen tablo.')
               }
             })()}
           </p>
@@ -105,7 +105,7 @@ export default function PanelKontrolleriSorguAltPaneli({
                             üyeler: []
                           } as OluşturulacakProje
                         default:
-                          return {} as OluşturulacakVeri
+                          throw new Error('Bilinmeyen tablo.')
                       }
                     })()
                   )

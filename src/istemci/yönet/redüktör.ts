@@ -136,6 +136,6 @@ export default function Redüktör(durum: Durum, aksiyon: Aksiyon): Durum {
         hata: değer[0]
       }
     default:
-      return durum
+      throw new Error('Bilinmeyen aksiyon.')
   }
 }

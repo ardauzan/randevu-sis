@@ -2,52 +2,72 @@ import React, { useContext, useState, useEffect } from 'react'
 import { ArrowLongLeftIcon } from '@heroicons/react/20/solid'
 import Yükleniyor from '@/istemci/ortak/yükleniyor'
 import Durum from '@/istemci/yönet/durum'
-import { listele, ekle, tetikle, olmadı } from '@/istemci/yönet/aksiyonlar'
+import {
+  listele,
+  güncelle,
+  tetikle,
+  olmadı,
+  oku
+} from '@/istemci/yönet/aksiyonlar'
 import {
   kişiOluştururkenkiProjeleriSeç,
-  yöneticiİçinEkle,
-  projeOluştururkenkiÜyeleriSeç
+  projeOluştururkenkiÜyeleriSeç,
+  yöneticiİçinGüncelle
 } from '@/istemci/kütüphane'
 
-export default function VeriEkle() {
+export default function VeriGüncelle() {
   const { durum, aksiyonYayınla } = useContext(Durum)
-  const spesifikDurum = durum as EkleDurum
-  const [kişiProjeleri, setKişiProjeleri] = useState('') //# Kişi oluştururkenki projeleri seçmek için
-  const [projeÜyeleri, setProjeÜyeleri] = useState('') //# Proje oluştururkenki üyeleri seçmek için
+  const spesifikDurum = durum as GüncelleDurum
+  const [kişiProjeleri, setKişiProjeleri] = useState(
+    (spesifikDurum.veri as GüncellenecekKişi)[1].projeler?.join(',') || ''
+  ) //# Kişi oluştururkenki projeleri seçmek için
+  const [projeÜyeleri, setProjeÜyeleri] = useState(
+    (spesifikDurum.veri as GüncellenecekProje)[1].üyeler?.join(',') || ''
+  ) //# Proje oluştururkenki üyeleri seçmek için
   useEffect(() => {
     if (spesifikDurum.yükleniyor) {
-      yöneticiİçinEkle(spesifikDurum.tablo, spesifikDurum.veri)
+      yöneticiİçinGüncelle(spesifikDurum.tablo, spesifikDurum.veri)
         .then(() => aksiyonYayınla(listele()))
         .catch((hata) => aksiyonYayınla(olmadı(hata.message)))
     }
   }, [spesifikDurum.yükleniyor])
   useEffect(() => {
+    const güncellenecekKişi = spesifikDurum.veri as GüncellenecekKişi
+    const [id, veri] = güncellenecekKişi
     if (
       spesifikDurum.tablo === 'kişiler' &&
       /^\d+(,\d+)*,?$/g.test(kişiProjeleri)
     )
       aksiyonYayınla(
-        ekle({
-          ...spesifikDurum.veri,
-          projeler: kişiOluştururkenkiProjeleriSeç(kişiProjeleri)
-        })
+        güncelle([
+          id,
+          {
+            ...veri,
+            projeler: kişiOluştururkenkiProjeleriSeç(kişiProjeleri)
+          }
+        ])
       )
     else if (spesifikDurum.tablo === 'kişiler')
-      aksiyonYayınla(ekle({ ...spesifikDurum.veri, projeler: [] }))
+      aksiyonYayınla(güncelle([id, { ...veri, projeler: [] }]))
   }, [kişiProjeleri])
   useEffect(() => {
+    const güncellenecekProje = spesifikDurum.veri as GüncellenecekProje
+    const [id, veri] = güncellenecekProje
     if (
       spesifikDurum.tablo === 'projeler' &&
       /^\d+(,\d+)*,?$/g.test(projeÜyeleri)
     )
       aksiyonYayınla(
-        ekle({
-          ...spesifikDurum.veri,
-          üyeler: projeOluştururkenkiÜyeleriSeç(projeÜyeleri)
-        })
+        güncelle([
+          id,
+          {
+            ...veri,
+            üyeler: projeOluştururkenkiÜyeleriSeç(projeÜyeleri)
+          }
+        ])
       )
     else if (spesifikDurum.tablo === 'projeler')
-      aksiyonYayınla(ekle({ ...spesifikDurum.veri, üyeler: [] }))
+      aksiyonYayınla(güncelle([id, { ...veri, üyeler: [] }]))
   }, [projeÜyeleri])
   return (
     <article className="mt-10 flex size-full flex-col p-2">
@@ -58,7 +78,9 @@ export default function VeriEkle() {
           <section className="mt-2 flex items-end justify-between rounded-lg border border-black bg-gray-600 p-2">
             <button
               className="flex flex-col items-center text-white"
-              onClick={() => aksiyonYayınla(listele())}
+              onClick={() =>
+                aksiyonYayınla(oku(spesifikDurum.tablo, spesifikDurum.veri[0]))
+              }
             >
               <ArrowLongLeftIcon className="size-8" />
               <span className="font-serif font-semibold">Geri</span>
@@ -68,8 +90,9 @@ export default function VeriEkle() {
             {(() => {
               switch (spesifikDurum.tablo) {
                 case 'kişiler':
-                  const oluşturulacakKişi =
-                    spesifikDurum.veri as OluşturulacakKişi
+                  const güncellenecekKişi =
+                    spesifikDurum.veri as GüncellenecekKişi
+                  const [kişiId, kişiVeri] = güncellenecekKişi
                   return (
                     <>
                       <h1 className="font-mono text-3xl font-bold">
@@ -86,13 +109,16 @@ export default function VeriEkle() {
                         <input
                           type="checkbox"
                           name="yönetici"
-                          checked={oluşturulacakKişi.yönetici}
+                          checked={güncellenecekKişi[1].yönetici}
                           onChange={(e) => {
                             aksiyonYayınla(
-                              ekle({
-                                ...oluşturulacakKişi,
-                                yönetici: e.target.checked
-                              })
+                              güncelle([
+                                kişiId,
+                                {
+                                  ...kişiVeri,
+                                  yönetici: e.target.checked
+                                }
+                              ])
                             )
                           }}
                           className="border border-black"
@@ -103,18 +129,19 @@ export default function VeriEkle() {
                           name="öğrenciNo"
                           required
                           value={
-                            oluşturulacakKişi.öğrenciNo === 0
-                              ? ''
-                              : oluşturulacakKişi.öğrenciNo
+                            kişiVeri.öğrenciNo === 0 ? '' : kişiVeri.öğrenciNo
                           }
                           onChange={(e) => {
                             aksiyonYayınla(
-                              ekle({
-                                ...oluşturulacakKişi,
-                                öğrenciNo: e.target.value
-                                  ? parseInt(e.target.value)
-                                  : 0
-                              })
+                              güncelle([
+                                kişiId,
+                                {
+                                  ...kişiVeri,
+                                  öğrenciNo: e.target.value
+                                    ? parseInt(e.target.value)
+                                    : 0
+                                }
+                              ])
                             )
                           }}
                           min={0}
@@ -125,10 +152,13 @@ export default function VeriEkle() {
                           type="text"
                           name="ad"
                           required
-                          value={oluşturulacakKişi.ad}
+                          value={kişiVeri.ad}
                           onChange={(e) => {
                             aksiyonYayınla(
-                              ekle({ ...oluşturulacakKişi, ad: e.target.value })
+                              güncelle([
+                                kişiId,
+                                { ...kişiVeri, ad: e.target.value }
+                              ])
                             )
                           }}
                           className="border border-black"
@@ -138,13 +168,16 @@ export default function VeriEkle() {
                           type="text"
                           name="soyAd"
                           required
-                          value={oluşturulacakKişi.soyAd}
+                          value={kişiVeri.soyAd}
                           onChange={(e) => {
                             aksiyonYayınla(
-                              ekle({
-                                ...oluşturulacakKişi,
-                                soyAd: e.target.value
-                              })
+                              güncelle([
+                                kişiId,
+                                {
+                                  ...kişiVeri,
+                                  soyAd: e.target.value
+                                }
+                              ])
                             )
                           }}
                           className="border border-black"
@@ -154,13 +187,16 @@ export default function VeriEkle() {
                           type="email"
                           name="email"
                           required
-                          value={oluşturulacakKişi.email}
+                          value={kişiVeri.email}
                           onChange={(e) => {
                             aksiyonYayınla(
-                              ekle({
-                                ...oluşturulacakKişi,
-                                email: e.target.value
-                              })
+                              güncelle([
+                                kişiId,
+                                {
+                                  ...kişiVeri,
+                                  email: e.target.value
+                                }
+                              ])
                             )
                           }}
                           className="border border-black"
@@ -170,13 +206,16 @@ export default function VeriEkle() {
                           type="password"
                           name="şifre"
                           required
-                          value={oluşturulacakKişi.şifre}
+                          value={kişiVeri.şifre}
                           onChange={(e) => {
                             aksiyonYayınla(
-                              ekle({
-                                ...oluşturulacakKişi,
-                                şifre: e.target.value
-                              })
+                              güncelle([
+                                kişiId,
+                                {
+                                  ...kişiVeri,
+                                  şifre: e.target.value
+                                }
+                              ])
                             )
                           }}
                           className="border border-black"
@@ -199,8 +238,9 @@ export default function VeriEkle() {
                     </>
                   )
                 case 'projeler':
-                  const oluşturulacakProje =
-                    spesifikDurum.veri as OluşturulacakProje
+                  const güncellenecekProje =
+                    spesifikDurum.veri as GüncellenecekProje
+                  const [projeId, projeVeri] = güncellenecekProje
                   return (
                     <>
                       <h1 className="font-mono text-3xl font-bold">
@@ -218,13 +258,13 @@ export default function VeriEkle() {
                           type="text"
                           name="ad"
                           required
-                          value={oluşturulacakProje.ad}
+                          value={projeVeri.ad}
                           onChange={(e) => {
                             aksiyonYayınla(
-                              ekle({
-                                ...oluşturulacakProje,
-                                ad: e.target.value
-                              })
+                              güncelle([
+                                projeId,
+                                { ...projeVeri, ad: e.target.value }
+                              ])
                             )
                           }}
                           className="border border-black"
@@ -236,13 +276,16 @@ export default function VeriEkle() {
                           type="date"
                           name="başlangıçTarihi"
                           required
-                          value={oluşturulacakProje.başlangıçTarihi}
+                          value={projeVeri.başlangıçTarihi}
                           onChange={(e) => {
                             aksiyonYayınla(
-                              ekle({
-                                ...oluşturulacakProje,
-                                başlangıçTarihi: e.target.value
-                              })
+                              güncelle([
+                                projeId,
+                                {
+                                  ...projeVeri,
+                                  başlangıçTarihi: e.target.value
+                                }
+                              ])
                             )
                           }}
                           className="border border-black"
@@ -252,13 +295,16 @@ export default function VeriEkle() {
                           type="date"
                           name="bitişTarihi"
                           required
-                          value={oluşturulacakProje.bitişTarihi}
+                          value={projeVeri.bitişTarihi}
                           onChange={(e) => {
                             aksiyonYayınla(
-                              ekle({
-                                ...oluşturulacakProje,
-                                bitişTarihi: e.target.value
-                              })
+                              güncelle([
+                                projeId,
+                                {
+                                  ...projeVeri,
+                                  bitişTarihi: e.target.value
+                                }
+                              ])
                             )
                           }}
                           className="border border-black"
@@ -268,13 +314,16 @@ export default function VeriEkle() {
                           type="text"
                           name="açıklama"
                           required
-                          value={oluşturulacakProje.açıklama}
+                          value={projeVeri.açıklama}
                           onChange={(e) => {
                             aksiyonYayınla(
-                              ekle({
-                                ...oluşturulacakProje,
-                                açıklama: e.target.value
-                              })
+                              güncelle([
+                                projeId,
+                                {
+                                  ...projeVeri,
+                                  açıklama: e.target.value
+                                }
+                              ])
                             )
                           }}
                           className="border border-black"
@@ -291,13 +340,13 @@ export default function VeriEkle() {
                           type="submit"
                           className="rounded-lg bg-blue-500 p-2 text-white"
                         >
-                          Ekle
+                          Güncelle
                         </button>
                       </form>
                     </>
                   )
                 default:
-                  throw new Error('Bilinmeyen tablo')
+                  throw new Error('Bilinmeyen tablo.')
               }
             })()}
           </section>

@@ -4,6 +4,8 @@ import PanelKontrolleri from '@/istemci/yönet/panelKontrolleri'
 import VerileriListele from '@/istemci/yönet/verileriListele'
 import Veriyiİncele from '@/istemci/yönet/veriyiİncele'
 import VeriEkle from '@/istemci/yönet/veriEkle'
+import VeriGüncelle from '@/istemci/yönet/veriGüncelle'
+import VeriSil from '@/istemci/yönet/veriSil'
 import GeriBildirim from '@/istemci/ortak/geriBildirim'
 import Durum from '@/istemci/yönet/durum'
 
@@ -32,8 +34,12 @@ export default function İçerik() {
               return <Veriyiİncele />
             case 'ekle':
               return <VeriEkle />
+            case 'güncelle':
+              return <VeriGüncelle />
+            case 'sil':
+              return <VeriSil />
             default:
-              return <div>İçerik yok</div>
+              throw new Error('Bilinmeyen amaç.')
           }
         })()}
       </section>
