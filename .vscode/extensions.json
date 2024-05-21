@@ -1,14 +1,12 @@
 {
   "recommendations": [
     "esbenp.prettier-vscode",
-    "dbaeumer.vscode-eslint",
     "eamodio.gitlens",
     "visualstudioexptteam.vscodeintellicode",
     "visualstudioexptteam.intellicode-api-usage-examples",
     "github.vscode-pull-request-github",
     "aaron-bond.better-comments",
     "davidanson.vscode-markdownlint",
-    "github.copilot",
     "dotenv.dotenv-vscode",
     "redhat.vscode-yaml",
     "foxundermoon.shell-format",
