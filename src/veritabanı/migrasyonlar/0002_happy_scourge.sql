@@ -1,1 +1,0 @@
-ALTER TABLE "projeler_gereçler" RENAME TO "gereçler_randevular";
