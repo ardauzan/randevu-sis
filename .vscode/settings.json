@@ -32,8 +32,8 @@
   "[markdown]": {
     "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
   },
-  "[mdx]": {
-    "editor.defaultFormatter": "unifiedjs.vscode-mdx"
+  "[toml]": {
+    "editor.defaultFormatter": "tamasfe.even-better-toml"
   },
   "[ignore]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"

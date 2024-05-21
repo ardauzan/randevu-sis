@@ -12,6 +12,6 @@
     "foxundermoon.shell-format",
     "oven.bun-vscode",
     "bradlc.vscode-tailwindcss",
-    "unifiedjs.vscode-mdx"
+    "tamasfe.even-better-toml"
   ]
 }

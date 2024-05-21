@@ -60,7 +60,7 @@ export default function Bilgilendirme(props: BilgilendirmeProps) {
               )}
               onClick={() => setMobilMenüAçık(false)}
             />
-            <İçerik />
+            <İçerik kimlikDurumu={kimlikDurumu} />
           </section>
           <Altlık />
           <section />

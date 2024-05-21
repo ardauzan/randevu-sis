@@ -11,6 +11,7 @@ import Yönet from '@/istemci/yönet/yönet'
 import Bulunamadı from '@/istemci/404/404'
 import Randevularım from '@/istemci/randevularım/randevularım'
 import Giriş from '@/istemci/giriş/giriş'
+
 import {
   emailVeŞifreİleKimlikDoğrula,
   kimlikVerisiniAl,
@@ -131,7 +132,9 @@ const arkayüz = new Elysia({
   .get('/bilgilendirme', async ({ cookie: { kimlik }, jwt }) => {
     const kimlikVerisi = await kimlikVerisiniAl(await jwt.verify(kimlik.value))
     const cevap = await renderToReadableStream(
-      createElement(Bilgilendirme, { kimlikDurumu: kimlikVerisi[1] }),
+      createElement(Bilgilendirme, {
+        kimlikDurumu: kimlikVerisi[1]
+      }),
       {
         bootstrapScripts: ['/statik/bilgilendirme.js']
       }
