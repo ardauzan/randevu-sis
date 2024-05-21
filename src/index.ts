@@ -36,14 +36,14 @@ console.info(
   `Paket ismi ${paketAdı} olan ve güncel versiyonu (v${uygulamaVersiyonu}) olan (${uygulamanınAdı}) adlı yazılım;`
 )
 console.info(
-  `2024 yılında, detayları | ${yazar} |`,
-  `olan kişi tarafından | ${lisans} | lisansı altında yayınlanmıştır.`
+  `2024 yılında, detayları ${yazar}`,
+  `olan kişi tarafından ${lisans} lisansı altında yayınlanmıştır.`,
+  `Kaynak kodları ${depo} adresindeki depoda barınır.`
 )
 console.info(
   "Süleyman Demirel Üniversitesi için geliştirilmiştir. Üniversite bünyesindeki Prototip Atölyesi'nin randevularını yönetmek için tasarlanmıştır."
 )
 console.info('Bu yazılım aktif geliştirme aşamasındadır. Dikkatli kullanınız.')
-console.info(`| ${depo} | adresindeki depoda barınır.`)
 console.info(
   'Bu yazılım 64-bit x86 mimarisi çalıştıran Linux 5.6 ve üzeri işletim sistemlerinde çalışır.',
   'Bun ın en son çıkan versiyonuyla devamlı test edilir ve çalışma ortamı olarak Bun en güncel hali hedeflenir. Bun dışında çalıştırılmamalıdır. (Node veya Deno ile çalıştırılmamalıdır.)'
@@ -84,7 +84,7 @@ const tailwindcss = Bun.spawnSync([
   '-o',
   'statik/stiller.css',
   '--no-autoprefixer',
-  '--minify'
+  prod ? '--minify' : ''
 ])
 console.info(
   'Tailwindcss dosyası oluşturuldu:',
@@ -93,7 +93,7 @@ console.info(
 const anasayfa = await Bun.build({
   entrypoints: ['src/istemci/anasayfa/index.tsx'],
   outdir: 'statik',
-  minify: true,
+  minify: prod ? true : false,
   naming: '[dir]/anasayfa.[ext]'
 })
 console.info(
@@ -103,7 +103,7 @@ console.info(
 const bilgilendirme = await Bun.build({
   entrypoints: ['src/istemci/bilgilendirme/index.tsx'],
   outdir: 'statik',
-  minify: true,
+  minify: prod ? true : false,
   naming: '[dir]/bilgilendirme.[ext]'
 })
 console.info(
@@ -113,7 +113,7 @@ console.info(
 const yönet = await Bun.build({
   entrypoints: ['src/istemci/yönet/index.tsx'],
   outdir: 'statik',
-  minify: true,
+  minify: prod ? true : false,
   naming: '[dir]/yonet.[ext]'
 })
 console.info(
@@ -123,7 +123,7 @@ console.info(
 const randevularım = await Bun.build({
   entrypoints: ['src/istemci/randevularım/index.tsx'],
   outdir: 'statik',
-  minify: true,
+  minify: prod ? true : false,
   naming: '[dir]/randevularim.[ext]'
 })
 console.info(
@@ -133,7 +133,7 @@ console.info(
 const giriş = await Bun.build({
   entrypoints: ['src/istemci/giriş/index.tsx'],
   outdir: 'statik',
-  minify: true,
+  minify: prod ? true : false,
   naming: '[dir]/giris.[ext]'
 })
 console.info(
@@ -143,7 +143,7 @@ console.info(
 const bulunamadı = await Bun.build({
   entrypoints: ['src/istemci/404/index.tsx'],
   outdir: 'statik',
-  minify: true,
+  minify: prod ? true : false,
   naming: '[dir]/404.[ext]'
 })
 console.info(
@@ -197,7 +197,10 @@ try {
 }
 console.info('Veritabanına bağlanıldı.')
 arkayüz.listen(port)
-console.info(`SDÜ Randevu Yönetim Sistemi v(${uygulamaVersiyonu}) çevrimiçi.`)
+console.info(
+  `SDÜ Randevu Yönetim Sistemi v(${uygulamaVersiyonu}) çevrimiçi.`,
+  `(${port}. porttan sunuluyor.)`
+)
 
 //# Linux sinyallerini dinle ve uygulamayı gerektiği gibi durdur, yeniden başlat yada kapat
 process.on('SIGINT', () => {
