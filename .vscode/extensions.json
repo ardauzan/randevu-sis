@@ -11,6 +11,7 @@
     "redhat.vscode-yaml",
     "foxundermoon.shell-format",
     "oven.bun-vscode",
-    "bradlc.vscode-tailwindcss"
+    "bradlc.vscode-tailwindcss",
+    "unifiedjs.vscode-mdx"
   ]
 }

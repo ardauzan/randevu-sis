@@ -1,6 +1,6 @@
 import defaultTheme from 'tailwindcss/defaultTheme'
 import formsPlugin from '@tailwindcss/forms'
-import type { Config } from 'tailwindcss'
+import { type Config } from 'tailwindcss'
 
 const config = {
   content: ['src/istemci/**/*.{html,js,jsx,ts,tsx}'],

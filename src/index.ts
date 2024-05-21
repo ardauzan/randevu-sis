@@ -5,9 +5,9 @@ import {
   trueVeyaFalseuBaşarılıyaDönüştür,
   uygulamaBirSüreÇalıştıktanSonraKapatıldı
 } from '@/sunucu/kütüphane'
-import type { NodePgDatabase } from 'drizzle-orm/node-postgres'
+import { type NodePgDatabase } from 'drizzle-orm/node-postgres'
 import type * as şema from '@/veritabanı/şema'
-import bilgiler from '../package.json'
+import bilgiler from 'package.json'
 
 //# Bu yazılılmla ilgili npm paket bilgilerini al ve dışa aktar
 const {
@@ -21,6 +21,7 @@ const {
 } = bilgiler
 
 //# Ortamı kontrol et
+export const port = process.env['PORT'] || 3000
 export const paketAdı = name
 export const uygulamaVersiyonu = version
 export const uygulamanınAdı = description
@@ -28,6 +29,7 @@ export const lisans = license
 export const yazar = author
 export const depo = repository
 export const desteklenenBunVersiyonu = bun
+export const prod = (process.env['NODE_ENV'] || 'development') === 'production'
 
 //# İmza
 console.info(
@@ -194,7 +196,7 @@ try {
   process.exit(1)
 }
 console.info('Veritabanına bağlanıldı.')
-arkayüz.listen(3000)
+arkayüz.listen(port)
 console.info(`SDÜ Randevu Yönetim Sistemi v(${uygulamaVersiyonu}) çevrimiçi.`)
 
 //# Linux sinyallerini dinle ve uygulamayı gerektiği gibi durdur, yeniden başlat yada kapat

@@ -6,8 +6,9 @@
   "author": "Ali Arda Uzan <arda.uzan@protonmail.com> (https://github.com/ardauzan)",
   "repository": "github:ardauzan/randevu-sis",
   "scripts": {
-    "sun": "NODE_ENV=production bun run src/index.ts",
-    "geliştir": "bun run --watch src/index.ts",
+    "sun": "NODE_ENV=production PORT=8080 bun run src/index.ts",
+    "geliştir": "NODE_ENV=development PORT=3131 bun run --watch src/index.ts",
+    "sına": "NODE_ENV=test echo 'Sınama henüz yapılamıyor.' && exit 1",
     "veritabanı:oluştur": "drizzle-kit generate",
     "veritabanı:migrasyon": "bun run src/veritabanı/migrasyon.ts",
     "veritabanı:örnekler": "bun run src/veritabanı/örnekler.ts"
@@ -18,6 +19,7 @@
     "@elysiajs/static": "^1.0.3",
     "@elysiajs/swagger": "^1.0.5",
     "@heroicons/react": "^2.1.3",
+    "@mdx-js/esbuild": "^3.0.1",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.30.10",
     "elysia": "^1.0.20",

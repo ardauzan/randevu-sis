@@ -2,8 +2,7 @@
 /// <reference lib="dom.iterable" />
 import React, { StrictMode } from 'react'
 import { hydrateRoot } from 'react-dom/client'
-import Bulunamadı from '@/istemci/404/404'
-import type { BulunamadıProps } from '@/istemci/404/404'
+import Bulunamadı, { type BulunamadıProps } from '@/istemci/404/404'
 
 const props = document.documentElement.getAttribute('data-props')
 const { kimlikDurumu } = JSON.parse(props!) as BulunamadıProps

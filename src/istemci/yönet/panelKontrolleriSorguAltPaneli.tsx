@@ -3,7 +3,11 @@ import { debounce } from 'lodash'
 import clsx from 'clsx'
 import { MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/16/solid'
 import Durum from '@/istemci/yönet/durum'
-import { ekle, sayfaBoyutuDeğiştir, aramaDeğiştir } from './aksiyonlar'
+import {
+  ekle,
+  sayfaBoyutuDeğiştir,
+  aramaDeğiştir
+} from '@/istemci/yönet/aksiyonlar'
 
 export interface PanelKontrolleriSorguAltPaneliProps {
   readonly kontrollerGörünüyor?: boolean
