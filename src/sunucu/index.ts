@@ -1276,6 +1276,406 @@ const arkayüz = new Elysia({
               })
             }
           )
+          .get(
+            '/tatiller',
+            async ({
+              jwt,
+              cookie: { kimlik },
+              query: { arama, sayfa, sayfaBoyutu }
+            }) => {
+              const kimlikVerisi = await kimlikVerisiniAl(
+                await jwt.verify(kimlik.value)
+              )
+              if (kimlikVerisi[1] !== 'yönetici') {
+                const cevap = await JSON.stringify('Yönetici değilsiniz.')
+                return new Response(cevap, {
+                  headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                  },
+                  status: 403
+                })
+              }
+              const sonrakiArama = arama || ''
+              const sonrakiSayfa = sayfa || 1
+              const sonrakiSayfaBoyutu = sayfaBoyutu || 10
+              const tatiller = await tatilleriYöneticiİçinListele(
+                sonrakiArama,
+                sonrakiSayfa,
+                sonrakiSayfaBoyutu
+              )
+              const cevap = await JSON.stringify({
+                toplam: await tatilleriYöneticiİçinSay(sonrakiArama),
+                sayfa: sonrakiSayfa,
+                sayfaBoyutu: sonrakiSayfaBoyutu,
+                içerik: tatiller
+              })
+              return new Response(cevap, {
+                headers: {
+                  'Content-Type': 'application/json;charset=utf-8'
+                }
+              })
+            },
+            {
+              query: t.Object({
+                arama: t.Optional(t.String()),
+                sayfa: t.Optional(t.Numeric()),
+                sayfaBoyutu: t.Optional(t.Numeric())
+              })
+            }
+          )
+          .get(
+            '/tatiller/:id',
+            async ({ params: { id }, jwt, cookie: { kimlik } }) => {
+              const kimlikVerisi = await kimlikVerisiniAl(
+                await jwt.verify(kimlik.value)
+              )
+              if (kimlikVerisi[1] !== 'yönetici') {
+                const cevap = await JSON.stringify('Yönetici değilsiniz.')
+                return new Response(cevap, {
+                  headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                  },
+                  status: 403
+                })
+              }
+              const sonuç = await tatiliYöneticiİçinDetaylıOku(id)
+              const cevap = await JSON.stringify(
+                sonuç ? sonuç : 'Tatil bulunamadı.'
+              )
+              return new Response(cevap, {
+                headers: {
+                  'Content-Type': 'application/json;charset=utf-8'
+                },
+                status: sonuç ? 200 : 404
+              })
+            },
+            {
+              params: t.Object({
+                id: t.Numeric()
+              })
+            }
+          )
+          .post(
+            '/tatiller',
+            async ({
+              body: { başlangıçTarihi, bitişTarihi, açıklama },
+              jwt,
+              cookie: { kimlik }
+            }) => {
+              const kimlikVerisi = await kimlikVerisiniAl(
+                await jwt.verify(kimlik.value)
+              )
+              if (kimlikVerisi[1] !== 'yönetici') {
+                const cevap = await JSON.stringify('Yönetici değilsiniz.')
+                return new Response(cevap, {
+                  headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                  },
+                  status: 403
+                })
+              }
+              const sonuç = await yöneticiİçinTatilEkle({
+                başlangıçTarihi,
+                bitişTarihi,
+                açıklama
+              })
+              const cevap = await JSON.stringify(sonuç)
+              return new Response(cevap, {
+                headers: {
+                  'Content-Type': 'application/json;charset=utf-8'
+                }
+              })
+            },
+            {
+              body: t.Object({
+                başlangıçTarihi: t.String(),
+                bitişTarihi: t.String(),
+                açıklama: t.String()
+              })
+            }
+          )
+          .patch(
+            '/tatiller/:id',
+            async ({
+              params: { id },
+              body: { başlangıçTarihi, bitişTarihi, açıklama },
+              jwt,
+              cookie: { kimlik }
+            }) => {
+              const kimlikVerisi = await kimlikVerisiniAl(
+                await jwt.verify(kimlik.value)
+              )
+              if (kimlikVerisi[1] !== 'yönetici') {
+                const cevap = await JSON.stringify('Yönetici değilsiniz.')
+                return new Response(cevap, {
+                  headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                  },
+                  status: 403
+                })
+              }
+              const sonuç = await yöneticiİçinTatilGüncelle(id, {
+                başlangıçTarihi,
+                bitişTarihi,
+                açıklama
+              })
+              const cevap = await JSON.stringify(sonuç)
+              return new Response(cevap, {
+                headers: {
+                  'Content-Type': 'application/json;charset=utf-8'
+                }
+              })
+            },
+            {
+              params: t.Object({
+                id: t.Numeric()
+              }),
+              body: t.Object({
+                başlangıçTarihi: t.String(),
+                bitişTarihi: t.String(),
+                açıklama: t.String()
+              })
+            }
+          )
+          .delete(
+            '/tatiller/:id',
+            async ({ params: { id }, jwt, cookie: { kimlik } }) => {
+              const kimlikVerisi = await kimlikVerisiniAl(
+                await jwt.verify(kimlik.value)
+              )
+              if (kimlikVerisi[1] !== 'yönetici') {
+                const cevap = await JSON.stringify('Yönetici değilsiniz.')
+                return new Response(cevap, {
+                  headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                  },
+                  status: 403
+                })
+              }
+              const sonuç = await yöneticiİçinTatilSil(id)
+              const cevap = await JSON.stringify(sonuç)
+              return new Response(cevap, {
+                headers: {
+                  'Content-Type': 'application/json;charset=utf-8'
+                }
+              })
+            },
+            {
+              params: t.Object({
+                id: t.Numeric()
+              })
+            }
+          )
+          .get(
+            '/ziyaretler',
+            async ({
+              query: { arama, sayfa, sayfaBoyutu },
+              jwt,
+              cookie: { kimlik }
+            }) => {
+              const kimlikVerisi = await kimlikVerisiniAl(
+                await jwt.verify(kimlik.value)
+              )
+              if (kimlikVerisi[1] !== 'yönetici') {
+                const cevap = await JSON.stringify('Yönetici değilsiniz.')
+                return new Response(cevap, {
+                  headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                  },
+                  status: 403
+                })
+              }
+              const sonrakiArama = arama || ''
+              const sonrakiSayfa = sayfa || 1
+              const sonrakiSayfaBoyutu = sayfaBoyutu || 10
+              const ziyaretler = await ziyaretleriYöneticiİçinListele(
+                sonrakiArama,
+                sonrakiSayfa,
+                sonrakiSayfaBoyutu
+              )
+              const cevap = await JSON.stringify({
+                toplam: await ziyaretleriYöneticiİçinSay(sonrakiArama),
+                sayfa: sonrakiSayfa,
+                sayfaBoyutu: sonrakiSayfaBoyutu,
+                içerik: ziyaretler
+              })
+              return new Response(cevap, {
+                headers: {
+                  'Content-Type': 'application/json;charset=utf-8'
+                }
+              })
+            },
+            {
+              query: t.Object({
+                arama: t.Optional(t.String()),
+                sayfa: t.Optional(t.Numeric()),
+                sayfaBoyutu: t.Optional(t.Numeric())
+              })
+            }
+          )
+          .get(
+            '/ziyaretler/:id',
+            async ({ params: { id }, jwt, cookie: { kimlik } }) => {
+              const kimlikVerisi = await kimlikVerisiniAl(
+                await jwt.verify(kimlik.value)
+              )
+              if (kimlikVerisi[1] !== 'yönetici') {
+                const cevap = await JSON.stringify('Yönetici değilsiniz.')
+                return new Response(cevap, {
+                  headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                  },
+                  status: 403
+                })
+              }
+              const sonuç = await ziyaretiYöneticiİçinDetaylıOku(id)
+              const cevap = await JSON.stringify(
+                sonuç ? sonuç : 'Ziyaret bulunamadı.'
+              )
+              return new Response(cevap, {
+                headers: {
+                  'Content-Type': 'application/json;charset=utf-8'
+                },
+                status: sonuç ? 200 : 404
+              })
+            },
+            {
+              params: t.Object({
+                id: t.Numeric()
+              })
+            }
+          )
+          .post(
+            '/ziyaretler',
+            async ({
+              body: {
+                gün,
+                başlangıçZamanı,
+                bitişZamanı,
+                ziyaretEden,
+                ziyaretçiSayısı
+              },
+              jwt,
+              cookie: { kimlik }
+            }) => {
+              const kimlikVerisi = await kimlikVerisiniAl(
+                await jwt.verify(kimlik.value)
+              )
+              if (kimlikVerisi[1] !== 'yönetici') {
+                const cevap = await JSON.stringify('Yönetici değilsiniz.')
+                return new Response(cevap, {
+                  headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                  },
+                  status: 403
+                })
+              }
+              const sonuç = await yöneticiİçinZiyaretEkle({
+                gün,
+                başlangıçZamanı,
+                bitişZamanı,
+                ziyaretEden,
+                ziyaretçiSayısı
+              })
+              const cevap = await JSON.stringify(sonuç)
+              return new Response(cevap, {
+                headers: {
+                  'Content-Type': 'application/json;charset=utf-8'
+                }
+              })
+            },
+            {
+              body: t.Object({
+                gün: t.String(),
+                başlangıçZamanı: t.String(),
+                bitişZamanı: t.String(),
+                ziyaretEden: t.String(),
+                ziyaretçiSayısı: t.Numeric()
+              })
+            }
+          )
+          .patch(
+            '/ziyaretler/:id',
+            async ({
+              params: { id },
+              body: {
+                gün,
+                başlangıçZamanı,
+                bitişZamanı,
+                ziyaretEden,
+                ziyaretçiSayısı
+              },
+              jwt,
+              cookie: { kimlik }
+            }) => {
+              const kimlikVerisi = await kimlikVerisiniAl(
+                await jwt.verify(kimlik.value)
+              )
+              if (kimlikVerisi[1] !== 'yönetici') {
+                const cevap = await JSON.stringify('Yönetici değilsiniz.')
+                return new Response(cevap, {
+                  headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                  },
+                  status: 403
+                })
+              }
+              const sonuç = await yöneticiİçinZiyaretGüncelle(id, {
+                gün,
+                başlangıçZamanı,
+                bitişZamanı,
+                ziyaretEden,
+                ziyaretçiSayısı
+              })
+              const cevap = await JSON.stringify(sonuç)
+              return new Response(cevap, {
+                headers: {
+                  'Content-Type': 'application/json;charset=utf-8'
+                }
+              })
+            },
+            {
+              params: t.Object({
+                id: t.Numeric()
+              }),
+              body: t.Object({
+                gün: t.String(),
+                başlangıçZamanı: t.String(),
+                bitişZamanı: t.String(),
+                ziyaretEden: t.String(),
+                ziyaretçiSayısı: t.Numeric()
+              })
+            }
+          )
+          .delete(
+            '/ziyaretler/:id',
+            async ({ params: { id }, jwt, cookie: { kimlik } }) => {
+              const kimlikVerisi = await kimlikVerisiniAl(
+                await jwt.verify(kimlik.value)
+              )
+              if (kimlikVerisi[1] !== 'yönetici') {
+                const cevap = await JSON.stringify('Yönetici değilsiniz.')
+                return new Response(cevap, {
+                  headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                  },
+                  status: 403
+                })
+              }
+              const sonuç = await yöneticiİçinZiyaretSil(id)
+              const cevap = await JSON.stringify(sonuç)
+              return new Response(cevap, {
+                headers: {
+                  'Content-Type': 'application/json;charset=utf-8'
+                }
+              })
+            },
+            {
+              params: t.Object({
+                id: t.Numeric()
+              })
+            }
+          )
       })
   })
 export default arkayüz
