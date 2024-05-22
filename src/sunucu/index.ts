@@ -70,6 +70,7 @@ const arkayüz = new Elysia({
 })
   .use(
     logger({
+      level: 'error',
       transport: {
         target: 'pino-pretty',
         options: {
@@ -88,10 +89,11 @@ const arkayüz = new Elysia({
   )
   .guard({
     cookie: t.Cookie({
-      kimlik: t.String()
+      kimlik: t.Optional(t.String())
     })
   })
-  .onError(async ({ code, request: { method, headers }, jwt }) => {
+  .onError(async ({ error, code, request: { method, headers }, jwt }) => {
+    console.error(error)
     if (code === 'NOT_FOUND' && method === 'GET') {
       const cookie = headers.get('Cookie')?.split('=')[1]
       const kimlik = cookie ? await jwt.verify(cookie) : null

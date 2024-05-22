@@ -1,5 +1,5 @@
 import { Pool } from 'pg'
-import veritabanınıOluştur from '@/veritabanı'
+import veritabanınaBağlan from '@/veritabanı'
 import arkayüz from '@/sunucu'
 import {
   trueVeyaFalseuBaşarılıyaDönüştür,
@@ -189,7 +189,7 @@ try {
   havuz = new Pool()
   const havuzİstemcisi = await havuz.connect()
   await havuzİstemcisi.release()
-  veritabanı = veritabanınıOluştur(havuz)
+  veritabanı = veritabanınaBağlan(havuz)
 } catch (hata: any) {
   console.error('Veritabanına bağlanırken bir hata oluştu:', hata.message)
   uygulamaBirSüreÇalıştıktanSonraKapatıldı()
