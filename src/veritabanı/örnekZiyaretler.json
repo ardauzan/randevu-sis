@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "id": 1,
+    "gün": "2024-07-01",
+    "başlangıçZamanı": "09:00",
+    "bitişZamanı": "10:00",
+    "ziyaretEden": "Rektör",
+    "ziyaretçiSayısı": 5
+  }
+]

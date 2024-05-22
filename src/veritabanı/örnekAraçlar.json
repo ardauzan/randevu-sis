@@ -1,1 +1,8 @@
-[]
+[
+  {
+    "id": 1,
+    "ad": "3D Yazıcı",
+    "açıklama": "Açıklama",
+    "arızalı": false
+  }
+]

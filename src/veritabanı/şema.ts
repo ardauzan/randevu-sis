@@ -30,10 +30,10 @@ export const projeler = pgTable('projeler', {
 export const kişilerProjeler = pgTable(
   'kişiler_projeler',
   {
-    üye: integer('kişi')
+    üye: integer('kişi_id')
       .references(() => kişiler.id)
       .notNull(),
-    proje: integer('proje')
+    proje: integer('proje_id')
       .references(() => projeler.id)
       .notNull()
   },
@@ -44,7 +44,7 @@ export const kişilerProjeler = pgTable(
 export const gereçler = pgTable('gereçler', {
   id: serial('id').primaryKey(),
   ad: text('ad').notNull(),
-  adet: integer('miktar').notNull()
+  adet: integer('adet').notNull()
 })
 export const araçlar = pgTable('araçlar', {
   id: serial('id').primaryKey(),
@@ -65,11 +65,11 @@ export const randevular = pgTable('randevular', {
 export const gereçlerRandevular = pgTable(
   'gereçler_randevular',
   {
-    randevu: integer('randevu')
-      .references(() => randevular.id)
-      .notNull(),
-    gereç: integer('gereç')
+    gereç: integer('gereç_id')
       .references(() => gereçler.id)
+      .notNull(),
+    randevu: integer('randevu_id')
+      .references(() => randevular.id)
       .notNull(),
     adet: integer('adet').notNull()
   },
@@ -80,10 +80,10 @@ export const gereçlerRandevular = pgTable(
 export const araçlarRandevular = pgTable(
   'araçlar_randevular',
   {
-    araç: integer('araç')
+    araç: integer('araç_id')
       .references(() => araçlar.id)
       .notNull(),
-    randevu: integer('randevu')
+    randevu: integer('randevu_id')
       .references(() => randevular.id)
       .notNull()
   },

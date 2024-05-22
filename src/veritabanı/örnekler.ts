@@ -1,3 +1,4 @@
+import { sql } from 'drizzle-orm'
 import { drizzle } from 'drizzle-orm/node-postgres'
 import { Pool } from 'pg'
 import * as şema from '@/veritabanı/şema'
@@ -37,17 +38,60 @@ const main = async () => {
 
     await veritabanı.delete(kişilerProjeler)
     await veritabanı.delete(kişiler)
-    await veritabanı.delete(projeler)
     await veritabanı.delete(gereçlerRandevular)
     await veritabanı.delete(araçlarRandevular)
     await veritabanı.delete(gereçler)
     await veritabanı.delete(araçlar)
     await veritabanı.delete(randevular)
+    await veritabanı.delete(projeler)
     await veritabanı.delete(tatiller)
     await veritabanı.delete(ziyaretler)
 
     await veritabanı.insert(kişiler).values(örnekKişiler)
+    await veritabanı.execute(
+      sql.raw(
+        `SELECT setval('kişiler_id_seq', COALESCE((SELECT MAX(id) FROM kişiler) + 1, 1), false)`
+      )
+    )
     await veritabanı.insert(projeler).values(örnekProjeler)
+    await veritabanı.execute(
+      sql.raw(
+        `SELECT setval('projeler_id_seq', COALESCE((SELECT MAX(id) FROM projeler) + 1, 1), false)`
+      )
+    )
+    await veritabanı.insert(kişilerProjeler).values(örnekKişilerProjeler)
+    await veritabanı.insert(gereçler).values(örnekGereçler)
+    await veritabanı.execute(
+      sql.raw(
+        `SELECT setval('gereçler_id_seq', COALESCE((SELECT MAX(id) FROM gereçler) + 1, 1), false)`
+      )
+    )
+    await veritabanı.insert(araçlar).values(örnekAraçlar)
+    await veritabanı.execute(
+      sql.raw(
+        `SELECT setval('araçlar_id_seq', COALESCE((SELECT MAX(id) FROM araçlar) + 1, 1), false)`
+      )
+    )
+    await veritabanı.insert(randevular).values(örnekRandevular)
+    await veritabanı.execute(
+      sql.raw(
+        `SELECT setval('randevular_id_seq', COALESCE((SELECT MAX(id) FROM randevular) + 1, 1), false)`
+      )
+    )
+    await veritabanı.insert(gereçlerRandevular).values(örnekGereçlerRandevular)
+    await veritabanı.insert(araçlarRandevular).values(örnekAraçlarRandevular)
+    await veritabanı.insert(tatiller).values(örnekTatiller)
+    await veritabanı.execute(
+      sql.raw(
+        `SELECT setval('tatiller_id_seq', COALESCE((SELECT MAX(id) FROM tatiller) + 1, 1), false)`
+      )
+    )
+    await veritabanı.insert(ziyaretler).values(örnekZiyaretler)
+    await veritabanı.execute(
+      sql.raw(
+        `SELECT setval('ziyaretler_id_seq', COALESCE((SELECT MAX(id) FROM ziyaretler) + 1, 1), false)`
+      )
+    )
 
     console.info('Veritabanı sıfırlandı ve örnek veriler eklendi.')
     process.exit(0)
