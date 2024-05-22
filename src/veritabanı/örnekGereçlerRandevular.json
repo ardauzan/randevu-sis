@@ -1,7 +1,42 @@
 [
   {
-    "gereç": 1,
+    "gereç": 7,
     "randevu": 1,
+    "adet": 1
+  },
+  {
+    "gereç": 2,
+    "randevu": 3,
+    "adet": 1
+  },
+  {
+    "gereç": 1,
+    "randevu": 4,
+    "adet": 1
+  },
+  {
+    "gereç": 2,
+    "randevu": 4,
+    "adet": 2
+  },
+  {
+    "gereç": 3,
+    "randevu": 4,
+    "adet": 2
+  },
+  {
+    "gereç": 4,
+    "randevu": 4,
+    "adet": 4
+  },
+  {
+    "gereç": 5,
+    "randevu": 5,
+    "adet": 1
+  },
+  {
+    "gereç": 7,
+    "randevu": 5,
     "adet": 1
   }
 ]

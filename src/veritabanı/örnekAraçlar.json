@@ -2,7 +2,49 @@
   {
     "id": 1,
     "ad": "3D Yazıcı",
-    "açıklama": "Açıklama",
+    "açıklama": "Flash Forge marka 3D yazıcı",
     "arızalı": false
+  },
+  {
+    "id": 2,
+    "ad": "Lazer Kesim Makinesi",
+    "açıklama": "Epilog marka lazer kesim makinesi",
+    "arızalı": true
+  },
+  {
+    "id": 3,
+    "ad": "CNC Freze",
+    "açıklama": "Haas marka CNC freze",
+    "arızalı": false
+  },
+  {
+    "id": 4,
+    "ad": "3D Tarayıcı",
+    "açıklama": "Artec marka 3D tarayıcı",
+    "arızalı": true
+  },
+  {
+    "id": 5,
+    "ad": "3D Yazıcı",
+    "açıklama": "MakerBot marka 3D yazıcı",
+    "arızalı": false
+  },
+  {
+    "id": 6,
+    "ad": "CNC Torna",
+    "açıklama": "Okuma marka CNC torna",
+    "arızalı": false
+  },
+  {
+    "id": 7,
+    "ad": "Masa üstü bilgisayar 1",
+    "açıklama": "Dell marka masa üstü bilgisayar",
+    "arızalı": false
+  },
+  {
+    "id": 8,
+    "ad": "Masa üstü bilgisayar 2",
+    "açıklama": "HP marka masa üstü bilgisayar",
+    "arızalı": true
   }
 ]

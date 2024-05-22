@@ -1,7 +1,6 @@
 import { Elysia, t } from 'elysia'
 import { staticPlugin } from '@elysiajs/static'
 import { jwt } from '@elysiajs/jwt'
-import { swagger } from '@elysiajs/swagger'
 import { logger } from '@bogeychan/elysia-logger'
 import { renderToReadableStream } from 'react-dom/server'
 import { createElement } from 'react'
@@ -64,13 +63,12 @@ import navigasyon from '@/istemci/ortak/navigasyon'
 const arkayüz = new Elysia({
   name: 'arkayüz',
   cookie: {
-    sign: true,
+    sign: 'kimlik',
     secrets: [process.env['COOKIE_SECRET']!]
   }
 })
   .use(
     logger({
-      level: 'error',
       transport: {
         target: 'pino-pretty',
         options: {
@@ -79,7 +77,6 @@ const arkayüz = new Elysia({
       }
     })
   )
-  .use(swagger())
   .use(staticPlugin({ assets: 'statik', prefix: '/statik' }))
   .use(
     jwt({
@@ -257,15 +254,8 @@ const arkayüz = new Elysia({
               })
             }
           )
-          .post('/cikis', async ({ jwt, cookie: { kimlik } }) => {
-            kimlik.set({
-              value: await jwt.sign({ id: 0 }),
-              httpOnly: true,
-              path: '/',
-              sameSite: 'strict',
-              secure: true,
-              priority: 'high'
-            })
+          .post('/cikis', async ({ cookie: { kimlik } }) => {
+            kimlik.remove()
             const cevap = await JSON.stringify('Çıkış yapıldı.')
             return new Response(cevap, {
               headers: {
