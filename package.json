@@ -24,8 +24,8 @@
     "lodash": "^4.17.21",
     "pg": "^8.11.5",
     "pino-pretty": "^11.0.0",
-    "react": "^19.0.0-rc-81c5ff2e04-20240521",
-    "react-dom": "^19.0.0-rc-81c5ff2e04-20240521",
+    "react": "^19.0.0-rc-f994737d14-20240522",
+    "react-dom": "^19.0.0-rc-f994737d14-20240522",
     "react-error-boundary": "^4.0.13"
   },
   "devDependencies": {
@@ -35,7 +35,7 @@
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
     "bun-types": "^1.1.9",
-    "drizzle-kit": "^0.21.3",
+    "drizzle-kit": "^0.21.4",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.14",
     "tailwindcss": "^3.4.3",
