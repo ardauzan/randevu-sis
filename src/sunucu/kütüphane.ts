@@ -1,4 +1,4 @@
-import { eq, like, or, count } from 'drizzle-orm'
+import { eq, like, or, count, asc } from 'drizzle-orm'
 import { veritabanı } from '@/index'
 import {
   kişiler,
@@ -98,7 +98,8 @@ export async function kişileriYöneticiİçinListele(
       ad: true,
       soyAd: true,
       email: true
-    }
+    },
+    orderBy: [asc(kişiler.id)]
   })
 }
 export async function kişiyiYöneticiİçinDetaylıOku(
@@ -130,7 +131,8 @@ export async function kişiyiYöneticiİçinDetaylıOku(
               açıklama: true
             }
           }
-        }
+        },
+        orderBy: (projeler, { asc }) => [asc(projeler.proje)]
       }
     }
   })
@@ -228,7 +230,8 @@ export async function projeleriYöneticiİçinListele(
       başlangıçTarihi: true,
       bitişTarihi: true,
       açıklama: true
-    }
+    },
+    orderBy: [asc(projeler.id)]
   })
 }
 export async function projeyiYöneticiİçinDetaylıOku(
@@ -258,7 +261,8 @@ export async function projeyiYöneticiİçinDetaylıOku(
               email: true
             }
           }
-        }
+        },
+        orderBy: (kişilerProjeler, { asc }) => [asc(kişilerProjeler.üye)]
       }
     }
   })
@@ -354,7 +358,8 @@ export async function gereçleriYöneticiİçinListele(
       id: true,
       ad: true,
       adet: true
-    }
+    },
+    orderBy: [asc(gereçler.id)]
   })
 }
 export async function gereciYöneticiİçinDetaylıOku(
@@ -417,7 +422,8 @@ export async function araçlarıYöneticiİçinListele(
       ad: true,
       açıklama: true,
       arızalı: true
-    }
+    },
+    orderBy: [asc(araçlar.id)]
   })
 }
 export async function aracıYöneticiİçinDetaylıOku(
@@ -485,7 +491,8 @@ export async function randevularıYöneticiİçinListele(
       gün: true,
       başlangıçZamanı: true,
       bitişZamanı: true
-    }
+    },
+    orderBy: [asc(randevular.id)]
   })
 }
 export async function randevuyuYöneticiİçinDetaylıOku(
@@ -523,7 +530,10 @@ export async function randevuyuYöneticiİçinDetaylıOku(
               adet: true
             }
           }
-        }
+        },
+        orderBy: (gereçlerRandevular, { asc }) => [
+          asc(gereçlerRandevular.gereç)
+        ]
       },
       araçlar: {
         columns: {
@@ -538,7 +548,8 @@ export async function randevuyuYöneticiİçinDetaylıOku(
               arızalı: true
             }
           }
-        }
+        },
+        orderBy: (araçlarRandevular, { asc }) => [asc(araçlarRandevular.araç)]
       }
     }
   })
@@ -651,7 +662,8 @@ export async function tatilleriYöneticiİçinListele(
       başlangıçTarihi: true,
       bitişTarihi: true,
       açıklama: true
-    }
+    },
+    orderBy: [asc(tatiller.id)]
   })
 }
 export async function tatiliYöneticiİçinDetaylıOku(
@@ -716,7 +728,8 @@ export async function ziyaretleriYöneticiİçinListele(
       bitişZamanı: true,
       ziyaretEden: true,
       ziyaretçiSayısı: true
-    }
+    },
+    orderBy: [asc(ziyaretler.id)]
   })
 }
 export async function ziyaretiYöneticiİçinDetaylıOku(
