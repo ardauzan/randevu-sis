@@ -133,3 +133,29 @@ export const randevularRelations = relations(randevular, ({ one, many }) => ({
   gereçler: many(gereçlerRandevular),
   araçlar: many(araçlarRandevular)
 }))
+export const gereçlerRandevularRelations = relations(
+  gereçlerRandevular,
+  ({ one }) => ({
+    gereç: one(gereçler, {
+      fields: [gereçlerRandevular.gereç],
+      references: [gereçler.id]
+    }),
+    randevu: one(randevular, {
+      fields: [gereçlerRandevular.randevu],
+      references: [randevular.id]
+    })
+  })
+)
+export const araçlarRandevularRelations = relations(
+  araçlarRandevular,
+  ({ one }) => ({
+    araç: one(araçlar, {
+      fields: [araçlarRandevular.araç],
+      references: [araçlar.id]
+    }),
+    randevu: one(randevular, {
+      fields: [araçlarRandevular.randevu],
+      references: [randevular.id]
+    })
+  })
+)

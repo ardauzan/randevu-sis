@@ -10,6 +10,7 @@ import Durum from '@/istemci/yönet/durum'
 import { yöneticiİçinDetaylıOku } from '@/istemci/kütüphane'
 import {
   listele,
+  oku,
   tazele,
   olmadı,
   okundu,
@@ -87,8 +88,50 @@ export default function Veriyiİncele() {
                             açıklama: proje.açıklama,
                             üyeler: proje.üyeler.map((k) => k.id)
                           }
-                        default:
-                          throw new Error('Bilinmeyen tablo.')
+                        case 'gereçler':
+                          const gereç = spesifikDurum.veri as ListelenenGereç
+                          return {
+                            ad: gereç.ad,
+                            adet: gereç.adet
+                          }
+                        case 'araçlar':
+                          const araç = spesifikDurum.veri as ListelenenAraç
+                          return {
+                            ad: araç.ad,
+                            açıklama: araç.açıklama,
+                            arızalı: araç.arızalı
+                          }
+                        case 'randevular':
+                          const randevu = spesifikDurum.veri as DetaylıRandevu
+                          return {
+                            açıklama: randevu.açıklama,
+                            proje: randevu.proje.id,
+                            gün: randevu.gün,
+                            başlangıçZamanı: randevu.başlangıçZamanı,
+                            bitişZamanı: randevu.bitişZamanı,
+                            gereçler: randevu.gereçler.map((g) => [
+                              g[0],
+                              g[1].id
+                            ]),
+                            araçlar: randevu.araçlar.map((a) => a.id)
+                          }
+                        case 'tatiller':
+                          const tatil = spesifikDurum.veri as ListelenenTatil
+                          return {
+                            başlangıçTarihi: tatil.başlangıçTarihi,
+                            bitişTarihi: tatil.bitişTarihi,
+                            açıklama: tatil.açıklama
+                          }
+                        case 'ziyaretler':
+                          const ziyaret =
+                            spesifikDurum.veri as ListelenenZiyaret
+                          return {
+                            gün: ziyaret.gün,
+                            başlangıçZamanı: ziyaret.başlangıçZamanı,
+                            bitişZamanı: ziyaret.bitişZamanı,
+                            ziyaretEden: ziyaret.ziyaretEden,
+                            ziyaretçiSayısı: ziyaret.ziyaretçiSayısı
+                          }
                       }
                     })()
                   ])
@@ -161,8 +204,126 @@ export default function Veriyiİncele() {
                       />
                     </>
                   )
-                default:
-                  throw new Error('Bilinmeyen tablo: ' + spesifikDurum.tablo)
+                case 'gereçler':
+                  const gereç = spesifikDurum.veri as ListelenenGereç
+                  return (
+                    <>
+                      <h1 className="font-mono text-3xl font-bold">
+                        Gereç: {gereç.id}
+                      </h1>
+                      <h2 className="font-serif text-2xl font-bold">
+                        {gereç.ad} adındaki gereç.
+                      </h2>
+                      <p className="font-serif text-lg">adet: {gereç.adet}</p>
+                    </>
+                  )
+                case 'araçlar':
+                  const araç = spesifikDurum.veri as ListelenenAraç
+                  return (
+                    <>
+                      <h1 className="font-mono text-3xl font-bold">
+                        Araç: {araç.id}
+                      </h1>
+                      <h2 className="font-serif text-2xl font-bold">
+                        {araç.ad} adındaki araç.
+                      </h2>
+                      <p className="font-serif text-lg">
+                        {araç.arızalı ? 'Arızalı' : 'Arızasız'}
+                      </p>
+                    </>
+                  )
+                case 'randevular':
+                  const randevu = spesifikDurum.veri as DetaylıRandevu
+                  const gereçlerBoyut = randevu.gereçler.length
+                  const araçlarBoyut = randevu.araçlar.length
+                  return (
+                    <>
+                      <h1 className="font-mono text-3xl font-bold">
+                        Randevu: {randevu.id}
+                      </h1>
+                      <h2 className="font-serif text-2xl font-bold">
+                        {randevu.açıklama} adlı randevu.
+                      </h2>
+                      <p className="font-serif text-lg">
+                        Proje:{' '}
+                        <button
+                          onClick={() =>
+                            aksiyonYayınla(oku('projeler', randevu.proje.id))
+                          }
+                          className="font-serif text-blue-500 underline hover:text-blue-600 hover:no-underline focus:no-underline"
+                        >
+                          {randevu.proje.ad}
+                        </button>
+                      </p>
+                      <p className="font-serif text-lg">Gün: {randevu.gün}</p>
+                      <p className="font-serif text-lg">
+                        Başlangıç Zamanı: {randevu.başlangıçZamanı}
+                      </p>
+                      <p className="font-serif text-lg">
+                        Bitiş Zamanı: {randevu.bitişZamanı}
+                      </p>
+                      <h3 className="font-serif text-xl font-bold">
+                        Gereçler:
+                      </h3>
+                      {(() => {
+                        const sonrakiGereçler = randevu.gereçler.map((g) => {
+                          const [talepEdilenAdet, gereç] = g
+                          const { id, ad, adet } = gereç
+                          return { id, ad, talepEdilenAdet, ToplamAdet: adet }
+                        })
+                        return (
+                          <VeriListesi
+                            veriler={sonrakiGereçler}
+                            tablo="gereçler"
+                            sayfaBoyutu={gereçlerBoyut}
+                            toplam={gereçlerBoyut}
+                          />
+                        )
+                      })()}
+                      <h3 className="font-serif text-xl font-bold">Araçlar:</h3>
+                      <VeriListesi
+                        veriler={randevu.araçlar}
+                        tablo="araçlar"
+                        sayfaBoyutu={araçlarBoyut}
+                        toplam={araçlarBoyut}
+                      />
+                    </>
+                  )
+                case 'tatiller':
+                  const tatil = spesifikDurum.veri as ListelenenTatil
+                  return (
+                    <>
+                      <h1 className="font-mono text-3xl font-bold">
+                        Tatil: {tatil.id}
+                      </h1>
+                      <h2 className="font-serif text-2xl font-bold">
+                        {tatil.başlangıçTarihi} tarihinden başlayıp{' '}
+                        {tatil.bitişTarihi} tarihinde biten tatil.
+                      </h2>
+                      <p className="font-serif text-lg">
+                        Açıklama: {tatil.açıklama}
+                      </p>
+                    </>
+                  )
+                case 'ziyaretler':
+                  const ziyaret = spesifikDurum.veri as ListelenenZiyaret
+                  return (
+                    <>
+                      <h1 className="font-mono text-3xl font-bold">
+                        Ziyaret: {ziyaret.id}
+                      </h1>
+                      <h2 className="font-serif text-2xl font-bold">
+                        {ziyaret.gün} günü, {ziyaret.başlangıçZamanı} ile{' '}
+                        {ziyaret.bitişZamanı} arasında yapılan ziyaret.
+                      </h2>
+                      <p className="font-serif text-lg">
+                        Ziyaret Eden: {ziyaret.ziyaretEden}
+                      </p>
+                      <p className="font-serif text-lg">
+                        Ziyaretçi Sayısı: {ziyaret.ziyaretçiSayısı}
+                      </p>
+                    </>
+                  )
               }
             })()}
           </section>

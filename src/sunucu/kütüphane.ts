@@ -101,7 +101,6 @@ export async function kişileriYöneticiİçinListele(
     }
   })
 }
-
 export async function kişiyiYöneticiİçinDetaylıOku(
   id: number
 ): Promise<DetaylıKişi | null> {
@@ -146,7 +145,6 @@ export async function kişiyiYöneticiİçinDetaylıOku(
     projeler: res.projeler.map((p) => p.proje)
   }
 }
-
 export async function yöneticiİçinKişiEkle(
   oluşturulacakKişi: OluşturulacakKişi
 ): Promise<'Kişi eklendi.'> {
@@ -170,7 +168,6 @@ export async function yöneticiİçinKişiEkle(
   })
   return 'Kişi eklendi.'
 }
-
 export async function yöneticiİçinKişiGüncelle(
   id: number,
   güncellenecekKişi: OluşturulacakKişi
@@ -196,7 +193,6 @@ export async function yöneticiİçinKişiGüncelle(
   })
   return 'Kişi güncellendi.'
 }
-
 export async function yöneticiİçinKişiSil(
   id: number
 ): Promise<'Kişi silindi.'> {
@@ -210,7 +206,6 @@ export async function yöneticiİçinKişiSil(
   })
   return 'Kişi silindi.'
 }
-
 export async function projeleriYöneticiİçinSay(arama: string): Promise<number> {
   return veritabanı
     .select({ count: count() })
@@ -218,7 +213,6 @@ export async function projeleriYöneticiİçinSay(arama: string): Promise<number
     .where(like(projeler.ad, `%${arama}%`))
     .then((res) => res[0]!.count)
 }
-
 export async function projeleriYöneticiİçinListele(
   arama: string,
   sayfa: number,
@@ -237,7 +231,6 @@ export async function projeleriYöneticiİçinListele(
     }
   })
 }
-
 export async function projeyiYöneticiİçinDetaylıOku(
   id: number
 ): Promise<DetaylıProje | null> {
@@ -279,7 +272,6 @@ export async function projeyiYöneticiİçinDetaylıOku(
     üyeler: sonuç.üyeler.map((üye) => üye.üye)
   }
 }
-
 export async function yöneticiİçinProjeEkle(
   oluşturulacakProje: OluşturulacakProje
 ): Promise<'Proje eklendi.'> {
@@ -299,7 +291,6 @@ export async function yöneticiİçinProjeEkle(
   })
   return 'Proje eklendi.'
 }
-
 export async function yöneticiİçinProjeGüncelle(
   id: number,
   güncellenecekProje: OluşturulacakProje
@@ -317,12 +308,24 @@ export async function yöneticiİçinProjeGüncelle(
   })
   return 'Proje güncellendi.'
 }
-
 export async function yöneticiİçinProjeSil(
   id: number
 ): Promise<'Proje silindi.'> {
   await veritabanı.transaction(async (tx) => {
     await tx.delete(kişilerProjeler).where(eq(kişilerProjeler.proje, id))
+    const ilişkiliRandevular = await tx
+      .select({ id: randevular.id })
+      .from(randevular)
+      .where(eq(randevular.proje, id))
+    for (const randevu of ilişkiliRandevular) {
+      await tx
+        .delete(gereçlerRandevular)
+        .where(eq(gereçlerRandevular.randevu, randevu.id))
+      await tx
+        .delete(araçlarRandevular)
+        .where(eq(araçlarRandevular.randevu, randevu.id))
+    }
+    await tx.delete(randevular).where(eq(randevular.proje, id))
     const sonuç = await tx
       .delete(projeler)
       .where(eq(projeler.id, id))
@@ -387,6 +390,9 @@ export async function yöneticiİçinGereçGüncelle(
 export async function yöneticiİçinGereçSil(
   id: number
 ): Promise<'Gereç silindi.'> {
+  await veritabanı
+    .delete(gereçlerRandevular)
+    .where(eq(gereçlerRandevular.gereç, id))
   await veritabanı.delete(gereçler).where(eq(gereçler.id, id))
   return 'Gereç silindi.'
 }
@@ -448,6 +454,9 @@ export async function yöneticiİçinAraçGüncelle(
 export async function yöneticiİçinAraçSil(
   id: number
 ): Promise<'Araç silindi.'> {
+  await veritabanı
+    .delete(araçlarRandevular)
+    .where(eq(araçlarRandevular.araç, id))
   await veritabanı.delete(araçlar).where(eq(araçlar.id, id))
   return 'Araç silindi.'
 }
@@ -605,6 +614,10 @@ export async function yöneticiİçinRandevuSil(
   id: number
 ): Promise<'Randevu silindi.'> {
   await veritabanı.transaction(async (tx) => {
+    await tx
+      .delete(gereçlerRandevular)
+      .where(eq(gereçlerRandevular.randevu, id))
+    await tx.delete(araçlarRandevular).where(eq(araçlarRandevular.randevu, id))
     await tx
       .delete(gereçlerRandevular)
       .where(eq(gereçlerRandevular.randevu, id))

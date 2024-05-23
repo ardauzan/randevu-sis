@@ -678,7 +678,7 @@ const arkayüz = new Elysia({
             }
           )
           .get(
-            '/gereçler',
+            '/gerecler',
             async ({
               query: { arama, sayfa, sayfaBoyutu },
               jwt,
@@ -725,7 +725,7 @@ const arkayüz = new Elysia({
             }
           )
           .get(
-            '/gereçler/:id',
+            '/gerecler/:id',
             async ({ params: { id }, jwt, cookie: { kimlik } }) => {
               const kimlikVerisi = await kimlikVerisiniAl(
                 await jwt.verify(kimlik.value)
@@ -757,7 +757,7 @@ const arkayüz = new Elysia({
             }
           )
           .post(
-            '/gereçler',
+            '/gerecler',
             async ({ body: { ad, adet }, jwt, cookie: { kimlik } }) => {
               const kimlikVerisi = await kimlikVerisiniAl(
                 await jwt.verify(kimlik.value)
@@ -790,7 +790,7 @@ const arkayüz = new Elysia({
             }
           )
           .patch(
-            '/gereçler/:id',
+            '/gerecler/:id',
             async ({
               params: { id },
               body: { ad, adet },
@@ -831,7 +831,7 @@ const arkayüz = new Elysia({
             }
           )
           .delete(
-            '/gereçler/:id',
+            '/gerecler/:id',
             async ({ params: { id }, jwt, cookie: { kimlik } }) => {
               const kimlikVerisi = await kimlikVerisiniAl(
                 await jwt.verify(kimlik.value)

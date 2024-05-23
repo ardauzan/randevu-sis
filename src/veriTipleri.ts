@@ -20,6 +20,7 @@ type ListelenenVeri =
   | ListelenenKişi
   | ListelenenProje
   | ListelenenGereç
+  | RandevuDaKullanılanListelenenGereç
   | ListelenenAraç
   | ListelenenRandevu
   | ListelenenTatil
@@ -96,6 +97,12 @@ type ListelenenGereç = {
   id: number
   ad: string
   adet: number
+}
+type RandevuDaKullanılanListelenenGereç = {
+  id: number
+  ad: string
+  talepEdilenAdet: number
+  ToplamAdet: number
 }
 type OluşturulacakGereç = {
   ad: string

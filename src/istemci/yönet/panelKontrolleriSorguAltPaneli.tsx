@@ -11,12 +11,10 @@ import {
 
 export interface PanelKontrolleriSorguAltPaneliProps {
   readonly kontrollerGörünüyor?: boolean
-  readonly kontrolleriGizle?: () => void
 }
 
 export default function PanelKontrolleriSorguAltPaneli({
-  kontrollerGörünüyor = true,
-  kontrolleriGizle = () => {}
+  kontrollerGörünüyor = true
 }: PanelKontrolleriSorguAltPaneliProps) {
   const {
     durum,
@@ -28,7 +26,6 @@ export default function PanelKontrolleriSorguAltPaneli({
   useEffect(() => {
     const aramaDeğiştirDebounced = debounce(() => {
       aksiyonYayınla(aramaDeğiştir(arama))
-      kontrolleriGizle()
     }, 300)
     aramaDeğiştirDebounced()
     return aramaDeğiştirDebounced.cancel
@@ -114,7 +111,6 @@ export default function PanelKontrolleriSorguAltPaneli({
                     })()
                   )
                 )
-                kontrolleriGizle()
               }}
             >
               <PlusIcon className="size-4" />
@@ -126,7 +122,6 @@ export default function PanelKontrolleriSorguAltPaneli({
               value={sayfaBoyutu}
               onChange={(e) => {
                 aksiyonYayınla(sayfaBoyutuDeğiştir(parseInt(e.target.value)))
-                kontrolleriGizle()
               }}
             >
               <option value={10}> 10 </option>
