@@ -136,7 +136,7 @@ type DetaylıRandevu = {
   gün: string
   başlangıçZamanı: string
   bitişZamanı: string
-  gereçler: [adet: number, gereç: ListelenenGereç][]
+  gereçler: [gereç: ListelenenGereç, adet: number][]
   araçlar: ListelenenAraç[]
 }
 type OluşturulacakRandevu = {
@@ -145,7 +145,7 @@ type OluşturulacakRandevu = {
   gün: string
   başlangıçZamanı: string
   bitişZamanı: string
-  gereçler: [adet: number, gereç: number][]
+  gereçler: [gereç: number, adet: number][]
   araçlar: number[]
 }
 type GüncellenecekRandevu = [id: number, veri: OluşturulacakRandevu]

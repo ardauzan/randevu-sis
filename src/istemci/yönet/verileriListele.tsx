@@ -38,11 +38,11 @@ export default function VerileriListele() {
   }, [spesifikDurum])
 
   return (
-    <article className="mt-10 flex size-full flex-col p-2">
+    <article className="mt-10 flex size-full flex-col p-2 sm:mt-0">
       {spesifikDurum.veri.length === 0 && spesifikDurum.yükleniyor ? (
         <Yükleniyor />
       ) : (
-        <section className="mt-6 flex size-full flex-col gap-4 space-y-2 rounded-lg border border-black bg-white p-4 sm:w-full">
+        <section className="flex size-full flex-col gap-4 space-y-2 rounded-lg border border-black bg-white p-4 sm:w-full">
           <section className="max-w-full sm:px-2 md:px-4 lg:px-6">
             <VeriListesi
               veriler={spesifikDurum.veri}

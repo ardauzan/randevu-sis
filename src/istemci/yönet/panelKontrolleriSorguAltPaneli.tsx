@@ -59,8 +59,6 @@ export default function PanelKontrolleriSorguAltPaneli({
                   return 'Bu tablo sistemde kayıtlı olan tatilleri içerir.'
                 case 'ziyaretler':
                   return 'Bu tablo sistemde kayıtlı olan ziyaretleri içerir.'
-                default:
-                  throw new Error('Bilinmeyen tablo.')
               }
             })()}
           </p>
@@ -96,7 +94,7 @@ export default function PanelKontrolleriSorguAltPaneli({
                             email: '',
                             şifre: '',
                             projeler: []
-                          } as OluşturulacakKişi
+                          }
                         case 'projeler':
                           return {
                             ad: '',
@@ -104,9 +102,42 @@ export default function PanelKontrolleriSorguAltPaneli({
                             bitişTarihi: '',
                             açıklama: '',
                             üyeler: []
-                          } as OluşturulacakProje
-                        default:
-                          throw new Error('Bilinmeyen tablo.')
+                          }
+                        case 'gereçler':
+                          return {
+                            ad: '',
+                            adet: 0
+                          }
+                        case 'araçlar':
+                          return {
+                            ad: '',
+                            açıklama: '',
+                            arızalı: false
+                          }
+                        case 'randevular':
+                          return {
+                            açıklama: '',
+                            proje: 0,
+                            gün: '',
+                            başlangıçZamanı: '',
+                            bitişZamanı: '',
+                            gereçler: [],
+                            araçlar: []
+                          }
+                        case 'tatiller':
+                          return {
+                            başlangıçTarihi: '',
+                            bitişTarihi: '',
+                            açıklama: ''
+                          }
+                        case 'ziyaretler':
+                          return {
+                            gün: '',
+                            başlangıçZamanı: '',
+                            bitişZamanı: '',
+                            ziyaretEden: '',
+                            ziyaretçiSayısı: 0
+                          }
                       }
                     })()
                   )

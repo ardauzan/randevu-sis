@@ -4,7 +4,7 @@ import PanelKontrolleriSorguAltPaneli from '@/istemci/yönet/panelKontrolleriSor
 
 export default function PanelKontrolleriMobil() {
   return (
-    <article className="hidden h-full flex-col items-center overflow-visible rounded-lg bg-gray-300 p-6 pt-8 sm:flex sm:p-1 md:p-6">
+    <article className="hidden h-full flex-col items-center overflow-visible rounded-lg bg-gray-300 p-6 pt-8 sm:flex sm:p-2 md:p-6">
       <h2 className="text-center font-mono text-2xl font-semibold tracking-tight">
         Kontrol paneli
       </h2>

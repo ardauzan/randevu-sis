@@ -47,7 +47,7 @@ export default function Veriyiİncele() {
     }
   }, [spesifikDurum])
   return (
-    <article className="mt-10 flex size-full flex-col p-2">
+    <article className="mt-10 flex size-full flex-col p-2 sm:mt-0">
       {spesifikDurum.yükleniyor && typeof spesifikDurum.veri === 'number' ? (
         <Yükleniyor />
       ) : (
@@ -110,8 +110,8 @@ export default function Veriyiİncele() {
                             başlangıçZamanı: randevu.başlangıçZamanı,
                             bitişZamanı: randevu.bitişZamanı,
                             gereçler: randevu.gereçler.map((g) => [
-                              g[0],
-                              g[1].id
+                              g[0].id,
+                              g[1]
                             ]),
                             araçlar: randevu.araçlar.map((a) => a.id)
                           }
@@ -242,7 +242,7 @@ export default function Veriyiİncele() {
                         Randevu: {randevu.id}
                       </h1>
                       <h2 className="font-serif text-2xl font-bold">
-                        {randevu.açıklama} adlı randevu.
+                        Açıklama: {randevu.açıklama}
                       </h2>
                       <p className="font-serif text-lg">
                         Proje:{' '}
@@ -267,7 +267,7 @@ export default function Veriyiİncele() {
                       </h3>
                       {(() => {
                         const sonrakiGereçler = randevu.gereçler.map((g) => {
-                          const [talepEdilenAdet, gereç] = g
+                          const [gereç, talepEdilenAdet] = g
                           const { id, ad, adet } = gereç
                           return { id, ad, talepEdilenAdet, ToplamAdet: adet }
                         })

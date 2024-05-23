@@ -550,7 +550,7 @@ export async function randevuyuYöneticiİçinDetaylıOku(
     gün: sonuç.gün,
     başlangıçZamanı: sonuç.başlangıçZamanı,
     bitişZamanı: sonuç.bitişZamanı,
-    gereçler: sonuç.gereçler.map((g) => [g.adet, g.gereç]),
+    gereçler: sonuç.gereçler.map((g) => [g.gereç, g.adet]),
     araçlar: sonuç.araçlar.map((a) => a.araç)
   }
 }
@@ -565,7 +565,7 @@ export async function yöneticiİçinRandevuEkle(
       .returning({ id: randevular.id })
     if (gereçler.length)
       await tx.insert(gereçlerRandevular).values(
-        gereçler.map(([adet, gereç]) => ({
+        gereçler.map(([gereç, adet]) => ({
           randevu: sonuç[0]!.id,
           gereç,
           adet
@@ -594,7 +594,7 @@ export async function yöneticiİçinRandevuGüncelle(
     await tx.delete(araçlarRandevular).where(eq(araçlarRandevular.randevu, id))
     if (gereçler.length)
       await tx.insert(gereçlerRandevular).values(
-        gereçler.map(([adet, gereç]) => ({
+        gereçler.map(([gereç, adet]) => ({
           randevu: id,
           gereç,
           adet

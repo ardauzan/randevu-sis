@@ -38,8 +38,6 @@ export default function İçerik() {
               return <VeriGüncelle />
             case 'sil':
               return <VeriSil />
-            default:
-              throw new Error('Bilinmeyen amaç.')
           }
         })()}
       </section>

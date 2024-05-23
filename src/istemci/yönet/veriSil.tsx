@@ -16,7 +16,7 @@ export default function VeriSil() {
     }
   }, [spesifikDurum.yükleniyor])
   return (
-    <article className="mt-10 flex size-full flex-col p-2">
+    <article className="mt-10 flex size-full flex-col p-2 sm:mt-0">
       {spesifikDurum.yükleniyor ? (
         <Yükleniyor />
       ) : (

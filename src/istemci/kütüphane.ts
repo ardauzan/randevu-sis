@@ -156,3 +156,24 @@ export function projeOluştururkenkiÜyeleriSeç(üyeler: string): number[] {
       .map(Number)
   return []
 }
+export function randevuOlustururkenkiGereçleriSeç(
+  gereçler: string
+): [gereç: number, adet: number][] {
+  if (gereçler)
+    return gereçler
+      .split(',')
+      .filter((gereçİfadesi) => gereçİfadesi !== '')
+      .map((gereçİfadesi) => {
+        const [id, adet] = gereçİfadesi.split(':')
+        return [Number(id), Number(adet)]
+      })
+  return []
+}
+export function randevuOlustururkenkiAraçlarıSeç(araçlar: string): number[] {
+  if (araçlar)
+    return araçlar
+      .split(',')
+      .filter((id) => id !== '')
+      .map(Number)
+  return []
+}
