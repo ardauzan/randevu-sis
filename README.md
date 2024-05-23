@@ -25,17 +25,16 @@ bun install
 
 Kök dizindeki `.env.example` dosyasını `.env.local` olarak kopyalayın ve gerekli ayarları yapın.
 
-Son olarak projeyi çalıştırmak için aşağıdaki komutu çalıştırın:
+Son olarak projeyi geliştirme modunda çalıştırmak için aşağıdaki komutu çalıştırın:
 
 ```bash
-bun start
+bun geliştir
 ```
 
 ### Notlar
 
-- Proje varsayılan olarak `http://localhost:3000` adresinde çalışır.
+- Proje geliştirme modunda varsayılan olarak `http://localhost:3131` adresinde çalışır.
 - PostgreSQL veritabanı kullanır. Veritabanı bağlantı ayarlarını `.env.local` dosyasından yapabilirsiniz.
-- JWT ile kimlik doğrulama yapılır. JWT nin koruyucu olabilmesi için `.env.local` dosyasında kırılması çok zor bir `JWT_SECRET` tanımlanmalıdır.
 - Drizzle kullanılarak veritabanı şeması oluşturulmuştur. `package.json` dosyasındaki `veritabanı` komutları ile veritabanı işlemleri yapılabilir.
 - Geliştirme için VSCode önerilir. `.vscode` dizininde tanımlanmış ayarlar mevcuttur.
 
