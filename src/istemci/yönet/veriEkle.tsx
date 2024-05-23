@@ -5,10 +5,10 @@ import Durum from '@/istemci/yönet/durum'
 import { listele, ekle, tetikle, olmadı } from '@/istemci/yönet/aksiyonlar'
 import {
   kişiOluştururkenkiProjeleriSeç,
-  yöneticiİçinEkle,
   projeOluştururkenkiÜyeleriSeç,
   randevuOlustururkenkiGereçleriSeç,
-  randevuOlustururkenkiAraçlarıSeç
+  randevuOlustururkenkiAraçlarıSeç,
+  yöneticiİçinEkle
 } from '@/istemci/kütüphane'
 
 export default function VeriEkle() {
@@ -18,6 +18,7 @@ export default function VeriEkle() {
   const [projeÜyeleri, setProjeÜyeleri] = useState('') //# Proje oluştururkenki üyeleri seçmek için
   const [randevuGereçleri, setRandevuGereçleri] = useState('') //# Randevu oluştururkenki gereçleri seçmek için
   const [randevuAraçları, setRandevuAraçları] = useState('') //# Randevu oluştururkenki araçları seçmek için
+
   useEffect(() => {
     if (spesifikDurum.yükleniyor) {
       yöneticiİçinEkle(spesifikDurum.tablo, spesifikDurum.veri)
