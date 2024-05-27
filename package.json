@@ -14,7 +14,7 @@
     "veritabanı:örnekler": "bun run src/veritabanı/örnekler.ts"
   },
   "dependencies": {
-    "@bogeychan/elysia-logger": "^0.0.21",
+    "@bogeychan/elysia-logger": "^0.0.22",
     "@elysiajs/jwt": "^1.0.2",
     "@elysiajs/static": "^1.0.3",
     "@heroicons/react": "^2.1.3",
