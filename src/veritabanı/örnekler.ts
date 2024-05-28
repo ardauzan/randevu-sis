@@ -47,12 +47,23 @@ const main = async () => {
     await veritabanı.delete(tatiller)
     await veritabanı.delete(ziyaretler)
 
-    await veritabanı.insert(kişiler).values(örnekKişiler)
+    await veritabanı.insert(kişiler).values([
+      {
+        id: 1,
+        yönetici: true,
+        öğrenciNo: 2311310817,
+        ad: 'Ali Arda',
+        soyAd: 'Uzan',
+        email: 'arda.uzan@protonmail.com',
+        şifreHash:
+          '$argon2id$v=19$m=65536,t=2,p=1$V8GZjeEzEVK5GXwdKif5adspNmSjxPdqzGxg8GG6D7Q$MfhKjRc0iP+E7K02fWAdhE+Yf2Izx5rEf8/ICBpSNtU'
+      }
+    ])
     await veritabanı.execute(
       sql.raw(
         `SELECT setval('kişiler_id_seq', COALESCE((SELECT MAX(id) FROM kişiler) + 1, 1), false)`
       )
-    )
+    ) /*
     await veritabanı.insert(projeler).values(örnekProjeler)
     await veritabanı.execute(
       sql.raw(
@@ -92,7 +103,7 @@ const main = async () => {
         `SELECT setval('ziyaretler_id_seq', COALESCE((SELECT MAX(id) FROM ziyaretler) + 1, 1), false)`
       )
     )
-
+*/
     console.info('Veritabanı sıfırlandı ve örnek veriler eklendi.')
     process.exit(0)
   } catch (error) {
