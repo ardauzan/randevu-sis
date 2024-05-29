@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import { ArrowLongLeftIcon } from '@heroicons/react/20/solid'
 import Yükleniyor from '@/istemci/ortak/yükleniyor'
 import Durum from '@/istemci/yönet/durum'
-import { listele, ekle, tetikle, olmadı } from '@/istemci/yönet/aksiyonlar'
+import { listele, oku, ekle, tetikle, olmadı } from '@/istemci/yönet/aksiyonlar'
 import {
   kişiOluştururkenkiProjeleriSeç,
   projeOluştururkenkiÜyeleriSeç,
@@ -22,7 +22,7 @@ export default function VeriEkle() {
   useEffect(() => {
     if (spesifikDurum.yükleniyor) {
       yöneticiİçinEkle(spesifikDurum.tablo, spesifikDurum.veri)
-        .then(() => aksiyonYayınla(listele()))
+        .then((id) => aksiyonYayınla(oku(spesifikDurum.tablo, id)))
         .catch((hata) => aksiyonYayınla(olmadı(hata.message)))
     }
   }, [spesifikDurum.yükleniyor])

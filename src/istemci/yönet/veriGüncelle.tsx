@@ -38,7 +38,9 @@ export default function VeriGüncelle() {
   useEffect(() => {
     if (spesifikDurum.yükleniyor) {
       yöneticiİçinGüncelle(spesifikDurum.tablo, spesifikDurum.veri)
-        .then(() => aksiyonYayınla(listele()))
+        .then(() =>
+          aksiyonYayınla(oku(spesifikDurum.tablo, spesifikDurum.veri[0]))
+        )
         .catch((hata) => aksiyonYayınla(olmadı(hata.message)))
     }
   }, [spesifikDurum.yükleniyor])

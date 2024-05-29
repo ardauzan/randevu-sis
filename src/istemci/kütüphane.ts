@@ -81,7 +81,7 @@ export async function yöneticiİçinDetaylıOku(
 export const yöneticiİçinEkle = async (
   tablo: Tablo,
   veri: OluşturulacakVeri
-): Promise<void> => {
+): Promise<number> => {
   const sonuç: Response = await fetch(
     `/api/yonet/${ingilizceAlfabeyeÇevir(tablo)}`,
     {
@@ -94,6 +94,7 @@ export const yöneticiİçinEkle = async (
     }
   )
   if (!sonuç.ok) throw new Error(await sonuç.json())
+  return sonuç.json() as Promise<number>
 }
 export const yöneticiİçinGüncelle = async (
   tablo: Tablo,

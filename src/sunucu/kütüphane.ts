@@ -149,14 +149,15 @@ export async function kişiyiYöneticiİçinDetaylıOku(
 }
 export async function yöneticiİçinKişiEkle(
   oluşturulacakKişi: OluşturulacakKişi
-): Promise<'Kişi eklendi.'> {
+): Promise<number> {
   const { şifre, projeler, ...kişi } = oluşturulacakKişi
   const şifresiHashlenmişOluşturulacakKişi = {
     ...kişi,
     şifreHash: await stringiHashle(şifre)
   }
+  let sonuç: { id: number }[]
   await veritabanı.transaction(async (tx) => {
-    const sonuç = await tx
+    sonuç = await tx
       .insert(kişiler)
       .values([şifresiHashlenmişOluşturulacakKişi])
       .returning({ id: kişiler.id })
@@ -168,7 +169,7 @@ export async function yöneticiİçinKişiEkle(
         }))
       )
   })
-  return 'Kişi eklendi.'
+  return sonuç![0]!.id
 }
 export async function yöneticiİçinKişiGüncelle(
   id: number,
@@ -278,10 +279,11 @@ export async function projeyiYöneticiİçinDetaylıOku(
 }
 export async function yöneticiİçinProjeEkle(
   oluşturulacakProje: OluşturulacakProje
-): Promise<'Proje eklendi.'> {
+): Promise<number> {
   const { üyeler, ...proje } = oluşturulacakProje
+  let sonuç: { id: number }[]
   await veritabanı.transaction(async (tx) => {
-    const sonuç = await tx
+    sonuç = await tx
       .insert(projeler)
       .values([proje])
       .returning({ id: projeler.id })
@@ -293,7 +295,7 @@ export async function yöneticiİçinProjeEkle(
         }))
       )
   })
-  return 'Proje eklendi.'
+  return sonuç![0]!.id
 }
 export async function yöneticiİçinProjeGüncelle(
   id: number,
@@ -378,9 +380,14 @@ export async function gereciYöneticiİçinDetaylıOku(
 }
 export async function yöneticiİçinGereçEkle(
   oluşturulacakGereç: OluşturulacakGereç
-): Promise<'Gereç eklendi.'> {
-  await veritabanı.insert(gereçler).values([oluşturulacakGereç])
-  return 'Gereç eklendi.'
+): Promise<number> {
+  const sonuç = await veritabanı
+    .insert(gereçler)
+    .values([oluşturulacakGereç])
+    .returning({
+      id: gereçler.id
+    })
+  return sonuç[0]!.id
 }
 export async function yöneticiİçinGereçGüncelle(
   id: number,
@@ -443,9 +450,14 @@ export async function aracıYöneticiİçinDetaylıOku(
 }
 export async function yöneticiİçinAraçEkle(
   oluşturulacakAraç: OluşturulacakAraç
-): Promise<'Araç eklendi.'> {
-  await veritabanı.insert(araçlar).values([oluşturulacakAraç])
-  return 'Araç eklendi.'
+): Promise<number> {
+  const sonuç = await veritabanı
+    .insert(araçlar)
+    .values([oluşturulacakAraç])
+    .returning({
+      id: araçlar.id
+    })
+  return sonuç[0]!.id
 }
 export async function yöneticiİçinAraçGüncelle(
   id: number,
@@ -567,10 +579,11 @@ export async function randevuyuYöneticiİçinDetaylıOku(
 }
 export async function yöneticiİçinRandevuEkle(
   oluşturulacakRandevu: OluşturulacakRandevu
-): Promise<'Randevu eklendi.'> {
+): Promise<number> {
   const { gereçler, araçlar, ...randevu } = oluşturulacakRandevu
+  let sonuç: { id: number }[]
   await veritabanı.transaction(async (tx) => {
-    const sonuç = await tx
+    sonuç = await tx
       .insert(randevular)
       .values([randevu])
       .returning({ id: randevular.id })
@@ -590,7 +603,7 @@ export async function yöneticiİçinRandevuEkle(
         }))
       )
   })
-  return 'Randevu eklendi.'
+  return sonuç![0]!.id
 }
 export async function yöneticiİçinRandevuGüncelle(
   id: number,
@@ -683,9 +696,14 @@ export async function tatiliYöneticiİçinDetaylıOku(
 }
 export async function yöneticiİçinTatilEkle(
   oluşturulacakTatil: OluşturulacakTatil
-): Promise<'Tatil eklendi.'> {
-  await veritabanı.insert(tatiller).values([oluşturulacakTatil])
-  return 'Tatil eklendi.'
+): Promise<number> {
+  const sonuç = await veritabanı
+    .insert(tatiller)
+    .values([oluşturulacakTatil])
+    .returning({
+      id: tatiller.id
+    })
+  return sonuç[0]!.id
 }
 export async function yöneticiİçinTatilGüncelle(
   id: number,
@@ -751,9 +769,14 @@ export async function ziyaretiYöneticiİçinDetaylıOku(
 }
 export async function yöneticiİçinZiyaretEkle(
   oluşturulacakZiyaret: OluşturulacakZiyaret
-): Promise<'Ziyaret eklendi.'> {
-  await veritabanı.insert(ziyaretler).values([oluşturulacakZiyaret])
-  return 'Ziyaret eklendi.'
+): Promise<number> {
+  const sonuç = await veritabanı
+    .insert(ziyaretler)
+    .values([oluşturulacakZiyaret])
+    .returning({
+      id: ziyaretler.id
+    })
+  return sonuç[0]!.id
 }
 export async function yöneticiİçinZiyaretGüncelle(
   id: number,
