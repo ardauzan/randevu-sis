@@ -8,7 +8,7 @@ export default function Redüktör(durum: Durum, aksiyon: Aksiyon): Durum {
         ...durum,
         amaç: 'listele',
         toplam: 0,
-        veri: [],
+        veri: null,
         yükleniyor: true,
         hata: ''
       }
@@ -74,7 +74,7 @@ export default function Redüktör(durum: Durum, aksiyon: Aksiyon): Durum {
         sayfa: 1,
         arama: '',
         toplam: 0,
-        veri: [],
+        veri: null,
         yükleniyor: true,
         hata: ''
       }
@@ -96,7 +96,7 @@ export default function Redüktör(durum: Durum, aksiyon: Aksiyon): Durum {
         sayfa: 1,
         sayfaBoyutu: değer[0],
         toplam: 0,
-        veri: [],
+        veri: null,
         yükleniyor: true,
         hata: ''
       }
@@ -108,7 +108,7 @@ export default function Redüktör(durum: Durum, aksiyon: Aksiyon): Durum {
         arama: değer[0],
         sayfa: 1,
         toplam: 0,
-        veri: [],
+        veri: null,
         yükleniyor: true,
         hata: ''
       }

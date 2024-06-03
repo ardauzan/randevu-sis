@@ -190,7 +190,7 @@ type OrtakDurum = {
 }
 type ListeleDurum = {
   amaç: 'listele'
-  veri: ListelenenVeriler
+  veri: ListelenenVeriler | null
 } & OrtakDurum
 type OkuDurum = {
   amaç: 'oku'
@@ -212,7 +212,7 @@ type Durum = ListeleDurum | OkuDurum | EkleDurum | GüncelleDurum | SilDurum
 //# Aksiyon
 type LİSTELEAKSİYON = {
   tip: 'LİSTELE'
-  değer: []
+  değer: null
 }
 type OKUAKSİYON = {
   tip: 'OKU'

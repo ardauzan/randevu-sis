@@ -1,7 +1,7 @@
 // info Eylem başlat
 // # Genel
 export function listele(): LİSTELEAKSİYON {
-  return { tip: 'LİSTELE', değer: [] }
+  return { tip: 'LİSTELE', değer: null }
 }
 export function oku(tablo: Tablo, veri: number | DetaylıVeri): OKUAKSİYON {
   return { tip: 'OKU', değer: [tablo, veri] }

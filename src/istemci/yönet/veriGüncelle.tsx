@@ -2,13 +2,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import { ArrowLongLeftIcon } from '@heroicons/react/20/solid'
 import Yükleniyor from '@/istemci/ortak/yükleniyor'
 import Durum from '@/istemci/yönet/durum'
-import {
-  listele,
-  güncelle,
-  tetikle,
-  olmadı,
-  oku
-} from '@/istemci/yönet/aksiyonlar'
+import { güncelle, tetikle, olmadı, oku } from '@/istemci/yönet/aksiyonlar'
 import {
   kişiOluştururkenkiProjeleriSeç,
   projeOluştururkenkiÜyeleriSeç,

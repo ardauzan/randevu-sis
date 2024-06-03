@@ -48,7 +48,7 @@ export default function Veriyiİncele() {
   }, [spesifikDurum])
   return (
     <article className="mt-10 flex size-full flex-col p-2 sm:mt-0">
-      {spesifikDurum.yükleniyor && typeof spesifikDurum.veri === 'number' ? (
+      {typeof spesifikDurum.veri === 'number' ? (
         <Yükleniyor />
       ) : (
         <>

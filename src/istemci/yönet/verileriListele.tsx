@@ -39,7 +39,7 @@ export default function VerileriListele() {
 
   return (
     <article className="mt-10 flex size-full flex-col p-2 sm:mt-0">
-      {spesifikDurum.veri.length === 0 && spesifikDurum.yükleniyor ? (
+      {spesifikDurum.veri === null ? (
         <Yükleniyor />
       ) : (
         <section className="flex size-full flex-col gap-4 space-y-2 rounded-lg border border-black bg-white p-4 sm:w-full">

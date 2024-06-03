@@ -30,6 +30,9 @@ export default function PanelKontrolleriSorguAltPaneli({
     aramaDeğiştirDebounced()
     return aramaDeğiştirDebounced.cancel
   }, [arama])
+  useEffect(() => {
+    setArama(durum.arama)
+  }, [durum.arama])
   return (
     <article
       className={clsx(
