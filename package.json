@@ -11,7 +11,7 @@
     "sına": "NODE_ENV=test echo 'Sınama henüz yapılamıyor.' && exit 1",
     "veritabanı:oluştur": "drizzle-kit generate",
     "veritabanı:migrasyon": "bun run src/veritabanı/migrasyon.ts",
-    "veritabanı:örnekler": "bun run src/veritabanı/örnekler.ts"
+    "veritabanı:sıfırla": "bun run src/veritabanı/sıfırla.ts"
   },
   "dependencies": {
     "@bogeychan/elysia-logger": "^0.0.22",
