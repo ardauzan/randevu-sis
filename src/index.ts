@@ -1,6 +1,6 @@
 import { Pool } from 'pg'
 import veritabanınaBağlan from '@/veritabanı'
-import arkayüz from '@/sunucu'
+import arkayüzüOluştur from '@/sunucu'
 import {
   trueVeyaFalseuBaşarılıyaDönüştür,
   uygulamaBirSüreÇalıştıktanSonraKapatıldı
@@ -196,6 +196,16 @@ try {
   process.exit(1)
 }
 console.info('Veritabanına bağlanıldı.')
+console.info('Arkayüz oluşturuluyor...')
+let arkayüz
+try {
+  arkayüz = arkayüzüOluştur()
+  console.info('Arkayüz oluşturuldu.')
+} catch (hata: any) {
+  console.error('Arkayüz oluşturulurken bir hata oluştu:', hata.message)
+  uygulamaBirSüreÇalıştıktanSonraKapatıldı()
+  process.exit(1)
+}
 arkayüz.listen(port)
 console.info(
   `SDÜ Randevu Yönetim Sistemi v(${uygulamaVersiyonu}) çevrimiçi.`,
