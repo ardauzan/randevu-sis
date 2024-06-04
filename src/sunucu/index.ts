@@ -10,6 +10,7 @@ import Yönet from '@/istemci/yönet/yönet'
 import Bulunamadı from '@/istemci/404/404'
 import Randevularım from '@/istemci/randevularım/randevularım'
 import Giriş from '@/istemci/giriş/giriş'
+import { prod, port } from '@/index'
 
 import {
   emailVeŞifreİleKimlikDoğrula,
@@ -75,7 +76,8 @@ export default function arkayüzüOluştur() {
           options: {
             colorize: true
           }
-        }
+        },
+        level: prod ? 'info' : 'debug'
       })
     )
     .use(staticPlugin({ assets: 'statik', prefix: '/statik', maxAge: 86400 }))
@@ -1234,4 +1236,5 @@ export default function arkayüzüOluştur() {
           }
         )
     })
+    .listen(port)
 }

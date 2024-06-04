@@ -5,8 +5,6 @@ import {
   trueVeyaFalseuBaşarılıyaDönüştür,
   uygulamaBirSüreÇalıştıktanSonraKapatıldı
 } from '@/sunucu/kütüphane'
-import { type NodePgDatabase } from 'drizzle-orm/node-postgres'
-import type * as şema from '@/veritabanı/şema'
 import bilgiler from 'package.json'
 
 //# Bu yazılılmla ilgili npm paket bilgilerini al ve dışa aktar
@@ -184,7 +182,7 @@ console.info('Ortam değişkenleri tamam.')
 //# Veritabanına bağlan
 console.info('Veritabanına bağlanılıyor...')
 let havuz: Pool
-export let veritabanı: NodePgDatabase<typeof şema>
+export let veritabanı: ReturnType<typeof veritabanınaBağlan>
 try {
   havuz = new Pool()
   const havuzİstemcisi = await havuz.connect()
@@ -197,7 +195,7 @@ try {
 }
 console.info('Veritabanına bağlanıldı.')
 console.info('Arkayüz oluşturuluyor...')
-let arkayüz
+export let arkayüz: ReturnType<typeof arkayüzüOluştur>
 try {
   arkayüz = arkayüzüOluştur()
   console.info('Arkayüz oluşturuldu.')
@@ -206,7 +204,6 @@ try {
   uygulamaBirSüreÇalıştıktanSonraKapatıldı()
   process.exit(1)
 }
-arkayüz.listen(port)
 console.info(
   `SDÜ Randevu Yönetim Sistemi v(${uygulamaVersiyonu}) çevrimiçi.`,
   `(${port}. porttan sunuluyor.)`
