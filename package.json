@@ -34,7 +34,7 @@
     "@types/pg": "^8.11.6",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "bun-types": "1.1.15",
+    "bun-types": "1.1.17",
     "drizzle-kit": "^0.22.7",
     "prettier": "^3.3.2",
     "prettier-plugin-tailwindcss": "^0.6.5",
@@ -42,7 +42,7 @@
     "typescript": "^5.5.2"
   },
   "engines": {
-    "bun": "1.1.15"
+    "bun": "1.1.17"
   },
   "private": true
 }

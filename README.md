@@ -5,16 +5,16 @@
 ## Gerekli yazılımlar
 
 1. PostgreSQL veritabanı (v16.3) [www.postgresql.org](https://www.postgresql.org)
-2. Bun çalışma zamanı (v1.1.15) [bun.sh](https://bun.sh)
+2. Bun çalışma zamanı (v1.1.17) [bun.sh](https://bun.sh)
 
 ## Kurulum
 
-Bu proje Bun ile çalışır ve versiyon 1.1.15 ile test edilmiştir.
+Bu proje Bun ile çalışır ve versiyon 1.1.17 ile test edilmiştir.
 
 Öncelikle bun'u kurun:
 
 ```bash
-curl -fsSl https://bun.sh/install | bash -s "bun-v1.1.15"
+curl -fsSl https://bun.sh/install | bash -s "bun-v1.1.17"
 ```
 
 Sonrada projenin dizinine girip aşağıdaki komutu çalıştırın:
